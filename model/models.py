@@ -25,6 +25,10 @@ class Word(db.Model):
     cards = db.relationship('Card', back_populates='word', lazy=True)
 
     @classmethod
+    def exists(cls, english_word) -> bool:
+        return cls.query.filter_by(english_word=english_word).first() is not None
+
+    @classmethod
     def add_word(cls, english_word: str, hungarian_meaning: str) -> "Word":
         word = cls(english_word=english_word, hungarian_meaning=hungarian_meaning)
         db.session.add(word)

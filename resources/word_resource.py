@@ -12,6 +12,9 @@ class AddWord(Resource):
         english_word = data['english_word']
         hungarian_meaning = data["hungarian_meaning"]
 
+        if Word.exists(english_word):
+            return {"message": "Word already exists."}, 400
+
         word = Word.add_word(english_word, hungarian_meaning)
 
         return word_schema.dump(word)
