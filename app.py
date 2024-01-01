@@ -4,6 +4,7 @@ from instance.config import Config
 from flask_restful import Api
 from resources.user_resource import AddUser
 from resources.word_resource import AddWord
+from resources.card_resource import AddCard
 
 app = Flask(__name__)
 api = Api(app)
@@ -13,3 +14,4 @@ db.init_app(app)
 
 api.add_resource(AddUser, '/add_user')
 api.add_resource(AddWord, '/add_word')
+api.add_resource(AddCard, '/add_card')

@@ -69,3 +69,10 @@ class Card(db.Model):
         self.lapses = scheduling_card_user_rating.lapses
         self.state = scheduling_card_user_rating.state
         self.last_review = scheduling_card_user_rating.last_review
+
+    @classmethod
+    def add_card(cls, user_id: int, word_id: int) -> "Card":
+        card = cls(user_id=user_id, word_id=word_id)
+        db.session.add(card)
+        db.session.commit()
+        return card
