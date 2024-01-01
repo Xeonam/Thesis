@@ -24,6 +24,13 @@ class Word(db.Model):
     hungarian_meaning = db.Column(db.String(255), nullable=False)
     cards = db.relationship('Card', back_populates='word', lazy=True)
 
+    @classmethod
+    def add_word(cls, english_word: str, hungarian_meaning: str) -> "Word":
+        word = cls(english_word=english_word, hungarian_meaning=hungarian_meaning)
+        db.session.add(word)
+        db.session.commit()
+        return word
+
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
