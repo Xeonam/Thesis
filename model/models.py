@@ -71,6 +71,10 @@ class Card(db.Model):
         self.last_review = scheduling_card_user_rating.last_review
 
     @classmethod
+    def exists(self, user_id, word_id) -> bool:
+        return self.query.filter_by(user_id=user_id, word_id=word_id).first() is not None
+
+    @classmethod
     def add_card(cls, user_id: int, word_id: int) -> "Card":
         card = cls(user_id=user_id, word_id=word_id)
         db.session.add(card)

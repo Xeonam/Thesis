@@ -12,6 +12,9 @@ class AddCard(Resource):
         user_id = data['user_id']
         word_id = data["word_id"]
 
+        if Card.exists(user_id, word_id):
+            return {"message": "Already connected."}, 400
+
         card = Card.add_card(user_id, word_id)
 
         return card_schema.dump(card)
