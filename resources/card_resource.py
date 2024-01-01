@@ -18,3 +18,15 @@ class AddCard(Resource):
         card = Card.add_card(user_id, word_id)
 
         return card_schema.dump(card)
+
+class RepeatCard(Resource):
+    def post(self, card_id: int):
+        data = request.get_json()
+
+        user_rating = data['rating']
+
+        card = Card.query.filter_by(id=card_id).first()
+
+        card.do_repeat(user_rating)
+
+        return card_schema.dump(card)
