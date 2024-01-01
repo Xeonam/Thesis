@@ -11,6 +11,13 @@ class User(db.Model):
     pw = db.Column(db.String(255), nullable=False)
     cards = db.relationship('Card', back_populates='user', lazy=True)
 
+    @classmethod
+    def add_user(cls, username: str, email: str, pw: str) -> "User":
+        user = cls(username=username, email=email, pw=pw)
+        db.session.add(user)
+        db.session.commit()
+        return user
+
 class Word(db.Model):
     word_id = db.Column(db.Integer, primary_key=True)
     english_word = db.Column(db.String(255), nullable=False)
