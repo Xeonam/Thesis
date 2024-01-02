@@ -28,6 +28,19 @@ class User(db.Model):
             .all()
         )
         return user_cards
+    
+    #a function that return the user's cards where the due date is less than the current date
+    @classmethod
+    def get_due_cards(cls, user_id: int):
+        user_cards = (
+            db.session.query(User, Card, Word)
+            .join(Card, User.user_id == Card.user_id)
+            .join(Word, Card.word_id == Word.word_id)
+            .filter(User.user_id == user_id)
+            .filter(Card.due < datetime.utcnow())
+            .all()
+        )
+        return user_cards
 
 
 class Word(db.Model):
