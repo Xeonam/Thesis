@@ -21,6 +21,10 @@ class User(db.Model):
         return user
     
     @classmethod
+    def find_by_email(cls, email: str):
+        return cls.query.filter_by(email=email).first()
+    
+    @classmethod
     def verify_password(cls, user_id: int, password: str) -> bool:
         user = cls.query.get(user_id)
         if user:
