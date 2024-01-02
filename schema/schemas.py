@@ -4,7 +4,6 @@ class UserSchema(Schema):
     id = fields.Integer(dump_only=True)
     username = fields.String()
     email = fields.String()
-    pw = fields.String()
 
 class WordSchema(Schema):
     id = fields.Integer(dump_only=True)

@@ -32,3 +32,16 @@ class GetDueCards(Resource):
         cards = [{'card_id': user_card.Card.id, 'word': word_schema.dump(user_card.Word)} for user_card in cards]
 
         return cards
+class Login(Resource):
+    def post(self):
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('pw')
+
+        user = User.find_by_email(email)
+
+        if user and user.verify_password(password):
+            return user_schema.dump(user)
+        else:
+            return {'message': 'Invalid credentials'}, 401
+

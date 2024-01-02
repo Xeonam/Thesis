@@ -24,15 +24,12 @@ class User(db.Model):
     def find_by_email(cls, email: str):
         return cls.query.filter_by(email=email).first()
     
-    @classmethod
-    def verify_password(cls, user_id: int, password: str) -> bool:
-        user = cls.query.get(user_id)
-        if user:
-            try:
-                return ph.verify(user.pw, password)
-            except exceptions.VerifyMismatchError:
-                return False
-        return False
+    def verify_password(self, password) -> bool:
+        try:
+            return ph.verify(self.pw, password)
+        except exceptions.VerifyMismatchError:
+            return False
+   
 
     @classmethod
     def get_user_words(cls, user_id: int):
