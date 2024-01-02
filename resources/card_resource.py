@@ -3,14 +3,16 @@ from flask_restful import Resource
 from model.models import Card
 from schema.schemas import CardSchema
 from fsrs import Rating
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 card_schema = CardSchema()
 
 class AddCard(Resource):
+    @jwt_required()
     def post(self):
         data = request.get_json()
 
-        user_id = data['user_id']
+        user_id = get_jwt_identity()
         word_id = data["word_id"]
 
         if Card.exists(user_id, word_id):
