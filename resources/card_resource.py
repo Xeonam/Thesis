@@ -30,3 +30,8 @@ class RepeatCard(Resource):
         card.do_repeat(user_rating)
 
         return card_schema.dump(card)
+    
+class GetCard(Resource):
+    def get(self, card_id: int):
+        card = Card.get_card(card_id)
+        return card_schema.dump(card)

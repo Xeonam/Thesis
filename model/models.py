@@ -92,3 +92,7 @@ class Card(db.Model):
         db.session.add(card)
         db.session.commit()
         return card
+    
+    @classmethod
+    def get_card(cls, card_id: int):
+        return cls.query.filter_by(id=card_id).first()
