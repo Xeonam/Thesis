@@ -2,7 +2,7 @@ from flask import request, jsonify
 from flask_restful import Resource
 from model.models import db, User, Card
 from schema.schemas import UserSchema, WordSchema
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 
 user_schema = UserSchema()
@@ -21,8 +21,10 @@ class AddUser(Resource):
         return user_schema.dump(user)
 
 class GetWords(Resource):
-    def get(self, user_id: int):
-        words = User.get_user_words(user_id=user_id)
+    @jwt_required()
+    def get(self):
+        current_user_id = get_jwt_identity()
+        words = User.get_user_words(user_id=current_user_id)
         words = [{'card_id': user_card.Card.id, 'word': word_schema.dump(user_card.Word)} for user_card in words]
 
         return words
