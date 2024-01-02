@@ -2,6 +2,7 @@ from flask import request
 from flask_restful import Resource
 from model.models import Card
 from schema.schemas import CardSchema
+from fsrs import Rating
 
 card_schema = CardSchema()
 
@@ -22,12 +23,9 @@ class AddCard(Resource):
 class RepeatCard(Resource):
     def post(self, card_id: int):
         data = request.get_json()
-
         user_rating = data['rating']
 
-        card = Card.query.filter_by(id=card_id).first()
-
-        card.do_repeat(user_rating)
+        card = Card.repeat(card_id, Rating(user_rating))
 
         return card_schema.dump(card)
     

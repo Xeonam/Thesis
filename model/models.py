@@ -81,6 +81,15 @@ class Card(db.Model):
         self.lapses = scheduling_card_user_rating.lapses
         self.state = scheduling_card_user_rating.state
         self.last_review = scheduling_card_user_rating.last_review
+    
+    #a function that invokes the do_repeat function and commits the changes to the database
+    @classmethod
+    def repeat(self, card_id, user_rating: Rating) -> None:
+        card = self.get_card(card_id)
+        card.do_repeat(Rating(user_rating))
+        db.session.commit()
+        return card
+
 
     @classmethod
     def exists(self, user_id, word_id) -> bool:
