@@ -25,15 +25,7 @@ class AddCard(Resource):
 class RepeatCard(Resource):
     @jwt_required()
     def post(self, card_id: int):
-        current_user_id = get_jwt_identity()
-        card = Card.get_card(card_id)
-
-        if not card:
-            return {"message": "Card not found."}, 404
-
-        if card.user_id != current_user_id:
-            return {"message": "Not your card."}, 401
-        
+        Card.verify_card_ownership(card_id)
         data = request.get_json()
         user_rating = data['rating']
 
@@ -42,6 +34,9 @@ class RepeatCard(Resource):
         return card_schema.dump(updated_card)
     
 class GetCard(Resource):
+    @jwt_required()
     def get(self, card_id: int):
-        card = Card.get_card(card_id)
+        card = Card.verify_card_ownership(card_id)
+        print(card)
+        #card = Card.get_card(card_id)
         return card_schema.dump(card)

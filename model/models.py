@@ -2,6 +2,9 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from fsrs import FSRS, Rating
 from argon2 import PasswordHasher, exceptions
+from flask_jwt_extended import get_jwt_identity
+from flask_restful import abort
+
 
 db = SQLAlchemy()
 ph = PasswordHasher()
@@ -131,3 +134,13 @@ class Card(db.Model):
     @classmethod
     def get_card(cls, card_id: int):
         return cls.query.filter_by(id=card_id).first()
+    
+    @classmethod
+    def verify_card_ownership(cls, card_id):
+        current_user_id = get_jwt_identity()
+        card = Card.get_card(card_id)
+        if not card:
+            abort(404, message="Card not found.")
+        if card.user_id != current_user_id:
+            abort(403, message="Not your card.")
+        return card
