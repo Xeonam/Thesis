@@ -17,6 +17,18 @@ class User(db.Model):
         db.session.add(user)
         db.session.commit()
         return user
+    
+    @classmethod
+    def get_user_words(cls, user_id: int):
+        user_cards = (
+            db.session.query(User, Card, Word)
+            .join(Card, User.user_id == Card.user_id)
+            .join(Word, Card.word_id == Word.word_id)
+            .filter(User.user_id == user_id)
+            .all()
+        )
+        return user_cards
+
 
 class Word(db.Model):
     word_id = db.Column(db.Integer, primary_key=True)
