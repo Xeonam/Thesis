@@ -30,11 +30,14 @@ class GetWords(Resource):
         return words
 
 class GetDueCards(Resource):
-    def get(self, user_id: int):
-        cards = User.get_due_cards(user_id=user_id)
+    @jwt_required()
+    def get(self):
+        current_user_id = get_jwt_identity()
+        cards = User.get_due_cards(current_user_id)
         cards = [{'card_id': user_card.Card.id, 'word': word_schema.dump(user_card.Word)} for user_card in cards]
 
         return cards
+    
 class Login(Resource):
     def post(self):
         data = request.get_json()
