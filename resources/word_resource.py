@@ -3,10 +3,12 @@ from flask_restful import Resource
 from model.models import db, Word
 from schema.schemas import WordSchema
 from utils.translator import translate_to_hungarian
+from flask_jwt_extended import jwt_required
 
 word_schema = WordSchema()
 
 class AddWord(Resource):
+    @jwt_required()
     def post(self):
         data = request.get_json()
 
