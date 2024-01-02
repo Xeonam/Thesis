@@ -1,9 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from fsrs import FSRS, Rating
+from argon2 import PasswordHasher, exceptions
 
 db = SQLAlchemy()
-
+ph = PasswordHasher()
 class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
@@ -12,12 +13,23 @@ class User(db.Model):
     cards = db.relationship('Card', back_populates='user', lazy=True)
 
     @classmethod
-    def add_user(cls, username: str, email: str, pw: str) -> "User":
-        user = cls(username=username, email=email, pw=pw)
+    def add_user(cls, username: str, email: str, pw: str):
+        hashed_pw = ph.hash(pw)
+        user = cls(username=username, email=email, pw=hashed_pw)
         db.session.add(user)
         db.session.commit()
         return user
     
+    @classmethod
+    def verify_password(cls, user_id: int, password: str) -> bool:
+        user = cls.query.get(user_id)
+        if user:
+            try:
+                return ph.verify(user.pw, password)
+            except exceptions.VerifyMismatchError:
+                return False
+        return False
+
     @classmethod
     def get_user_words(cls, user_id: int):
         user_cards = (
