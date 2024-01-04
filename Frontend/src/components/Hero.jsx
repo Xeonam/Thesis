@@ -1,4 +1,6 @@
 import React from "react";
+import helloIcon from "../assets/animations/hero_animation.json";
+import Lottie from "lottie-react";
 
 function Hero() {
   return (
@@ -22,6 +24,10 @@ function Hero() {
           <span className="text-customTextHighlight">Join</span> us and transcend language barriers, one
           word at a time!</p>
       </div>
+      <div className="absolute right-0 bottom-28 z-10 overflow-hidden">
+        <Lottie animationData={helloIcon} className="w-52" />
+      </div>
+      
     </div>
   );
 }
