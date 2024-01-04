@@ -1,7 +1,7 @@
 .GradientBackground {
   background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, rgba(1, 3, 20, 0.7) 0%, #35155D 100%);
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   color: white;
   display: flex;
   flex-direction: column;
