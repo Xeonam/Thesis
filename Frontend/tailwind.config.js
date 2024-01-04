@@ -5,7 +5,11 @@ export default {
     'node_modules/flowbite-react/lib/esm/**/*.js'
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        customNavbar: '#512B81'
+      }
+    },
   },
   plugins: [
     require('flowbite/plugin')
