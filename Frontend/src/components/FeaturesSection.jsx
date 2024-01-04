@@ -9,7 +9,7 @@ const FeatureCard = ({title, text, bgColor, animation }) => (
     className={`flex flex-col items-center p-4 ${bgColor} rounded-lg shadow`}
   >
     <Lottie animationData={animation} className="w-1/2" />
-    <h3 className="text-lg font-semibold">{title}</h3>
+    <h3 className="text-lg font-semibold py-2">{title}</h3>
     <p className="text-sm text-center">{text}</p>
   </div>
 );
@@ -19,7 +19,7 @@ const FeaturesSection = () => {
     <section className="py-12 bg-[#FDF1EC]">
       <div className="text-center mb-10">
         <h2 className="text-4xl font-bold text-gray-800">
-          Why choose WordEnlighten:
+          Why <span className="text-customTextHighlight">choose</span> WordEnlighten?
         </h2>
       </div>
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
