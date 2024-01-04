@@ -19,7 +19,7 @@ const FeaturesSection = () => {
     <section className="py-12 bg-[#FDF1EC]">
       <div className="text-center mb-10">
         <h2 className="text-4xl font-bold text-gray-800">
-          Why teams choose WordEnlighten:
+          Why choose WordEnlighten:
         </h2>
       </div>
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
