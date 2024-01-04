@@ -1,10 +1,6 @@
-.GradientBackground {
+.HeroSection {
   background: #2C1338;
-  height: 100vh;
+  height: 75vh;
   width: 100%;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
 }
+

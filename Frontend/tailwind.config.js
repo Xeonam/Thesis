@@ -9,6 +9,7 @@ export default {
       colors: {
         customNavbar: '#512B81',
         customNavbarText: '#FFDE91',
+        customTextHighlight: '#9F549C',
         
       }
     },
