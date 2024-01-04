@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css'; 
-import { DefaultNavbar, Hero, HeroImage } from './components';
+import { DefaultNavbar, Hero, HeroImage, FeaturesSection } from './components';
 
 const App = () => {
   return (
@@ -8,6 +8,7 @@ const App = () => {
         <DefaultNavbar />
         <Hero />
         <HeroImage />
+        <FeaturesSection />
     </div>
   );
 }
