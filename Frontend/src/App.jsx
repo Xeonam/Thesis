@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css'; 
-import { Home,  } from './pages';
+import { Home, Register } from './pages';
 import { BrowserRouter,  Routes, Route } from 'react-router-dom';
 
 const App = () => {
@@ -9,6 +9,7 @@ const App = () => {
         <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/signup" element={<Register />} />
         </Routes>
 
         </BrowserRouter>
