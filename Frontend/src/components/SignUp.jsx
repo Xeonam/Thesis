@@ -1,14 +1,51 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import axios from "axios";
+
+const schema = yup.object({
+  username: yup.string().required("Username is required"),
+  email: yup.string().email("Invalid email").required("Email is required"),
+  pw: yup.string().required("Password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("pw"), null], "Passwords must match")
+    .required("Confirm password is required"),
+});
+
+async function addUser(userData) {
+  const response = await axios.post("http://localhost:5000/add_user", userData);
+  return response.data;
+}
 
 function SignUp() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const createUserMutation = useMutation({
+    mutationFn: addUser,
+  });
+
+  const onSubmit = (data) => {
+    const { confirmPassword, ...userData } = data;
+    console.log(userData);
+    createUserMutation.mutate(userData);
+  };
   return (
     <div>
       <section className="bg-customNavbar">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
           <Link
             to="/"
-            class="flex items-center mb-6 text-2xl font-semibold text-customNavbarText"
+            className="flex items-center mb-6 text-2xl font-semibold text-customNavbarText"
           >
             <h1>WordEnlighten</h1>
           </Link>
@@ -18,11 +55,11 @@ function SignUp() {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                 Create an account
               </h1>
-              <form className="space-y-4 md:space-y-6" action="#">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6" action="#">
                 <div>
                   <label
-                    for="username"
-                    class="block mb-2 text-sm font-medium text-gray-900 "
+                    htmlFor="username"
+                    className="block mb-2 text-sm font-medium text-gray-900 "
                   >
                     Your username
                   </label>
@@ -33,13 +70,14 @@ function SignUp() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                     placeholder="username"
                     required=""
+                    {...register("username")}
                   />
                 </div>
 
                 <div>
                   <label
-                    for="email"
-                    class="block mb-2 text-sm font-medium text-gray-900 "
+                    htmlFor="email"
+                    className="block mb-2 text-sm font-medium text-gray-900 "
                   >
                     Your email
                   </label>
@@ -50,11 +88,12 @@ function SignUp() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                     placeholder="name@company.com"
                     required=""
+                    {...register("email")}
                   />
                 </div>
                 <div>
                   <label
-                    for="password"
+                    htmlFor="password"
                     className="block mb-2 text-sm font-medium text-gray-900 "
                   >
                     Password
@@ -66,11 +105,12 @@ function SignUp() {
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                     required=""
+                    {...register("pw")}
                   />
                 </div>
                 <div>
                   <label
-                    for="confirm-password"
+                    htmlFor="confirm-password"
                     className="block mb-2 text-sm font-medium text-gray-900 "
                   >
                     Confirm password
@@ -82,30 +122,11 @@ function SignUp() {
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                     required=""
+                    {...register("confirmPassword")}
+
                   />
                 </div>
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="terms"
-                      aria-describedby="terms"
-                      type="checkbox"
-                      class="w-4 h-4 border border-gray-300 rounded bg-gray-50"
-                      required=""
-                    />
-                  </div>
-                  <div className="ml-3 text-sm">
-                    <label for="terms" className="font-light text-black-500 ">
-                      I accept the{" "}
-                      <a
-                        className="font-medium text-primary-600 hover:underline"
-                        href="#"
-                      >
-                        Terms and Conditions
-                      </a>
-                    </label>
-                  </div>
-                </div>
+
                 <button
                   type="submit"
                   className="w-full text-white bg-customNavbar hover:bg-primary-700 active:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
