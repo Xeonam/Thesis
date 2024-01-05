@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
 function LogInForm() {
   return (
     <div>
@@ -63,18 +62,12 @@ function LogInForm() {
                       />
                     </div>
                     <div class="ml-3 text-sm">
-                      <label
-                        for="remember"
-                        class="text-black"
-                      >
+                      <label for="remember" class="text-black">
                         Remember me
                       </label>
                     </div>
                   </div>
-                  <a
-                    href="#"
-                    class="text-sm font-medium hover:underline"
-                  >
+                  <a href="#" class="text-sm font-medium hover:underline">
                     Forgot password?
                   </a>
                 </div>
@@ -86,12 +79,9 @@ function LogInForm() {
                 </button>
                 <p class="text-sm font-light text-black">
                   Don’t have an account yet?{" "}
-                  <a
-                    href="#"
-                    class="font-medium hover:underline"
-                  >
+                  <Link to="/signup" className="font-medium hover:underline">
                     Sign up
-                  </a>
+                  </Link>
                 </p>
               </form>
             </div>
