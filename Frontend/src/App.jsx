@@ -1,14 +1,18 @@
 import React from 'react';
 import './App.css'; 
-import { DefaultNavbar, Hero, HeroImage, FeaturesSection } from './components';
+import { Home,  } from './pages';
+import { BrowserRouter,  Routes, Route } from 'react-router-dom';
 
 const App = () => {
   return (
     <div>
-        <DefaultNavbar />
-        <Hero />
-        <HeroImage />
-        <FeaturesSection />
+        <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+
+        </BrowserRouter>
+
     </div>
   );
 }
