@@ -62,11 +62,8 @@ function SignUp() {
                   </label>
                   <input
                     type="string"
-                    name="username"
-                    id="username"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                     placeholder="username"
-                    required=""
                     {...register("username")}
                   />
                 </div>
@@ -80,11 +77,8 @@ function SignUp() {
                   </label>
                   <input
                     type="email"
-                    name="email"
-                    id="email"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                     placeholder="name@company.com"
-                    required=""
                     {...register("email")}
                   />
                 </div>
@@ -97,11 +91,8 @@ function SignUp() {
                   </label>
                   <input
                     type="password"
-                    name="password"
-                    id="password"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
-                    required=""
                     {...register("pw")}
                   />
                 </div>
@@ -113,12 +104,9 @@ function SignUp() {
                     Confirm password
                   </label>
                   <input
-                    type="confirm-password"
-                    name="confirm-password"
-                    id="confirm-password"
+                    type="password"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
-                    required=""
                     {...register("confirmPassword")}
 
                   />
