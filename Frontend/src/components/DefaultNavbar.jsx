@@ -1,6 +1,6 @@
 import React from "react";
 import { Navbar, Button } from "flowbite-react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 //import Link
 import "../App.css";
 
@@ -13,12 +13,10 @@ function DefaultNavbar() {
         </span>
       </Navbar.Brand>
       <div className="flex md:order-2 mx-6">
-        <a
-          href="#_"
-          class="my-2 mx-5 font-medium text-white hover:text-customNavbarText"
-        >
+        <Link to="/login" className="my-2 mx-5 font-medium text-white hover:text-customNavbarText">
           Log in
-        </a>
+        </Link>
+
         <NavLink to="/signup">
           <Button className="bg-customNavbarText hover:bg-[#564260]">
             Sign up

@@ -1,16 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function SignUp() {
   return (
     <div>
       <section className="bg-customNavbar">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
-          <a
-            href="/"
+          <Link
+            to="/"
             class="flex items-center mb-6 text-2xl font-semibold text-customNavbarText"
           >
             <h1>WordEnlighten</h1>
-          </a>
+          </Link>
+
           <div className="w-full bg-[#87CEFA] rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
@@ -95,12 +97,12 @@ function SignUp() {
                 </button>
                 <p className="text-sm font-light text-black-500">
                   Already have an account?{" "}
-                  <a
-                    href="#"
+                  <Link
+                    to="/login"
                     className="font-medium text-primary-600 hover:underline"
                   >
                     Login here
-                  </a>
+                  </Link>
                 </p>
               </form>
             </div>
