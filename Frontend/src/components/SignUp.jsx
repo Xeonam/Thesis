@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { addUser } from "../api/apiCalls";
 import * as yup from "yup";
-import axios from "axios";
 
 const schema = yup.object({
   username: yup.string().required("Username is required"),
@@ -16,10 +16,6 @@ const schema = yup.object({
     .required("Confirm password is required"),
 });
 
-async function addUser(userData) {
-  const response = await axios.post("http://localhost:5000/add_user", userData);
-  return response.data;
-}
 
 function SignUp() {
   const {
@@ -39,6 +35,7 @@ function SignUp() {
     console.log(userData);
     createUserMutation.mutate(userData);
   };
+
   return (
     <div>
       <section className="bg-customNavbar">
