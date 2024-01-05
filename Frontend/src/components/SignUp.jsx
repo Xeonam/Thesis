@@ -16,7 +16,6 @@ const schema = yup.object({
     .required("Confirm password is required"),
 });
 
-
 function SignUp() {
   const {
     register,
@@ -52,7 +51,11 @@ function SignUp() {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                 Create an account
               </h1>
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6" action="#">
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="space-y-4 md:space-y-6"
+                action="#"
+              >
                 <div>
                   <label
                     htmlFor="username"
@@ -66,6 +69,11 @@ function SignUp() {
                     placeholder="username"
                     {...register("username")}
                   />
+                  {errors.username && (
+                    <p className="text-red-500 font-bold">
+                      {errors.username.message}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -81,6 +89,11 @@ function SignUp() {
                     placeholder="name@company.com"
                     {...register("email")}
                   />
+                  {errors.email && (
+                    <p className="text-red-500 font-bold">
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label
@@ -95,6 +108,11 @@ function SignUp() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                     {...register("pw")}
                   />
+                  {errors.pw && (
+                    <p className="text-red-500 font-bold">
+                      {errors.pw.message}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label
@@ -107,9 +125,14 @@ function SignUp() {
                     type="password"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                    required=""
                     {...register("confirmPassword")}
-
                   />
+                  {errors.confirmPassword && (
+                    <p className="text-red-500 font-bold">
+                      {errors.confirmPassword.message}
+                    </p>
+                  )}
                 </div>
 
                 <button
