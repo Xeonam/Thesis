@@ -1,7 +1,39 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { login } from "../api/apiCalls";
+import * as yup from "yup";
+
+const schema = yup.object({
+  email: yup.string().email("Invalid email").required("Email is required"),
+  pw: yup.string().required("Password is required"),
+});
 
 function LogInForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const createUserMutation = useMutation({
+    mutationFn: login,
+    onSuccess: (response) => {
+
+      const token = response.data.access_token;
+      console.log(token);
+      localStorage.setItem('accessToken', token);
+    }
+
+  });
+
+  const onSubmit = (data) => {
+    createUserMutation.mutate(data);
+  };
   return (
     <div>
       <section className="bg-customNavbar">
@@ -17,7 +49,11 @@ function LogInForm() {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-black md:text-2xl">
                 Sign in to your account
               </h1>
-              <form className="space-y-4 md:space-y-6" action="#">
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="space-y-4 md:space-y-6"
+                action="#"
+              >
                 <div>
                   <label
                     htmlFor="email"
@@ -32,6 +68,7 @@ function LogInForm() {
                     className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5"
                     placeholder="name@company.com"
                     required=""
+                    {...register("email")}
                   />
                 </div>
                 <div>
@@ -48,6 +85,8 @@ function LogInForm() {
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5"
                     required=""
+                    {...register("pw")}
+
                   />
                 </div>
                 <div className="flex items-center justify-between">
