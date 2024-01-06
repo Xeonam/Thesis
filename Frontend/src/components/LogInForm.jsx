@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -12,6 +12,7 @@ const schema = yup.object({
 });
 
 function LogInForm() {
+  const  navigate  = useNavigate();
   const {
     register,
     handleSubmit,
@@ -27,6 +28,7 @@ function LogInForm() {
       const token = response.data.access_token;
       console.log(token);
       localStorage.setItem('accessToken', token);
+      navigate('/dashboard');
     }
 
   });
@@ -52,7 +54,6 @@ function LogInForm() {
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="space-y-4 md:space-y-6"
-                action="#"
               >
                 <div>
                   <label
