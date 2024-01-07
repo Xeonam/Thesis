@@ -35,11 +35,11 @@ function LogInForm() {
   };
   return (
     <div>
-      <section className="bg-customNavbar">
+      <section className="bg-navbarBgColor">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
           <Link
             to="/"
-            className="flex items-center mb-6 text-2xl font-semibold text-customNavbarText"
+            className="flex items-center mb-6 text-2xl font-semibold text-importantText"
           >
             <h1>WordEnlighten</h1>
           </Link>
@@ -109,7 +109,7 @@ function LogInForm() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full text-white bg-customNavbar   active:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                  className="w-full text-white bg-navbarBgColor   active:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
                   Sign in
                 </button>

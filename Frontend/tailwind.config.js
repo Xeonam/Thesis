@@ -11,7 +11,7 @@ export default {
       },
       colors: {
         navbarBgColor: '#512B81',
-        customNavbarText: '#FFDE91',
+        importantText: '#FFDE91',
         customTextHighlight: '#9F549C',
         
       }
