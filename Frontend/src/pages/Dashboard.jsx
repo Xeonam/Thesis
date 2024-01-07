@@ -1,8 +1,11 @@
 import React from 'react'
+import { Words } from '../components'
 
 function Dashboard() {
   return (
-    <div>Dashboard</div>
+    <div>Dashboard
+      <Words />
+    </div>
   )
 }
 
