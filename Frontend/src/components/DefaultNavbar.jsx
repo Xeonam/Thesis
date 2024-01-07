@@ -6,7 +6,7 @@ import "../App.css";
 
 function DefaultNavbar() {
   return (
-    <Navbar className="bg-customNavbar">
+    <Navbar className="bg-navbarBgColor">
       <Navbar.Brand href="/">
         <span className="self-center whitespace-nowrap text-xl font-semibold text-customNavbarText">
           WordEnlighten

@@ -10,7 +10,7 @@ export default {
         sans: ['Poppins', 'sans-serif'],
       },
       colors: {
-        customNavbar: '#512B81',
+        navbarBgColor: '#512B81',
         customNavbarText: '#FFDE91',
         customTextHighlight: '#9F549C',
         
