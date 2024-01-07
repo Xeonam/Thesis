@@ -16,7 +16,7 @@ function DefaultNavbar() {
         {isLoggedIn ? (
           <>
             <Link
-              to="/profile"
+              to="/dashboard"
               className="my-2 mx-5 font-medium text-white hover:text-importantText"
             >
               Dashboard

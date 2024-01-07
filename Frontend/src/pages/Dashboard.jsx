@@ -1,9 +1,10 @@
 import React from 'react'
-import { Words } from '../components'
+import { Words, DefaultNavbar } from '../components'
 
 function Dashboard() {
   return (
-    <div>Dashboard
+    <div>
+      <DefaultNavbar />
       <Words />
     </div>
   )
