@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -12,7 +12,7 @@ const schema = yup.object({
 });
 
 function LogInForm() {
-  const  navigate  = useNavigate();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -24,13 +24,10 @@ function LogInForm() {
   const createUserMutation = useMutation({
     mutationFn: login,
     onSuccess: (response) => {
-
       const token = response.data.access_token;
-      console.log(token);
-      localStorage.setItem('accessToken', token);
-      navigate('/dashboard');
-    }
-
+      localStorage.setItem("accessToken", token);
+      navigate("/dashboard");
+    },
   });
 
   const onSubmit = (data) => {
@@ -87,7 +84,6 @@ function LogInForm() {
                     className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5"
                     required=""
                     {...register("pw")}
-
                   />
                 </div>
                 <div className="flex items-center justify-between">
