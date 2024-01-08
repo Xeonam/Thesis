@@ -20,6 +20,12 @@ function DefaultNavbar() {
             >
               Dashboard
             </Link>
+            <Link
+              to="/submit-word"
+              className="my-2 mx-5 font-medium text-white hover:text-importantText"
+            >
+              Add word
+            </Link>
             <NavLink to="/">
               <Button
                 className="bg-importantText hover:bg-[#564260]"
