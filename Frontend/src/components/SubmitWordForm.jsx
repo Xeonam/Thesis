@@ -10,8 +10,9 @@ const schema = yup.object({
 });
 
 function SubmitWordForm() {
-  const [response, setResponse] = useState("");
   const [word_id, setWord_id] = useState("");
+  const [english_word, setEnglish_word] = useState("");
+  const [hungarian_meaning, setHungarian_meaning] = useState("");
 
   const {
     register,
@@ -31,8 +32,9 @@ function SubmitWordForm() {
     },
     onSettled: (responseData, error) => {
       if (responseData) {
-        setResponse(JSON.stringify(responseData, null, 2));
         setWord_id(responseData.word_id);
+        setEnglish_word(responseData.english_word);
+        setHungarian_meaning(responseData.hungarian_meaning);
       }
     },
   });
@@ -79,10 +81,10 @@ function SubmitWordForm() {
                   </p>
                 </div>
 
-                {response && (
+                {word_id && (
                   <div className="response-div mt-4 p-4 rounded bg-white text-black" onClick={handleResponseClick}>
-                    <h3 className="font-bold">Response:</h3>
-                    <pre>{response}</pre>
+                    <h3 className="font-bold">Translate:</h3>
+                    {english_word}: {hungarian_meaning}
                   </div>
                 )}
 
@@ -90,7 +92,7 @@ function SubmitWordForm() {
                   type="submit"
                   className="w-full text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
-                  Submit Word
+                  Translate Word
                 </button>
               </form>
             </div>
