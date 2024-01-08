@@ -45,7 +45,6 @@ function SubmitWordForm() {
 
   const onSubmit = (data) => {
     submitMutation.mutate(data);
-
   };
 
   return (
@@ -82,14 +81,25 @@ function SubmitWordForm() {
                 </div>
 
                 {word_id && (
-                  <div className="response-div mt-4 p-4 rounded bg-white text-black" onClick={handleResponseClick}>
-                    <h3 className="font-bold">Translate:</h3>
-                    {english_word}: {hungarian_meaning}
-
-                    <div className="text-center">
-                        <button className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 ">
-                            Add word
-                        </button>
+                  <div
+                    className="response-div mt-4 p-4 rounded bg-white text-black"
+                    onClick={handleResponseClick}
+                  >
+                    <h1 className="font-bold">Translation</h1>
+                    <hr className="h-px border-0 bg-black"/>
+                    <p className="mt-2">
+                      <span className="font-semibold">
+                        {english_word}
+                      </span>:{" "}
+                      <span className="italic">
+                        {hungarian_meaning}
+                      </span>
+                      
+                    </p>
+                    <div className="text-center pt-2">
+                      <button className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 ">
+                        Add word
+                      </button>
                     </div>
                   </div>
                 )}
