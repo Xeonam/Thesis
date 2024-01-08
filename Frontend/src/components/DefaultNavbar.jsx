@@ -5,6 +5,11 @@ import "../App.css";
 
 function DefaultNavbar() {
   const isLoggedIn = localStorage.getItem("accessToken") ? true : false;
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken"); // Törli az accessToken-t a localStorage-ból
+  };
+
   return (
     <Navbar className="bg-navbarBgColor">
       <Navbar.Brand href="/">
@@ -21,12 +26,14 @@ function DefaultNavbar() {
             >
               Dashboard
             </Link>
-            <Link
-              to="/logout"
-              className="my-2 mx-5 font-medium text-white hover:text-importantText"
-            >
-              Log out
-            </Link>
+            <NavLink to="/">
+              <Button
+                className="bg-importantText hover:bg-[#564260]"
+                onClick={handleLogout}
+              >
+                Log out
+              </Button>
+            </NavLink>
           </>
         ) : (
           <>
