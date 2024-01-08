@@ -20,9 +20,9 @@ export async function fetchWords() {
   return response.data;
 }
 
-export async function addWord() {
+export async function addWord(wordData) {
   const token = localStorage.getItem('accessToken');
-  const response = await axios.post("http://localhost:5000/add_word", {
+  const response = await axios.post("http://localhost:5000/add_word", wordData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
