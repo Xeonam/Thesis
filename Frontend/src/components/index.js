@@ -5,5 +5,6 @@ import FeaturesSection from "./FeaturesSection";
 import SignUp from "./SignUp";
 import LogInForm from "./LogInForm";
 import Words from "./Words";
+import SubmitWordForm from "./SubmitWordForm";
 
-export { DefaultNavbar, Hero, HeroImage, FeaturesSection, SignUp, LogInForm, Words };
+export { DefaultNavbar, Hero, HeroImage, FeaturesSection, SignUp, LogInForm, Words, SubmitWordForm };

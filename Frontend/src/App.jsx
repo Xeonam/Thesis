@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Home, Register, LogIn, Dashboard } from "./pages";
+import { Home, Register, LogIn, Dashboard, SubmitWord } from "./pages";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 const RequireAuth = ({ children }) => {
@@ -25,6 +25,14 @@ const App = () => {
             element={
               <RequireAuth>
                 <Dashboard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/submit-word"
+            element={
+              <RequireAuth>
+                <SubmitWord />
               </RequireAuth>
             }
           />
