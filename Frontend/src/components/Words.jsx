@@ -17,7 +17,7 @@ function Words() {
   }
 
   return (
-    <div className="p-5 bg-[#412A4C]">
+    <div className="p-5">
       <h1 className="text-2xl font-bold mb-5 text-importantText">Words</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 text-center">
         {data?.map((wordItem) => (

@@ -3,7 +3,7 @@ import { Words, DefaultNavbar } from '../components'
 
 function Dashboard() {
   return (
-    <div>
+    <div className="bg-[#412A4C] min-h-screen">
       <DefaultNavbar />
       <Words />
     </div>
