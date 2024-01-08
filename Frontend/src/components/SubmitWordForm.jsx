@@ -85,6 +85,12 @@ function SubmitWordForm() {
                   <div className="response-div mt-4 p-4 rounded bg-white text-black" onClick={handleResponseClick}>
                     <h3 className="font-bold">Translate:</h3>
                     {english_word}: {hungarian_meaning}
+
+                    <div className="text-center">
+                        <button className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 ">
+                            Add word
+                        </button>
+                    </div>
                   </div>
                 )}
 
