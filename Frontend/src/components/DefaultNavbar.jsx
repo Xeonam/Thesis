@@ -12,12 +12,6 @@ function DefaultNavbar() {
 
   return (
     <Navbar className="bg-navbarBgColor">
-      <Navbar.Brand href="/">
-        <span className="self-center whitespace-nowrap text-xl font-semibold text-importantText">
-          WordEnlighten
-        </span>
-      </Navbar.Brand>
-      <div className="flex md:order-2 mx-6">
         {isLoggedIn ? (
           <>
             <Link
@@ -37,6 +31,12 @@ function DefaultNavbar() {
           </>
         ) : (
           <>
+            <Navbar.Brand href="/">
+              <span className="self-center whitespace-nowrap text-xl font-semibold text-importantText">
+                WordEnlighten
+              </span>
+            </Navbar.Brand>
+            <div className="flex md:order-2 mx-6">
             <Link
               to="/login"
               className="my-2 mx-5 font-medium text-white hover:text-importantText"
@@ -49,9 +49,9 @@ function DefaultNavbar() {
                 Sign up
               </Button>
             </NavLink>
+            </div>
           </>
         )}
-      </div>
     </Navbar>
   );
 }
