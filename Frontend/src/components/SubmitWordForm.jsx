@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,27 +10,41 @@ const schema = yup.object({
 });
 
 function SubmitWordForm() {
+  const [response, setResponse] = useState("");
+  const [word_id, setWord_id] = useState("");
 
-    const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm({
-      resolver: yupResolver(schema),
-    });
-  
-    const submitMutation = useMutation({
-      mutationFn: addWord,
-      onSuccess: () => {
-        console.log("Success!");
-      },
-    });
-  
-    const onSubmit = (data) => {
-      submitMutation.mutate(data);
-      console.log(data);
-      console.log(localStorage.getItem("accessToken"));
-    };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const submitMutation = useMutation({
+    mutationFn: addWord,
+    onSuccess: () => {
+      console.log("Success!");
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+    onSettled: (responseData, error) => {
+      if (responseData) {
+        setResponse(JSON.stringify(responseData, null, 2));
+        setWord_id(responseData.word_id);
+      }
+    },
+  });
+
+  const handleResponseClick = () => {
+    console.log("Word id: ", word_id);
+  };
+
+  const onSubmit = (data) => {
+    submitMutation.mutate(data);
+
+  };
 
   return (
     <div>
@@ -64,6 +78,14 @@ function SubmitWordForm() {
                     {errors.english_word?.message}
                   </p>
                 </div>
+
+                {response && (
+                  <div className="response-div mt-4 p-4 rounded bg-white text-black" onClick={handleResponseClick}>
+                    <h3 className="font-bold">Response:</h3>
+                    <pre>{response}</pre>
+                  </div>
+                )}
+
                 <button
                   type="submit"
                   className="w-full text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
