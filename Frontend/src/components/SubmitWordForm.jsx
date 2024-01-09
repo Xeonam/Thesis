@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { addWord } from "../api/apiCalls";
+import { addWord, addCard } from "../api/apiCalls";
 
 const schema = yup.object({
   english_word: yup.string().required("English word is required"),
@@ -38,13 +38,26 @@ function SubmitWordForm() {
       }
     },
   });
-
-  const handleResponseClick = () => {
-    console.log("Word id: ", word_id);
-  };
-
+  
   const onSubmit = (data) => {
     submitMutation.mutate(data);
+  };
+
+  // addCard
+  const addCardMutation = useMutation({
+    mutationFn: addCard,
+    onSuccess: () => {
+      console.log("Success!");
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const handleAddCardClick = () => {
+    if (word_id) {
+      addCardMutation.mutate({ word_id: word_id });
+    }
   };
 
   return (
@@ -83,21 +96,16 @@ function SubmitWordForm() {
                 {word_id && (
                   <div
                     className="mt-4 p-4 rounded bg-white text-black"
-                    onClick={handleResponseClick}
                   >
                     <h1 className="font-bold">Translation</h1>
-                    <hr className="h-px border-0 bg-black"/>
+                    <hr className="h-px border-0 bg-black" />
                     <p className="mt-2">
-                      <span className="font-semibold">
-                        {english_word}
-                      </span>:{" "}
-                      <span className="italic">
-                        {hungarian_meaning}
-                      </span>
-                      
+                      <span className="font-semibold">{english_word}</span>:{" "}
+                      <span className="italic">{hungarian_meaning}</span>
                     </p>
                     <div className="text-center pt-2">
-                      <button className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 ">
+                      <button className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 "
+                       onClick={handleAddCardClick} >
                         Add word
                       </button>
                     </div>
