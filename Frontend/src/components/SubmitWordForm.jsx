@@ -50,7 +50,7 @@ function SubmitWordForm() {
   return (
     <div>
       <section className="bg-navbarBgColor">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen-90 lg:py-0">
           <div className="w-full bg-[#A7C7E7] rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-black md:text-2xl">
@@ -82,7 +82,7 @@ function SubmitWordForm() {
 
                 {word_id && (
                   <div
-                    className="response-div mt-4 p-4 rounded bg-white text-black"
+                    className="mt-4 p-4 rounded bg-white text-black"
                     onClick={handleResponseClick}
                   >
                     <h1 className="font-bold">Translation</h1>
