@@ -75,6 +75,11 @@ class Word(db.Model):
         db.session.add(word)
         db.session.commit()
         return word
+    
+    #function that returns the word with the given english word
+    @classmethod
+    def get_word(cls, english_word: str):
+        return cls.query.filter_by(english_word=english_word).first()
 
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True)

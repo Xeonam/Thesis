@@ -22,3 +22,9 @@ class AddWord(Resource):
         word = Word.add_word(english_word, hungarian_meaning)
 
         return word_schema.dump(word)
+
+class GetWord(Resource):
+    @jwt_required()
+    def get(self, english_word: str):
+        word = Word.get_word(english_word)
+        return word_schema.dump(word)
