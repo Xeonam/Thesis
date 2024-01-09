@@ -28,7 +28,11 @@ function SubmitWordForm() {
       console.log("Success!");
     },
     onError: (error) => {
-      console.log(error);
+      if (error.response.data) {
+        console.log("Error message from server:", error.response.data.message);
+      } else {
+        console.log("An error occurred", error);
+      }
     },
     onSettled: (responseData, error) => {
       if (responseData) {
