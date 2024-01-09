@@ -29,3 +29,13 @@ export async function addWord(wordData) {
   });
   return response.data;
 }
+
+export async function addCard(wordId) {
+  const token = localStorage.getItem('accessToken');
+  const response = await axios.post("http://localhost:5000/add_card", wordId, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
