@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { addWord, addCard } from "../api/apiCalls";
+import { addWord, addCard, fetchWord } from "../api/apiCalls";
 
 const schema = yup.object({
   english_word: yup.string().required("English word is required"),
@@ -28,13 +28,14 @@ function SubmitWordForm() {
       console.log("Success!");
     },
     onError: (error) => {
-      if (error.response.data) {
-        console.log("Error message from server:", error.response.data.message);
+
+      if (error.response && error.response.data && error.response.data.message === "Word already exists.") {
+        handleFetchWordClick(english_word);
       } else {
         console.log("An error occurred", error);
       }
     },
-    onSettled: (responseData, error) => {
+    onSettled: (responseData) => {
       if (responseData) {
         setWord_id(responseData.word_id);
         setEnglish_word(responseData.english_word);
@@ -63,6 +64,24 @@ function SubmitWordForm() {
       addCardMutation.mutate({ word_id: word_id });
     }
   };
+
+  // fetchWord
+  const fetchWordMutation = useMutation({
+    mutationFn: fetchWord,
+    onSuccess: (data) => {
+      // Itt kezeled az eredmény adatot
+      console.log("Word fetched successfully:", data);
+    },
+    onError: (error) => {
+      // Itt kezeled a hibát
+      console.error("Error fetching word:", error);
+    },
+  });
+
+  const handleFetchWordClick = (wordName) => {
+    fetchWordMutation.mutate(wordName);
+  }
+    
 
   return (
     <div>
