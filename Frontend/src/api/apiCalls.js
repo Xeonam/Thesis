@@ -39,3 +39,13 @@ export async function addCard(wordId) {
   });
   return response.data;
 }
+
+export async function fetchWord(name) {
+  const token = localStorage.getItem('accessToken');
+  const response = await axios.get(`http://localhost:5000/get_word/${name}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
