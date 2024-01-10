@@ -52,7 +52,9 @@ function SubmitWordForm() {
   const addCardMutation = useMutation({
     mutationFn: addCard,
     onSuccess: () => {
+      console.log("Card has been successfully added!");
       toast.success("Card has been successfully added!");
+      resetForm();
     },
     onError: (error) => {
       if (error.response.data.message) {
@@ -62,20 +64,17 @@ function SubmitWordForm() {
     },
   });
 
-  const handleAddCardClick = (event) => {
-    event.preventDefault();
-    if (word_id) {
-      addCardMutation.mutate({ word_id: word_id });
-    }
+  const handleAddCardClick = () => {
+    addCardMutation.mutate({ word_id: word_id });
   };
 
-  const fetchWordMutation = useMutation({
+  /* const fetchWordMutation = useMutation({
     mutationFn: fetchWord,
-  });
+  }); */
 
-  const handleFetchWordClick = (wordName) => {
+  /* const handleFetchWordClick = (wordName) => {
     fetchWordMutation.mutate(wordName);
-  };
+  }; */
 
   const resetForm = () => {
     reset({ english_word: "" });
@@ -119,31 +118,6 @@ function SubmitWordForm() {
                 <p className="mt-1 text-sm text-red-600">
                   {errors.english_word?.message}
                 </p>
-
-                {word_id && (
-                  <div className="mt-4 p-4 rounded bg-white text-black">
-                    <h1 className="font-bold">Translation</h1>
-                    <hr className="h-px border-0 bg-black" />
-                    <p className="mt-2">
-                      <span className="font-semibold">{english_word}</span>:{" "}
-                      <span className="italic">{hungarian_meaning}</span>
-                    </p>
-                    <div className="text-center pt-2">
-                      <button
-                        className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 "
-                        onClick={handleAddCardClick}
-                      >
-                        Add word
-                      </button>
-                    </div>
-                    {addCardError && (
-                      <div className="mt-1 text-sm text-red-600">
-                        {addCardError}
-                      </div>
-                    )}
-                  </div>
-                )}
-
                 <button
                   type="submit"
                   className="w-full text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
@@ -151,6 +125,30 @@ function SubmitWordForm() {
                   Translate Word
                 </button>
               </form>
+
+              {word_id && (
+                <div className="mt-4 p-4 rounded bg-white text-black">
+                  <h1 className="font-bold">Translation</h1>
+                  <hr className="h-px border-0 bg-black" />
+                  <p className="mt-2">
+                    <span className="font-semibold">{english_word}</span>:{" "}
+                    <span className="italic">{hungarian_meaning}</span>
+                  </p>
+                  <div className="text-center pt-2">
+                    <button
+                      className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 "
+                      onClick={handleAddCardClick}
+                    >
+                      Add word
+                    </button>
+                  </div>
+                  {addCardError && (
+                    <div className="mt-1 text-sm text-red-600">
+                      {addCardError}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
