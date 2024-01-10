@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { addWord, addCard, fetchWord } from "../api/apiCalls";
+import { addWord, addCard } from "../api/apiCalls";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaBackspace } from "react-icons/fa";
@@ -48,7 +48,6 @@ function SubmitWordForm() {
     submitMutation.mutate(data);
   };
 
-  // addCard
   const addCardMutation = useMutation({
     mutationFn: addCard,
     onSuccess: () => {
@@ -67,14 +66,6 @@ function SubmitWordForm() {
   const handleAddCardClick = () => {
     addCardMutation.mutate({ word_id: word_id });
   };
-
-  /* const fetchWordMutation = useMutation({
-    mutationFn: fetchWord,
-  }); */
-
-  /* const handleFetchWordClick = (wordName) => {
-    fetchWordMutation.mutate(wordName);
-  }; */
 
   const resetForm = () => {
     reset({ english_word: "" });
