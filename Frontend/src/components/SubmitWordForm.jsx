@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,6 +13,7 @@ const schema = yup.object({
 });
 
 function SubmitWordForm() {
+
   const [word_id, setWord_id] = useState("");
   const [english_word, setEnglish_word] = useState("");
   const [hungarian_meaning, setHungarian_meaning] = useState("");
@@ -23,6 +24,7 @@ function SubmitWordForm() {
     handleSubmit,
     formState: { errors },
     reset,
+    watch
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -75,6 +77,14 @@ function SubmitWordForm() {
     setAddCardError("");
   };
 
+  const watchedEnglishWord = watch("english_word");
+
+  useEffect(() => {
+    if (watchedEnglishWord === "") {
+      setWord_id("");
+      setHungarian_meaning("");
+    }
+  }, [watchedEnglishWord]);
   return (
     <div>
       <ToastContainer position="bottom-right" limit={3} />
