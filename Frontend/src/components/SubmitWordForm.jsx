@@ -13,6 +13,7 @@ function SubmitWordForm() {
   const [word_id, setWord_id] = useState("");
   const [english_word, setEnglish_word] = useState("");
   const [hungarian_meaning, setHungarian_meaning] = useState("");
+  const [addCardError, setAddCardError] = useState("");
 
   const {
     register,
@@ -55,7 +56,7 @@ function SubmitWordForm() {
       console.log("Success!");
     },
     onError: (error) => {
-      console.log(error);
+      setAddCardError(error.response.data.message);
     },
   });
 
@@ -65,15 +66,12 @@ function SubmitWordForm() {
     }
   };
 
-  // fetchWord
   const fetchWordMutation = useMutation({
     mutationFn: fetchWord,
     onSuccess: (data) => {
-      // Itt kezeled az eredmény adatot
       console.log("Word fetched successfully:", data);
     },
     onError: (error) => {
-      // Itt kezeled a hibát
       console.error("Error fetching word:", error);
     },
   });
@@ -132,6 +130,11 @@ function SubmitWordForm() {
                         Add word
                       </button>
                     </div>
+                    { addCardError && (
+                      <div className="mt-1 text-sm text-red-600">
+                        {addCardError}
+                      </div>
+                    )}
                   </div>
                 )}
 
