@@ -87,7 +87,7 @@ function SubmitWordForm() {
               </h1>
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="space-y-4 md:space-y-6"
+                className="space-y-4 md:space-y-3"
               >
                 <div className="relative">
                   <input
