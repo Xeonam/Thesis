@@ -4,8 +4,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { addWord, addCard, fetchWord } from "../api/apiCalls";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { FaBackspace } from "react-icons/fa";
 
 const schema = yup.object({
   english_word: yup.string().required("English word is required"),
@@ -21,6 +22,7 @@ function SubmitWordForm() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -28,10 +30,9 @@ function SubmitWordForm() {
   const submitMutation = useMutation({
     mutationFn: addWord,
     onSuccess: () => {
-        toast.success("The word has been successfully translated!");
+      toast.success("The word has been successfully translated!");
     },
     onError: () => {
-
       toast.error("An error occurred while translating the word.");
     },
     onSettled: (responseData) => {
@@ -42,7 +43,7 @@ function SubmitWordForm() {
       }
     },
   });
-  
+
   const onSubmit = (data) => {
     submitMutation.mutate(data);
   };
@@ -54,31 +55,35 @@ function SubmitWordForm() {
       toast.success("Card has been successfully added!");
     },
     onError: (error) => {
-      if (error.response.data.message){
+      if (error.response.data.message) {
         setAddCardError(error.response.data.message);
         toast.error("This word is already connected to your profile.");
       }
-
-
     },
   });
 
   const handleAddCardClick = (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
     if (word_id) {
       addCardMutation.mutate({ word_id: word_id });
     }
   };
-  
 
   const fetchWordMutation = useMutation({
-    mutationFn: fetchWord
+    mutationFn: fetchWord,
   });
 
   const handleFetchWordClick = (wordName) => {
     fetchWordMutation.mutate(wordName);
-  }
-    
+  };
+
+  const resetForm = () => {
+    reset({ english_word: "" });
+    setWord_id("");
+    setEnglish_word("");
+    setHungarian_meaning("");
+    setAddCardError("");
+  };
 
   return (
     <div>
@@ -94,30 +99,29 @@ function SubmitWordForm() {
                 onSubmit={handleSubmit(onSubmit)}
                 className="space-y-4 md:space-y-6"
               >
-                <div>
-                  <label
-                    htmlFor="english_word"
-                    className="block mb-2 text-sm font-medium text-black"
-                  >
-                    English Word
-                  </label>
+                <div className="relative">
                   <input
                     type="text"
                     name="english_word"
                     id="english_word"
-                    className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5"
+                    className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5 pl-3 pr-10"
                     placeholder="Enter an English word"
                     {...register("english_word")}
                   />
-                  <p className="mt-1 text-sm text-red-600">
-                    {errors.english_word?.message}
-                  </p>
+                  <button
+                    type="button"
+                    onClick={() => resetForm()}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  >
+                    <FaBackspace />
+                  </button>
                 </div>
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.english_word?.message}
+                </p>
 
                 {word_id && (
-                  <div
-                    className="mt-4 p-4 rounded bg-white text-black"
-                  >
+                  <div className="mt-4 p-4 rounded bg-white text-black">
                     <h1 className="font-bold">Translation</h1>
                     <hr className="h-px border-0 bg-black" />
                     <p className="mt-2">
@@ -125,12 +129,14 @@ function SubmitWordForm() {
                       <span className="italic">{hungarian_meaning}</span>
                     </p>
                     <div className="text-center pt-2">
-                      <button className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 "
-                       onClick={handleAddCardClick} >
+                      <button
+                        className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 "
+                        onClick={handleAddCardClick}
+                      >
                         Add word
                       </button>
                     </div>
-                    { addCardError && (
+                    {addCardError && (
                       <div className="mt-1 text-sm text-red-600">
                         {addCardError}
                       </div>
