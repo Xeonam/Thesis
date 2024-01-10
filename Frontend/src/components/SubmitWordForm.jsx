@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { addWord, addCard, fetchWord } from "../api/apiCalls";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const schema = yup.object({
   english_word: yup.string().required("English word is required"),
@@ -26,7 +28,7 @@ function SubmitWordForm() {
   const submitMutation = useMutation({
     mutationFn: addWord,
     onSuccess: () => {
-      console.log("Success!");
+        toast.success("The word has been successfully translated!");
     },
     onError: (error) => {
 
@@ -83,6 +85,7 @@ function SubmitWordForm() {
 
   return (
     <div>
+      <ToastContainer position="bottom-right" limit={3}/>
       <section className="bg-navbarBgColor">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen-90 lg:py-0">
           <div className="w-full bg-[#A7C7E7] rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
