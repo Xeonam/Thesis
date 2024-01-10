@@ -30,13 +30,9 @@ function SubmitWordForm() {
     onSuccess: () => {
         toast.success("The word has been successfully translated!");
     },
-    onError: (error) => {
+    onError: () => {
 
-      if (error.response) {
-        handleFetchWordClick(english_word);
-      } else {
-        toast.error("An error occurred!");
-      }
+      toast.error("An error occurred while translating the word.");
     },
     onSettled: (responseData) => {
       if (responseData) {
@@ -55,27 +51,28 @@ function SubmitWordForm() {
   const addCardMutation = useMutation({
     mutationFn: addCard,
     onSuccess: () => {
-      console.log("Success!");
+      toast.success("Card has been successfully added!");
     },
     onError: (error) => {
-      setAddCardError(error.response.data.message);
+      if (error.response.data.message){
+        setAddCardError(error.response.data.message);
+        toast.error("This word is already connected to your profile.");
+      }
+
+
     },
   });
 
-  const handleAddCardClick = () => {
+  const handleAddCardClick = (event) => {
+    event.preventDefault(); 
     if (word_id) {
       addCardMutation.mutate({ word_id: word_id });
     }
   };
+  
 
   const fetchWordMutation = useMutation({
-    mutationFn: fetchWord,
-    onSuccess: (data) => {
-      console.log("Word fetched successfully:", data);
-    },
-    onError: (error) => {
-      console.error("Error fetching word:", error);
-    },
+    mutationFn: fetchWord
   });
 
   const handleFetchWordClick = (wordName) => {
@@ -85,7 +82,7 @@ function SubmitWordForm() {
 
   return (
     <div>
-      <ToastContainer position="bottom-right" limit={3}/>
+      <ToastContainer position="bottom-right" limit={3} />
       <section className="bg-navbarBgColor">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen-90 lg:py-0">
           <div className="w-full bg-[#A7C7E7] rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
