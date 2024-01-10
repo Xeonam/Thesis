@@ -32,10 +32,10 @@ function SubmitWordForm() {
     },
     onError: (error) => {
 
-      if (error.response && error.response.data && error.response.data.message === "Word already exists.") {
+      if (error.response) {
         handleFetchWordClick(english_word);
       } else {
-        console.log("An error occurred", error);
+        toast.error("An error occurred!");
       }
     },
     onSettled: (responseData) => {
