@@ -30,11 +30,10 @@ function DueCardsComponent() {
     if (currentCardIndex < data.length - 1) {
       setCurrentCardIndex(currentCardIndex + 1);
     } else {
-      setCurrentCardIndex(0); 
+      setCurrentCardIndex(0);
     }
     setIsFlipped(false);
   };
-
 
   return (
     <div>
@@ -44,7 +43,7 @@ function DueCardsComponent() {
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen-90 lg:py-0">
           <div className="w-full bg-[#a7e7c6] rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <div className="text-center mb-4">
+              <div className="text-center mb-4">
                 {currentCardIndex + 1}/{data.length}
               </div>
               <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
@@ -61,8 +60,25 @@ function DueCardsComponent() {
                   {currentCard.word.hungarian_meaning}
                 </div>
               </ReactCardFlip>
-              <button onClick={handleNext} className="mt-4 p-2 bg-blue-500 text-white rounded">Next</button>
-
+              {isFlipped && (
+                <>
+                  <div className="flex mt-4 gap-12 text-white ">
+                    <button className="p-2 bg-red-500 rounded mx-1">
+                      Again
+                    </button>
+                    <button className="p-2 bg-orange-500 rounded">
+                      Hard
+                    </button>
+                    <button className="p-2 bg-blue-500 rounded">
+                      Good
+                    </button>
+                    <button className="p-2 bg-green-500 rounded">
+                      Easy
+                    </button>
+                  </div>
+                </>
+              )}
+              {/* <button onClick={handleNext} className="mt-4 p-2 bg-blue-500 text-white rounded">Next</button> */}
             </div>
           </div>
         </div>
