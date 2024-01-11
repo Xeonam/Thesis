@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { fetchDueCards, repeatCard } from "../api/apiCalls";
 import ReactCardFlip from "react-card-flip";
 
@@ -37,9 +37,25 @@ function DueCardsComponent() {
 
   //Button
   const [buttonValue, setButtonValue] = useState(null);
-  const handleButtonClick = (value) => {
+
+
+  //repeatCard
+  const repeatCardMutation = useMutation({
+    mutationFn: ({ card_id, rating }) => repeatCard(card_id, rating),
+    onSuccess: () => {
+      console.log("Card has been successfully repeated!");
+    },
+    onError: (error) => {
+      console.log("An error occurred while repeating the card.");
+    }
+  });
+
+  const repeatCardHandler = (value) => {
     setButtonValue(value);
-  };
+    console.log(currentCard.card_id);
+    repeatCardMutation.mutate({ card_id: currentCard.card_id, rating: value });
+    handleNext();
+  }
 
   console.log(buttonValue);
 
@@ -73,25 +89,25 @@ function DueCardsComponent() {
                   <div className="flex mt-4 gap-12 text-white ">
                     <button
                       className="p-2 bg-red-500 rounded mx-1"
-                      onClick={() => handleButtonClick(1)}
+                      onClick={() => repeatCardHandler(1)}
                     >
                       Again
                     </button>
                     <button
                       className="p-2 bg-orange-500 rounded"
-                      onClick={() => handleButtonClick(2)}
+                      onClick={() => repeatCardHandler(2)}
                     >
                       Hard
                     </button>
                     <button
                       className="p-2 bg-blue-500 rounded"
-                      onClick={() => handleButtonClick(3)}
+                      onClick={() => repeatCardHandler(3)}
                     >
                       Good
                     </button>
                     <button
                       className="p-2 bg-green-500 rounded"
-                      onClick={() => handleButtonClick(4)}
+                      onClick={() => repeatCardHandler(4)}
                     >
                       Easy
                     </button>
