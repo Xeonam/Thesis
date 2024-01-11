@@ -3,5 +3,6 @@ import Register from "./Register";
 import LogIn from './LogIn'
 import Dashboard from "./Dashboard";
 import SubmitWord from "./SubmitWord";
+import DueCard from "./DueCard";
 
-export { Home, Register, LogIn, Dashboard, SubmitWord };
+export { Home, Register, LogIn, Dashboard, SubmitWord, DueCard };
