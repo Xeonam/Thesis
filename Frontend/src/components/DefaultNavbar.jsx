@@ -26,6 +26,12 @@ function DefaultNavbar() {
             >
               Add word
             </Link>
+            <Link
+              to="/due-cards"
+              className="my-2 mx-5 font-medium text-white hover:text-importantText"
+            >
+              Due cards
+            </Link>
             <NavLink to="/">
               <Button
                 className="bg-importantText hover:bg-[#564260]"
