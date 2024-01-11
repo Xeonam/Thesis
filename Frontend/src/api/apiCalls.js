@@ -59,3 +59,14 @@ export async function fetchDueCards() {
   });
   return response.data;
 }
+
+{/* http://127.0.0.1:5000/repeat_card/49 a post request to this */}
+export async function repeatCard(cardId) {
+  const token = localStorage.getItem('accessToken');
+  const response = await axios.post(`http://127.0.0.1:5000/repeat_card/${cardId}`, {}, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
