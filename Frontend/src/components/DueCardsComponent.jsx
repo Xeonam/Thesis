@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchDueCards } from "../api/apiCalls";
+import { fetchDueCards, repeatCard } from "../api/apiCalls";
 import ReactCardFlip from "react-card-flip";
 
 function DueCardsComponent() {
@@ -35,6 +35,14 @@ function DueCardsComponent() {
     setIsFlipped(false);
   };
 
+  //Button
+  const [buttonValue, setButtonValue] = useState(null);
+  const handleButtonClick = (value) => {
+    setButtonValue(value);
+  };
+
+  console.log(buttonValue);
+
   return (
     <div>
       {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
@@ -63,16 +71,28 @@ function DueCardsComponent() {
               {isFlipped && (
                 <>
                   <div className="flex mt-4 gap-12 text-white ">
-                    <button className="p-2 bg-red-500 rounded mx-1">
+                    <button
+                      className="p-2 bg-red-500 rounded mx-1"
+                      onClick={() => handleButtonClick(1)}
+                    >
                       Again
                     </button>
-                    <button className="p-2 bg-orange-500 rounded">
+                    <button
+                      className="p-2 bg-orange-500 rounded"
+                      onClick={() => handleButtonClick(2)}
+                    >
                       Hard
                     </button>
-                    <button className="p-2 bg-blue-500 rounded">
+                    <button
+                      className="p-2 bg-blue-500 rounded"
+                      onClick={() => handleButtonClick(3)}
+                    >
                       Good
                     </button>
-                    <button className="p-2 bg-green-500 rounded">
+                    <button
+                      className="p-2 bg-green-500 rounded"
+                      onClick={() => handleButtonClick(4)}
+                    >
                       Easy
                     </button>
                   </div>
