@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { addUser } from "../api/apiCalls";
 import * as yup from "yup";
-
+import { toast } from "react-toastify";
 const schema = yup.object({
   username: yup.string().required("Username is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -29,6 +29,7 @@ function SignUp() {
   const createUserMutation = useMutation({
     mutationFn: addUser,
     onSuccess: () => {
+      toast.success("User has been successfully created!");
       setTimeout(() => {
         Navigate("/dashboard");
       }, 2000);
