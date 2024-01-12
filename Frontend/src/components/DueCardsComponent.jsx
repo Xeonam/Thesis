@@ -53,6 +53,10 @@ function DueCardsComponent() {
     handleNext();
   };
 
+  if (data.length === 0) {
+    return <div>There are no due cards.</div>;
+  }
+
   return (
     <div>
       {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
