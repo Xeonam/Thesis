@@ -25,7 +25,6 @@ function DueCardsComponent() {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["dueCards"],
     queryFn: fetchDueCards,
-
   });
 
   if (isLoading) {
@@ -61,8 +60,6 @@ function DueCardsComponent() {
 
   return (
     <div>
-      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-
       <section className="bg-navbarBgColor">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen-90 lg:py-0">
           <div className="w-full bg-[#a7e7c6] rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
