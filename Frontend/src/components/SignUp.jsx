@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -17,6 +17,7 @@ const schema = yup.object({
 });
 
 function SignUp() {
+  const Navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -27,6 +28,9 @@ function SignUp() {
 
   const createUserMutation = useMutation({
     mutationFn: addUser,
+    onSuccess: () => {
+      Navigate("/login")
+    }
   });
 
   const onSubmit = (data) => {
