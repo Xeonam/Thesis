@@ -17,7 +17,7 @@ function DueCardsComponent() {
     },
   });
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["dueCards"],
     queryFn: fetchDueCards,
   });
@@ -37,8 +37,13 @@ function DueCardsComponent() {
   const currentCard = data[currentCardIndex];
 
   const handleNext = () => {
-    setCurrentCardIndex((currentCardIndex + 1) % data.length);
+    const nextIndex = (currentCardIndex + 1) % data.length
+    setCurrentCardIndex(nextIndex);
     setIsFlipped(false);
+
+    if (nextIndex === 0) {
+      refetch();
+    }
   };
 
   const repeatCardHandler = (rating) => {
@@ -51,6 +56,7 @@ function DueCardsComponent() {
     });
 
     handleNext();
+
   };
 
   if (data.length === 0) {
