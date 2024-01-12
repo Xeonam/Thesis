@@ -4,6 +4,19 @@ import { fetchDueCards, repeatCard } from "../api/apiCalls";
 import ReactCardFlip from "react-card-flip";
 
 function DueCardsComponent() {
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
+
+  const repeatCardMutation = useMutation({
+    mutationFn: repeatCard,
+    onSuccess: () => {
+      console.log("Card has been successfully repeated!");
+    },
+    onError: (error) => {
+      console.log("An error occurred while repeating the card.", error);
+    },
+  });
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["dueCards"],
     queryFn: fetchDueCards,
@@ -17,9 +30,6 @@ function DueCardsComponent() {
     return <div>Error! {error.message}</div>;
   }
 
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
-
   const handleClick = () => {
     setIsFlipped(!isFlipped);
   };
@@ -27,37 +37,21 @@ function DueCardsComponent() {
   const currentCard = data[currentCardIndex];
 
   const handleNext = () => {
-    if (currentCardIndex < data.length - 1) {
-      setCurrentCardIndex(currentCardIndex + 1);
-    } else {
-      setCurrentCardIndex(0);
-    }
+    setCurrentCardIndex((currentCardIndex + 1) % data.length);
     setIsFlipped(false);
   };
 
-  //Button
-  const [buttonValue, setButtonValue] = useState(null);
+  const repeatCardHandler = (rating) => {
+    console.log("rating", rating);
+    console.log("currentCard", currentCard.card_id);
 
+    repeatCardMutation.mutate({
+      cardId: currentCard.card_id,
+      rating: rating,
+    });
 
-  //repeatCard
-  const repeatCardMutation = useMutation({
-    mutationFn: ({ card_id, rating }) => repeatCard(card_id, rating),
-    onSuccess: () => {
-      console.log("Card has been successfully repeated!");
-    },
-    onError: (error) => {
-      console.log("An error occurred while repeating the card.");
-    }
-  });
-
-  const repeatCardHandler = (value) => {
-    setButtonValue(value);
-    console.log(currentCard.card_id);
-    repeatCardMutation.mutate({ card_id: currentCard.card_id, rating: value });
     handleNext();
-  }
-
-  console.log(buttonValue);
+  };
 
   return (
     <div>
@@ -114,7 +108,12 @@ function DueCardsComponent() {
                   </div>
                 </>
               )}
-              {/* <button onClick={handleNext} className="mt-4 p-2 bg-blue-500 text-white rounded">Next</button> */}
+              <button
+                onClick={handleNext}
+                className="mt-4 p-2 bg-blue-500 text-white rounded"
+              >
+                Next
+              </button>
             </div>
           </div>
         </div>
