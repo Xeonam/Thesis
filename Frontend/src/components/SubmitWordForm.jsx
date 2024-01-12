@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { addWord, addCard } from "../api/apiCalls";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaBackspace } from "react-icons/fa";
 
@@ -13,7 +13,6 @@ const schema = yup.object({
 });
 
 function SubmitWordForm() {
-
   const [word_id, setWord_id] = useState("");
   const [english_word, setEnglish_word] = useState("");
   const [hungarian_meaning, setHungarian_meaning] = useState("");
@@ -24,7 +23,7 @@ function SubmitWordForm() {
     handleSubmit,
     formState: { errors },
     reset,
-    watch
+    watch,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -87,7 +86,6 @@ function SubmitWordForm() {
   }, [watchedEnglishWord]);
   return (
     <div>
-      <ToastContainer position="bottom-right" limit={3} />
       <section className="bg-navbarBgColor">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen-90 lg:py-0">
           <div className="w-full bg-[#A7C7E7] rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
