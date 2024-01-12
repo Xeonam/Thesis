@@ -29,8 +29,10 @@ function SignUp() {
   const createUserMutation = useMutation({
     mutationFn: addUser,
     onSuccess: () => {
-      Navigate("/login")
-    }
+      setTimeout(() => {
+        Navigate("/dashboard");
+      }, 2000);
+    },
   });
 
   const onSubmit = (data) => {
