@@ -5,14 +5,13 @@ import "../App.css";
 
 function DefaultNavbar() {
   const isLoggedIn = localStorage.getItem("accessToken") ? true : false;
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken"); // Törli az accessToken-t a localStorage-ból
+  };
+
   return (
     <Navbar className="bg-navbarBgColor">
-      <Navbar.Brand href="/">
-        <span className="self-center whitespace-nowrap text-xl font-semibold text-importantText">
-          WordEnlighten
-        </span>
-      </Navbar.Brand>
-      <div className="flex md:order-2 mx-6">
         {isLoggedIn ? (
           <>
             <Link
@@ -22,14 +21,34 @@ function DefaultNavbar() {
               Dashboard
             </Link>
             <Link
-              to="/logout"
+              to="/submit-word"
               className="my-2 mx-5 font-medium text-white hover:text-importantText"
             >
-              Log out
+              Add word
             </Link>
+            <Link
+              to="/due-cards"
+              className="my-2 mx-5 font-medium text-white hover:text-importantText"
+            >
+              Due cards
+            </Link>
+            <NavLink to="/">
+              <Button
+                className="bg-importantText hover:bg-[#564260]"
+                onClick={handleLogout}
+              >
+                Log out
+              </Button>
+            </NavLink>
           </>
         ) : (
           <>
+            <Navbar.Brand href="/">
+              <span className="self-center whitespace-nowrap text-xl font-semibold text-importantText">
+                WordEnlighten
+              </span>
+            </Navbar.Brand>
+            <div className="flex md:order-2 mx-6">
             <Link
               to="/login"
               className="my-2 mx-5 font-medium text-white hover:text-importantText"
@@ -42,9 +61,9 @@ function DefaultNavbar() {
                 Sign up
               </Button>
             </NavLink>
+            </div>
           </>
         )}
-      </div>
     </Navbar>
   );
 }

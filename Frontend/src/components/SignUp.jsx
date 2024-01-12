@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { addUser } from "../api/apiCalls";
 import * as yup from "yup";
-
+import { toast } from "react-toastify";
 const schema = yup.object({
   username: yup.string().required("Username is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -17,6 +17,7 @@ const schema = yup.object({
 });
 
 function SignUp() {
+  const Navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -27,6 +28,12 @@ function SignUp() {
 
   const createUserMutation = useMutation({
     mutationFn: addUser,
+    onSuccess: () => {
+      toast.success("User has been successfully created!");
+      setTimeout(() => {
+        Navigate("/dashboard");
+      }, 2000);
+    },
   });
 
   const onSubmit = (data) => {

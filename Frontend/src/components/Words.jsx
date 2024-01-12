@@ -17,9 +17,9 @@ function Words() {
   }
 
   return (
-    <div className="p-5 bg-[#412A4C]">
+    <div className="p-5">
       <h1 className="text-2xl font-bold mb-5 text-importantText">Words</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 text-center">
         {data?.map((wordItem) => (
           <div
             key={wordItem.card_id}
@@ -29,7 +29,8 @@ function Words() {
               <h3 className="text-lg font-semibold text-gray-800 mb-2">
                 English Word: {wordItem.word.english_word}
               </h3>
-              <p className="text-gray-600">
+              <hr class="h-px  bg-black border-0"></hr>
+              <p className="text-gray-600 pt-2">
                 Hungarian Meaning: {wordItem.word.hungarian_meaning}
               </p>
             </div>

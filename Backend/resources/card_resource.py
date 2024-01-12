@@ -16,7 +16,7 @@ class AddCard(Resource):
         word_id = data["word_id"]
 
         if Card.exists(user_id, word_id):
-            return {"message": "Already connected."}, 400
+            return {"message": "This word is already connected to your profile."}, 409
 
         card = Card.add_card(user_id, word_id)
 

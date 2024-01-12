@@ -3,7 +3,7 @@ from model.models import db
 from instance.config import Config
 from flask_restful import Api
 from resources.user_resource import AddUser, GetWords, GetDueCards, Login
-from resources.word_resource import AddWord
+from resources.word_resource import AddWord, GetWord
 from resources.card_resource import AddCard, RepeatCard, GetCard
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
@@ -25,3 +25,4 @@ api.add_resource(GetWords, '/get_words')
 api.add_resource(GetCard, '/get_card/<int:card_id>')
 api.add_resource(GetDueCards, '/get_due_cards')
 api.add_resource(Login, '/login')
+api.add_resource(GetWord, '/get_word/<string:english_word>')

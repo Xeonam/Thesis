@@ -14,6 +14,9 @@ export default {
         importantText: '#FFDE91',
         customTextHighlight: '#9F549C',
         
+      },
+      height: {
+        'screen-90': '91.5vh',
       }
     },
   },
