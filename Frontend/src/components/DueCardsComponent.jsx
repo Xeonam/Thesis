@@ -11,6 +11,11 @@ function DueCardsComponent() {
     mutationFn: repeatCard,
     onSuccess: () => {
       console.log("Card has been successfully repeated!");
+      const isLastCard = currentCardIndex === data.length - 1;
+      if (isLastCard) {
+        refetch();
+      }
+      handleNext(isLastCard);
     },
     onError: (error) => {
       console.log("An error occurred while repeating the card.", error);
@@ -20,6 +25,7 @@ function DueCardsComponent() {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["dueCards"],
     queryFn: fetchDueCards,
+
   });
 
   if (isLoading) {
@@ -37,26 +43,16 @@ function DueCardsComponent() {
   const currentCard = data[currentCardIndex];
 
   const handleNext = () => {
-    const nextIndex = (currentCardIndex + 1) % data.length
+    let nextIndex = (currentCardIndex + 1) % data.length;
     setCurrentCardIndex(nextIndex);
     setIsFlipped(false);
-
-    if (nextIndex === 0) {
-      refetch();
-    }
   };
 
   const repeatCardHandler = (rating) => {
-    console.log("rating", rating);
-    console.log("currentCard", currentCard.card_id);
-
     repeatCardMutation.mutate({
       cardId: currentCard.card_id,
       rating: rating,
     });
-
-    handleNext();
-
   };
 
   if (data.length === 0) {
@@ -74,20 +70,23 @@ function DueCardsComponent() {
               <div className="text-center mb-4">
                 {currentCardIndex + 1}/{data.length}
               </div>
-              <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
-                <div
-                  onClick={handleClick}
-                  className="p-4 border border-white shadow rounded bg-blue-200"
-                >
-                  {currentCard.word.english_word}
-                </div>
-                <div
-                  onClick={handleClick}
-                  className="p-4 border border-white shadow rounded bg-blue-100"
-                >
-                  {currentCard.word.hungarian_meaning}
-                </div>
-              </ReactCardFlip>
+              {currentCard && (
+                <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
+                  <div
+                    onClick={handleClick}
+                    className="p-4 border border-white shadow rounded bg-blue-200"
+                  >
+                    {currentCard.word.english_word}
+                  </div>
+                  <div
+                    onClick={handleClick}
+                    className="p-4 border border-white shadow rounded bg-blue-100"
+                  >
+                    {currentCard.word.hungarian_meaning}
+                  </div>
+                </ReactCardFlip>
+              )}
+
               {isFlipped && (
                 <>
                   <div className="flex mt-4 gap-12 text-white ">
