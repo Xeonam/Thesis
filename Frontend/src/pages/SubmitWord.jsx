@@ -1,12 +1,11 @@
 import React from "react";
-import { SubmitWordForm, DefaultNavbar, FileUploadForm } from "../components";
+import { SubmitWordForm, DefaultNavbar } from "../components";
 
 function SubmitWord() {
   return (
     <div>
       <DefaultNavbar />
       <SubmitWordForm />
-      <FileUploadForm />
     </div>
   );
 }
