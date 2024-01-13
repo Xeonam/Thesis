@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { uploadFile } from "../api/apiCalls";
+import { FaInfoCircle } from "react-icons/fa";
 
 function FileUploadForm() {
   const [selectedFile, setSelectedFile] = useState(null);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
   const uploadMutation = useMutation({
     mutationFn: uploadFile,
     onSuccess: () => toast.success("File uploaded successfully"),
@@ -46,10 +52,31 @@ function FileUploadForm() {
       onDrop={handleDrop}
       onDragOver={handleDragOver}
     >
+      <button type="button" onClick={toggleModal}>
+        <FaInfoCircle />
+      </button>
+      {isModalOpen && (
+        <div className="fixed inset-0" onClick={toggleModal}>
+          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-blue-200">
+            <div className="mt-3 text-center">
+              <h3 className="text-lg leading-6 font-medium text-gray-900">File Upload Instructions</h3>
+              <div className="mt-2 px-7 py-3">
+                <p className="text-sm text-gray-500">
+                  Itt írhatod le a szükséges információkat a txt fájlokról...
+                </p>
+              </div>
+              <div className="items-center px-4 py-3">
+                <button id="ok-btn" className="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-purple-300" onClick={toggleModal}>
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center justify-center w-full">
-        <label
-          className="flex flex-col rounded-lg border-2 border-purple-300 border-dashed w-full md:w-96 h-44 p-6 group text-center bg-white hover:border-purple-500 hover:bg-purple-100 transition duration-300 ease-in-out"
-        >
+        <label className="flex flex-col rounded-lg border-2 border-purple-300 border-dashed w-full md:w-96 h-44 p-6 group text-center bg-white hover:border-purple-500 hover:bg-purple-100 transition duration-300 ease-in-out">
           <div className="h-full w-full text-center flex flex-col items-center justify-center">
             {!selectedFile && (
               <p className="pointer-none text-purple-500 group-hover:text-purple-600 transition duration-300 ease-in-out mt-2">
