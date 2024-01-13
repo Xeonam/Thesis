@@ -71,3 +71,17 @@ export async function repeatCard({cardId, rating}) {
   });
   return response.data;
 }
+
+export async function uploadFile(fileData) {
+  const token = localStorage.getItem('accessToken');
+  const formData = new FormData();
+  formData.append('file', fileData);
+
+  const response = await axios.post("http://localhost:5000/upload_file", formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
+}
