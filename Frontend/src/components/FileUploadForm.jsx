@@ -69,8 +69,6 @@ function FileUploadForm() {
                   into Hungarian and add them to your study flashcards.
                 </p>
               </div>
-
-
               <p className="text-sm font-bold">
                 After the upload is complete, each word from your file will be
                 translated and added to your flashcards for learning.
