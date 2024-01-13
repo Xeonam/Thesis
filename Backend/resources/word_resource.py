@@ -41,29 +41,22 @@ class FileUpload(Resource):
 
         file = request.files['file']
 
-        if file.filename == '':
-            return {'message': 'No file selected for uploading'}, 400
+        if not file.filename.endswith('.txt'):
+            return {'message': 'File is not a .txt file'}, 400
 
-        
-        filename = secure_filename(file.filename)
         file_content = file.read().decode('utf-8')
-        print(file_content)
+        words = file_content.splitlines()
+        hungarian_meanings = [translate_to_hungarian(word) for word in words if word]
 
-        #get the list of words
-        words = file_content.split("\n")
-        #cut the "/r" from the end of the words
-        words = [word[:-1] for word in words if word != ""]
-        print(words)
+        for word, hungarian_meaning in zip(words, hungarian_meanings):
+            if not Word.exists(word):
+                word_obj = Word.add_word(word, hungarian_meaning)
+            else:
+                word_obj = Word.get_word(word)
 
-        # now translate the words one by one
-        hungarian_meanings = []
-        for word in words:
-            hungarian_meanings.append(translate_to_hungarian(word))
-        
-        for i in range(len(words)):
-            word = Word.add_word(words[i], hungarian_meanings[i])
-            word_id = word.word_id 
+            word_id = word_obj.word_id
             if not Card.exists(user_id, word_id):
-                Card.add_card(user_id, word_id)
+                Card.add_card(user_id, word_id) 
 
-        return {'message': f'File {filename} uploaded successfully'}, 200
+        return {'message': f'File {file.filename} uploaded successfully'}, 200
+

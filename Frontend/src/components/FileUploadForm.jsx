@@ -9,7 +9,10 @@ function FileUploadForm() {
   const uploadMutation = useMutation({
     mutationFn: uploadFile,
     onSuccess: () => toast.success("File uploaded successfully"),
-    onError: (error) => toast.error(`Upload failed: ${error.message}`),
+    onError: (error) => {
+      const errorMessage = error.response.data.message;
+      toast.error(`Upload failed: ${errorMessage}`);
+    },
   });
 
   const handleFileChange = (e) => {
