@@ -27,9 +27,33 @@ function FileUploadForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="file" onChange={handleFileChange} />
-      <button type="submit">Upload</button>
+    <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6 p-6">
+      <div className="flex items-center justify-center w-full">
+        <label
+          className="flex flex-col rounded-lg border-2 border-purple-300 border-dashed w-full md:w-96 h
+  -44 p-6 group text-center bg-white hover:border-purple-500 hover:bg-purple-100 transition duration-300 ease-in-out"
+        >
+          <div className="h-full w-full text-center flex flex-col items-center justify-center">
+
+            <p className="pointer-none text-purple-500 group-hover:text-purple-600 transition duration-300 ease-in-out mt-2">
+              Drag and drop files here <br /> or{" "}
+              <span className="text-purple-600 hover:text-purple-700 font-semibold">
+                select a .txt file
+              </span>{" "}
+              from your computer
+            </p>
+          </div>
+          <input type="file" className="hidden" onChange={handleFileChange} />
+        </label>
+      </div>
+      <button
+        type="submit"
+        className="
+  
+  w-full text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition duration-300 ease-in-out"
+      >
+        Upload
+      </button>
     </form>
   );
 }
