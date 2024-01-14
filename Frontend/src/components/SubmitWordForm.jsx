@@ -7,6 +7,7 @@ import { addWord, addCard } from "../api/apiCalls";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaBackspace } from "react-icons/fa";
+import FileUploadForm from "./FileUploadForm";
 
 const schema = yup.object({
   english_word: yup.string().required("English word is required"),
@@ -148,6 +149,7 @@ function SubmitWordForm() {
                   )}
                 </div>
               )}
+              <FileUploadForm />
             </div>
           </div>
         </div>

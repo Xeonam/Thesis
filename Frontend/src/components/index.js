@@ -7,5 +7,6 @@ import LogInForm from "./LogInForm";
 import Words from "./Words";
 import SubmitWordForm from "./SubmitWordForm";
 import DueCardsComponent from "./DueCardsComponent";
+import FileUploadForm from './FileUploadForm'
 
-export { DefaultNavbar, Hero, HeroImage, FeaturesSection, SignUp, LogInForm, Words, SubmitWordForm, DueCardsComponent };
+export { DefaultNavbar, Hero, HeroImage, FeaturesSection, SignUp, LogInForm, Words, SubmitWordForm, DueCardsComponent, FileUploadForm};

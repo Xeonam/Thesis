@@ -1,9 +1,10 @@
 from flask import request
 from flask_restful import Resource
-from model.models import db, Word
+from model.models import db, Word, Card
 from schema.schemas import WordSchema
 from utils.translator import translate_to_hungarian
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from werkzeug.utils import secure_filename
 
 word_schema = WordSchema()
 
@@ -30,3 +31,32 @@ class GetWord(Resource):
     def get(self, english_word: str):
         word = Word.get_word(english_word)
         return word_schema.dump(word)
+
+class FileUpload(Resource):
+    @jwt_required()
+    def post(self):
+        user_id = get_jwt_identity()
+        if 'file' not in request.files:
+            return {'message': 'No file part'}, 400
+
+        file = request.files['file']
+
+        if not file.filename.endswith('.txt'):
+            return {'message': 'File is not a .txt file'}, 400
+
+        file_content = file.read().decode('utf-8')
+        words = file_content.splitlines()
+        hungarian_meanings = [translate_to_hungarian(word) for word in words if word]
+
+        for word, hungarian_meaning in zip(words, hungarian_meanings):
+            if not Word.exists(word):
+                word_obj = Word.add_word(word, hungarian_meaning)
+            else:
+                word_obj = Word.get_word(word)
+
+            word_id = word_obj.word_id
+            if not Card.exists(user_id, word_id):
+                Card.add_card(user_id, word_id) 
+
+        return {'message': f'File {file.filename} uploaded successfully'}, 200
+

@@ -23,3 +23,8 @@ class CardSchema(Schema):
     lapses = fields.Integer()
     state = fields.Integer()
     last_review = fields.DateTime()
+
+class DeckSchema(Schema):
+    deck_id = fields.Integer(dump_only=True)
+    name = fields.String()
+    user_id = fields.Integer()

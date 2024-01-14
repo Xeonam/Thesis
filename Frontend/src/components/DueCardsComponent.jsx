@@ -78,16 +78,16 @@ function DueCardsComponent() {
                 {currentCardIndex + 1}/{data.length}
               </div>
               {currentCard && (
-                <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
+                <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical" >
                   <div
                     onClick={handleClick}
-                    className="p-4 border border-white shadow rounded bg-blue-200"
+                    className="p-4 border border-white shadow rounded bg-blue-200 hover:cursor-pointer"
                   >
                     {currentCard.word.english_word}
                   </div>
                   <div
                     onClick={handleClick}
-                    className="p-4 border border-white shadow rounded bg-blue-100"
+                    className="p-4 border border-white shadow rounded bg-blue-100 hover:cursor-pointer"
                   >
                     {currentCard.word.hungarian_meaning}
                   </div>
@@ -98,25 +98,25 @@ function DueCardsComponent() {
                 <>
                   <div className="flex mt-4 gap-12 text-white ">
                     <button
-                      className="p-2 bg-red-500 rounded mx-1"
+                      className="p-2 bg-red-500 rounded mx-1 hover:text-importantText"
                       onClick={() => repeatCardHandler(1)}
                     >
                       Again
                     </button>
                     <button
-                      className="p-2 bg-orange-500 rounded"
+                      className="p-2 bg-orange-500 rounded hover:text-importantText"
                       onClick={() => repeatCardHandler(2)}
                     >
                       Hard
                     </button>
                     <button
-                      className="p-2 bg-blue-500 rounded"
+                      className="p-2 bg-blue-500 rounded hover:text-importantText"
                       onClick={() => repeatCardHandler(3)}
                     >
                       Good
                     </button>
                     <button
-                      className="p-2 bg-green-500 rounded"
+                      className="p-2 bg-green-500 rounded hover:text-importantText"
                       onClick={() => repeatCardHandler(4)}
                     >
                       Easy

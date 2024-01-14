@@ -14,6 +14,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     pw = db.Column(db.String(255), nullable=False)
     cards = db.relationship('Card', back_populates='user', lazy=True)
+    decks = db.relationship('Deck', back_populates='user', lazy=True)
 
     @classmethod
     def add_user(cls, username: str, email: str, pw: str):
@@ -65,7 +66,10 @@ class User(db.Model):
             .all()
         )
         return user_cards
-
+    
+    @classmethod
+    def get_user_decks(cls, user_id: int):
+        return Deck.query.filter_by(user_id=user_id).all()
 
 class Word(db.Model):
     word_id = db.Column(db.Integer, primary_key=True)
@@ -105,7 +109,7 @@ class Card(db.Model):
 
     user = db.relationship('User', back_populates='cards')
     word = db.relationship('Word', back_populates='cards')
-
+    decks = db.relationship('Deck', secondary='deck_card', back_populates='cards')
 
     def do_repeat(self, user_rating: Rating) -> None:
         now = datetime.utcnow()
@@ -157,3 +161,45 @@ class Card(db.Model):
         if card.user_id != current_user_id:
             abort(403, message="Not your card.")
         return card
+
+class Deck(db.Model):
+    deck_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+
+    cards = db.relationship('Card', secondary='deck_card', back_populates='decks', lazy=True)
+    user = db.relationship('User', back_populates='decks')
+
+    @classmethod
+    def add_deck(cls, name: str, user_id: int):
+        deck = cls(name=name, user_id=user_id)
+        db.session.add(deck)
+        db.session.commit()
+        return deck
+    
+    @classmethod
+    def get_deck(cls, deck_id: int):
+        return cls.query.filter_by(deck_id=deck_id).first()
+    
+    @classmethod
+    def get_deck_words(cls, deck_id: int):
+        words_in_deck = (
+            db.session.query(Word)
+            .join(Card, Word.word_id == Card.word_id)
+            .join(DeckCard, Card.id == DeckCard.card_id)
+            .filter(DeckCard.deck_id == deck_id)
+            .all()
+        )
+        return words_in_deck
+
+class DeckCard(db.Model):
+    __tablename__ = 'deck_card'
+    deck_id = db.Column(db.Integer, db.ForeignKey('deck.deck_id'), primary_key=True)
+    card_id = db.Column(db.Integer, db.ForeignKey('card.id'), primary_key=True)
+
+    @classmethod
+    def add_to_deck(cls, deck_id: int, card_id: int):
+        deck_card = cls(deck_id=deck_id, card_id=card_id)
+        db.session.add(deck_card)
+        db.session.commit()
+        return deck_card
