@@ -167,6 +167,13 @@ class Deck(db.Model):
     cards = db.relationship('Card', secondary='deck_card', back_populates='decks', lazy=True)
     user = db.relationship('User', back_populates='decks')
 
+    @classmethod
+    def add_deck(cls, name: str, user_id: int):
+        deck = cls(name=name, user_id=user_id)
+        db.session.add(deck)
+        db.session.commit()
+        return deck
+
 class DeckCard(db.Model):
     __tablename__ = 'deck_card'
     deck_id = db.Column(db.Integer, db.ForeignKey('deck.deck_id'), primary_key=True)
