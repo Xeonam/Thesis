@@ -66,7 +66,10 @@ class User(db.Model):
             .all()
         )
         return user_cards
-
+    
+    @classmethod
+    def get_user_decks(cls, user_id: int):
+        return Deck.query.filter_by(user_id=user_id).all()
 
 class Word(db.Model):
     word_id = db.Column(db.Integer, primary_key=True)

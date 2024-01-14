@@ -1,12 +1,13 @@
 from flask import request, jsonify
 from flask_restful import Resource
 from model.models import db, User, Card
-from schema.schemas import UserSchema, WordSchema
+from schema.schemas import UserSchema, WordSchema, DeckSchema
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 
 user_schema = UserSchema()
 word_schema = WordSchema()
+deck_schema = DeckSchema()
 WordSchema(many=True)
 class AddUser(Resource):
     def post(self):
@@ -51,4 +52,12 @@ class Login(Resource):
             return {'access_token': access_token}, 200
         else:
             return {'message': 'Invalid credentials'}, 401
+
+class GetDecks(Resource):
+    @jwt_required()
+    def get(self):
+        current_user_id = get_jwt_identity()
+        decks = User.get_user_decks(current_user_id)
+        decks = [deck_schema.dump(deck) for deck in decks]
+        return decks
 

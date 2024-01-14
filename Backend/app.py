@@ -2,7 +2,7 @@ from flask import Flask
 from model.models import db
 from instance.config import Config
 from flask_restful import Api
-from resources.user_resource import AddUser, GetWords, GetDueCards, Login
+from resources.user_resource import AddUser, GetWords, GetDueCards, Login, GetDecks
 from resources.word_resource import AddWord, GetWord, FileUpload
 from resources.card_resource import AddCard, RepeatCard, GetCard
 from resources.deck_resource import CreateDeck
@@ -29,3 +29,4 @@ api.add_resource(Login, '/login')
 api.add_resource(GetWord, '/get_word/<string:english_word>')
 api.add_resource(FileUpload, '/upload_file')
 api.add_resource(CreateDeck, '/create_deck')
+api.add_resource(GetDecks, '/get_decks')
