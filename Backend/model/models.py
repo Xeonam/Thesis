@@ -14,6 +14,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     pw = db.Column(db.String(255), nullable=False)
     cards = db.relationship('Card', back_populates='user', lazy=True)
+    decks = db.relationship('Deck', back_populates='user', lazy=True)
 
     @classmethod
     def add_user(cls, username: str, email: str, pw: str):
@@ -157,3 +158,13 @@ class Card(db.Model):
         if card.user_id != current_user_id:
             abort(403, message="Not your card.")
         return card
+
+class Deck(db.Model):
+    deck_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+
+    cards = db.relationship('Card', secondary='deck_card', back_populates='decks', lazy=True)
+    user = db.relationship('User', back_populates='decks')
+
+    
