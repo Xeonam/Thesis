@@ -180,6 +180,17 @@ class Deck(db.Model):
     @classmethod
     def get_deck(cls, deck_id: int):
         return cls.query.filter_by(deck_id=deck_id).first()
+    
+    @classmethod
+    def get_deck_words(cls, deck_id: int):
+        words_in_deck = (
+            db.session.query(Word)
+            .join(Card, Word.word_id == Card.word_id)
+            .join(DeckCard, Card.id == DeckCard.card_id)
+            .filter(DeckCard.deck_id == deck_id)
+            .all()
+        )
+        return words_in_deck
 
 class DeckCard(db.Model):
     __tablename__ = 'deck_card'
