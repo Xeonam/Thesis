@@ -176,6 +176,10 @@ class Deck(db.Model):
         db.session.add(deck)
         db.session.commit()
         return deck
+    
+    @classmethod
+    def get_deck(cls, deck_id: int):
+        return cls.query.filter_by(deck_id=deck_id).first()
 
 class DeckCard(db.Model):
     __tablename__ = 'deck_card'

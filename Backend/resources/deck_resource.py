@@ -28,10 +28,10 @@ class AddCardToDeck(Resource):
         if not deck_id or not card_id:
             return {"message": "Both deck_id and card_id are required in the request body."}, 400
 
-        """ deck = Deck.get_deck(deck_id)
+        deck = Deck.get_deck(deck_id)
 
         if not deck:
-            return {"message": "Deck not found."}, 404 """
+            return {"message": "Deck not found."}, 404
 
         card = Card.get_card(card_id)
 
