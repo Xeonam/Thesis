@@ -181,3 +181,10 @@ class DeckCard(db.Model):
     __tablename__ = 'deck_card'
     deck_id = db.Column(db.Integer, db.ForeignKey('deck.deck_id'), primary_key=True)
     card_id = db.Column(db.Integer, db.ForeignKey('card.id'), primary_key=True)
+
+    @classmethod
+    def add_to_deck(cls, deck_id: int, card_id: int):
+        deck_card = cls(deck_id=deck_id, card_id=card_id)
+        db.session.add(deck_card)
+        db.session.commit()
+        return deck_card

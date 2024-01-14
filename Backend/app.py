@@ -5,7 +5,7 @@ from flask_restful import Api
 from resources.user_resource import AddUser, GetWords, GetDueCards, Login, GetDecks
 from resources.word_resource import AddWord, GetWord, FileUpload
 from resources.card_resource import AddCard, RepeatCard, GetCard
-from resources.deck_resource import CreateDeck
+from resources.deck_resource import CreateDeck, AddCardToDeck
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
@@ -30,3 +30,4 @@ api.add_resource(GetWord, '/get_word/<string:english_word>')
 api.add_resource(FileUpload, '/upload_file')
 api.add_resource(CreateDeck, '/create_deck')
 api.add_resource(GetDecks, '/get_decks')
+api.add_resource(AddCardToDeck, '/add_card_to_deck')
