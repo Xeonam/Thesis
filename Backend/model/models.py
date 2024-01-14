@@ -106,7 +106,7 @@ class Card(db.Model):
 
     user = db.relationship('User', back_populates='cards')
     word = db.relationship('Word', back_populates='cards')
-
+    decks = db.relationship('Deck', secondary='deck_card', back_populates='cards')
 
     def do_repeat(self, user_rating: Rating) -> None:
         now = datetime.utcnow()
@@ -167,4 +167,7 @@ class Deck(db.Model):
     cards = db.relationship('Card', secondary='deck_card', back_populates='decks', lazy=True)
     user = db.relationship('User', back_populates='decks')
 
-    
+class DeckCard(db.Model):
+    __tablename__ = 'deck_card'
+    deck_id = db.Column(db.Integer, db.ForeignKey('deck.deck_id'), primary_key=True)
+    card_id = db.Column(db.Integer, db.ForeignKey('card.id'), primary_key=True)
