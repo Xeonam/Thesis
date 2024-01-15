@@ -96,9 +96,11 @@ export async function fetchDecks() {
   return response.data;
 }
 
-export async function fetchDeckWords() {
+export async function fetchDeckWords(deckId) {
   const token = localStorage.getItem('accessToken');
-  const response = await axios.get("http://localhost:5000/get-deck-words", {
+  const response = await axios.post("http://localhost:5000/get-deck-words", {
+    deck_id: deckId
+  }, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
