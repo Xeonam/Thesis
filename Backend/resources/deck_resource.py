@@ -44,7 +44,7 @@ class AddCardToDeck(Resource):
 
 class GetDeckWords(Resource):
     @jwt_required()
-    def post(self):
+    def get(self):
         try:
             data = request.get_json()
             deck_id = data.get("deck_id")
