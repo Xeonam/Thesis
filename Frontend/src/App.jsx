@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Home, Register, LogIn, Dashboard, SubmitWord, DueCard, DeckPage } from "./pages";
+import { Home, Register, LogIn, Dashboard, SubmitWord, DueCard, DeckPage, DeckWordsPractisePage } from "./pages";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -34,6 +34,14 @@ const App = () => {
             element={
               <RequireAuth>
                 <DeckPage />
+              </RequireAuth>
+            }
+          />
+           <Route
+            path="/practise"
+            element={
+              <RequireAuth>
+                <DeckWordsPractisePage />
               </RequireAuth>
             }
           />

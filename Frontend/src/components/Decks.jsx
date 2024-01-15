@@ -1,8 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchDecks } from "../api/apiCalls";
 
 function Decks() {
+    const navigate = useNavigate();
   const { data, isLoading, error } = useQuery({
     queryKey: ["decks"],
     queryFn: fetchDecks,
@@ -33,7 +35,8 @@ function Decks() {
               <hr className="h-px  bg-black border-0"></hr>
               <p className="text-gray-600 pt-2"></p>
               {/* a button with "Practise" */}
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => navigate('/practise')}>
                     Practise
                 </button>
             </div>
