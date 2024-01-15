@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Home, Register, LogIn, Dashboard, SubmitWord, DueCard } from "./pages";
+import { Home, Register, LogIn, Dashboard, SubmitWord, DueCard, DeckPage } from "./pages";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -33,7 +33,7 @@ const App = () => {
             path="/decks"
             element={
               <RequireAuth>
-                <Dashboard />
+                <DeckPage />
               </RequireAuth>
             }
           />
