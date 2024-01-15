@@ -36,7 +36,7 @@ function Decks() {
               <p className="text-gray-600 pt-2"></p>
               {/* a button with "Practise" */}
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => navigate('/practise')}>
+                onClick={() => navigate(`/practise/${item.deck_id}`)}>
                     Practise
                 </button>
             </div>
