@@ -24,6 +24,12 @@ function DefaultNavbar() {
               to="/submit-word"
               className="my-2 mx-5 font-medium text-white hover:text-importantText"
             >
+              Decks
+            </Link>
+            <Link
+              to="/submit-word"
+              className="my-2 mx-5 font-medium text-white hover:text-importantText"
+            >
               Add word
             </Link>
             <Link
