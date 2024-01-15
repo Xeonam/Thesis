@@ -30,6 +30,14 @@ const App = () => {
             }
           />
           <Route
+            path="/decks"
+            element={
+              <RequireAuth>
+                <Dashboard />
+              </RequireAuth>
+            }
+          />
+          <Route
             path="/submit-word"
             element={
               <RequireAuth>

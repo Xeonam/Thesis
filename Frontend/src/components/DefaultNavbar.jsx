@@ -21,7 +21,7 @@ function DefaultNavbar() {
               Dashboard
             </Link>
             <Link
-              to="/submit-word"
+              to="/decks"
               className="my-2 mx-5 font-medium text-white hover:text-importantText"
             >
               Decks
