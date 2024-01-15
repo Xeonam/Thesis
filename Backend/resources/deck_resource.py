@@ -46,8 +46,7 @@ class GetDeckWords(Resource):
     @jwt_required()
     def get(self):
         try:
-            data = request.get_json()
-            deck_id = data.get("deck_id")
+            deck_id = request.args.get("deck_id")
 
             if not deck_id:
                 return {"message": "Deck ID is required."}, 400
