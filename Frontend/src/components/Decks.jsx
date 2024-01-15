@@ -32,6 +32,10 @@ function Decks() {
               </h3>
               <hr className="h-px  bg-black border-0"></hr>
               <p className="text-gray-600 pt-2"></p>
+              {/* a button with "Practise" */}
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Practise
+                </button>
             </div>
           </div>
         ))}
