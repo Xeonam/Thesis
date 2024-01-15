@@ -85,3 +85,13 @@ export async function uploadFile(fileData) {
   });
   return response.data;
 }
+
+export async function fetchDecks() {
+  const token = localStorage.getItem('accessToken');
+  const response = await axios.get("http://localhost:5000/get-decks", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
