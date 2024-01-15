@@ -8,5 +8,6 @@ import Words from "./Words";
 import SubmitWordForm from "./SubmitWordForm";
 import DueCardsComponent from "./DueCardsComponent";
 import FileUploadForm from './FileUploadForm'
+import Decks from './Decks'
 
-export { DefaultNavbar, Hero, HeroImage, FeaturesSection, SignUp, LogInForm, Words, SubmitWordForm, DueCardsComponent, FileUploadForm};
+export { DefaultNavbar, Hero, HeroImage, FeaturesSection, SignUp, LogInForm, Words, SubmitWordForm, DueCardsComponent, FileUploadForm, Decks};
