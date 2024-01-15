@@ -38,7 +38,7 @@ const App = () => {
             }
           />
            <Route
-            path="/practise"
+            path="/practise/:deckId"
             element={
               <RequireAuth>
                 <DeckWordsPractisePage />
