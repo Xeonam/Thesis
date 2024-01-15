@@ -70,6 +70,18 @@ class User(db.Model):
     @classmethod
     def get_user_decks(cls, user_id: int):
         return Deck.query.filter_by(user_id=user_id).all()
+    
+    @classmethod
+    def get_user_deck_words(cls, user_id: int, deck_id: int):
+        words_in_deck = (
+            db.session.query(User, Card, Word)
+            .join(Card, Word.word_id == Card.word_id)
+            .join(DeckCard, Card.id == DeckCard.card_id)
+            .filter(DeckCard.deck_id == deck_id)
+            .filter(Card.user_id == user_id)
+            .all()
+        )
+        return words_in_deck
 
 class Word(db.Model):
     word_id = db.Column(db.Integer, primary_key=True)

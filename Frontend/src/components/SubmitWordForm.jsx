@@ -149,7 +149,7 @@ function SubmitWordForm() {
                   )}
                 </div>
               )}
-              <FileUploadForm />
+              {!word_id && <FileUploadForm />}
             </div>
           </div>
         </div>
