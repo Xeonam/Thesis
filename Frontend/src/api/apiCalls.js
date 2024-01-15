@@ -95,3 +95,13 @@ export async function fetchDecks() {
   });
   return response.data;
 }
+
+export async function fetchDeckWords() {
+  const token = localStorage.getItem('accessToken');
+  const response = await axios.get("http://localhost:5000/get-deck-words", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
