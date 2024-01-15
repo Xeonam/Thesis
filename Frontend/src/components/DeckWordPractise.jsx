@@ -5,7 +5,7 @@ import { fetchDeckWords } from "../api/apiCalls";
 function DeckWordPractise() {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
-  const deckId = 1 
+  const deckId = window.location.pathname.split("/")[2]; 
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["deckWords", deckId],
@@ -24,7 +24,7 @@ function DeckWordPractise() {
 
   return (
     <div>
-a   sd 
+    asd 
     </div>
   );
 }
