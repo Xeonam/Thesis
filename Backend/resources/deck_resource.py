@@ -1,9 +1,10 @@
 from flask import request
 from flask_restful import Resource
-from model.models import Deck, DeckCard, Card
+from model.models import Deck, DeckCard, Card, User
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from schema.schemas import WordSchema
 
-
+word_schema = WordSchema()
 class CreateDeck(Resource):
     @jwt_required()
     def post(self):
@@ -57,15 +58,11 @@ class GetDeckWords(Resource):
             if not deck:
                 return {"message": "Deck not found for this user."}, 404
 
-            words_data = [
-                {
-                    "word_id": word.word_id,
-                    "english_word": word.english_word,
-                    "hungarian_meaning": word.hungarian_meaning
-                } for word in Deck.get_deck_words(deck_id)
-            ]
+            data = User.get_user_deck_words(current_user_id, deck_id)
 
-            return {"words": words_data}, 200
+            words = [{'card_id': user_card.Card.id, 'word': word_schema.dump(user_card.Word)} for user_card in data]
+
+            return words, 200
 
         except Exception as e:
             return {"message": str(e)}, 500
