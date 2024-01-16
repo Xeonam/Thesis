@@ -108,3 +108,13 @@ export async function fetchDeckWords(deckId) {
   });
   return response.data;
 }
+
+export async function deleteDeck(deckId){
+  const token = localStorage.getItem('accessToken');
+  const response = await axios.delete(`http://localhost:5000/delete-deck/${deckId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
