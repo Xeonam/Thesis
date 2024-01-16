@@ -121,3 +121,13 @@ export async function deleteDeck(deckId){
   });
   return response.data;
 }
+
+export async function addDeck(deckData) {
+  const token = localStorage.getItem('accessToken');
+  const response = await axios.post("http://localhost:5000/create-deck", deckData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
