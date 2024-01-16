@@ -131,3 +131,13 @@ export async function addDeck(deckData) {
   });
   return response.data;
 }
+
+export async function addCardToDeck(data) {
+  const token = localStorage.getItem('accessToken');
+  const response = await axios.post("http://localhost:5000/add-card-to-deck", data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
