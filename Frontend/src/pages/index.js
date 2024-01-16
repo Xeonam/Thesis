@@ -6,5 +6,6 @@ import SubmitWord from "./SubmitWord";
 import DueCard from "./DueCard";
 import DeckPage from './DeckPage'
 import DeckWordsPractisePage from "./DeckWordsPractisePage";
+import AddNewDeck from "./AddNewDeck";
 
-export { Home, Register, LogIn, Dashboard, SubmitWord, DueCard, DeckPage, DeckWordsPractisePage };
+export { Home, Register, LogIn, Dashboard, SubmitWord, DueCard, DeckPage, DeckWordsPractisePage, AddNewDeck };
