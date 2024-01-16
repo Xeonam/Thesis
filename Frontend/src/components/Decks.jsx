@@ -35,6 +35,12 @@ function Decks() {
   return (
     <div className="p-5">
       <h1 className="text-2xl font-bold mb-5 text-importantText">Decks</h1>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-5"
+        onClick={() => navigate(`/add-new-deck`)}
+      >
+        Add new Deck
+      </button>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 text-center">
         {data?.map((item) => (
           <div
