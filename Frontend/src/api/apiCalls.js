@@ -111,10 +111,13 @@ export async function fetchDeckWords(deckId) {
 
 export async function deleteDeck(deckId){
   const token = localStorage.getItem('accessToken');
-  const response = await axios.delete(`http://localhost:5000/delete-deck/${deckId}`, {
+  const response = await axios.delete("http://localhost:5000/delete-deck", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    params: {
+      deck_id: deckId
+    }
   });
   return response.data;
 }

@@ -1,14 +1,27 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { fetchDecks } from "../api/apiCalls";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { fetchDecks, deleteDeck } from "../api/apiCalls";
 
 function Decks() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { data, isLoading, error } = useQuery({
     queryKey: ["decks"],
     queryFn: fetchDecks,
   });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteDeck,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["decks"]);
+      /* queryClient.invalidateQueries({ queryKey: ["suppliersData"] }); */
+    },
+  });
+
+  const handleDelete = (deckId) => {
+    deleteMutation.mutate(deckId);
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -41,7 +54,10 @@ function Decks() {
                 Practise
               </button>
 
-              <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-2">
+              <button
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-2"
+                onClick={() => handleDelete(item.deck_id)}
+              >
                 Delete
               </button>
             </div>
