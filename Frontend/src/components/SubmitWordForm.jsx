@@ -99,10 +99,6 @@ function SubmitWordForm() {
     },
   });
 
-  /*   const handleAddCardClick = () => {
-    addCardMutation.mutate({ word_id: word_id });
-  }; */
-
   const handleAddCardToDeckClick = () => {
     addCardAndAddToDeck();
   };
@@ -191,13 +187,6 @@ function SubmitWordForm() {
                   </div>
 
                   <div className="text-center pt-2">
-                    {/* <button
-                      className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 "
-                      onClick={handleAddCardClick}
-                    >
-                      Add word
-                    </button> */}
-
                     <button
                       className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 "
                       onClick={handleAddCardToDeckClick}
