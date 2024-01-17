@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource
-from model.models import db, Word, Card
+from model.models import db, Word, Card, DeckCard
 from schema.schemas import WordSchema
 from utils.translator import translate_to_hungarian
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -38,7 +38,8 @@ class FileUpload(Resource):
         user_id = get_jwt_identity()
         if 'file' not in request.files:
             return {'message': 'No file part'}, 400
-
+        print(request.form)
+        deck_id = request.form.get('deck_id')
         file = request.files['file']
 
         if not file.filename.endswith('.txt'):
@@ -56,7 +57,8 @@ class FileUpload(Resource):
 
             word_id = word_obj.word_id
             if not Card.exists(user_id, word_id):
-                Card.add_card(user_id, word_id) 
-
+                card = Card.add_card(user_id, word_id)
+                DeckCard.add_to_deck(deck_id, card.id)
+            
         return {'message': f'File {file.filename} uploaded successfully'}, 200
 

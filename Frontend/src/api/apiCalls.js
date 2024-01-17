@@ -74,10 +74,11 @@ export async function repeatCard({cardId, rating}) {
 
 export async function uploadFile(fileData) {
   const token = localStorage.getItem('accessToken');
-  const formData = new FormData();
-  formData.append('file', fileData);
+/*   const formData = new FormData();
+  formData.append('file', filedDat.selectedFile);
+  formData.append('deck_id',fileData.selectedDeck ); */
 
-  const response = await axios.post("http://localhost:5000/upload-file", formData, {
+  const response = await axios.post("http://localhost:5000/upload-file", fileData, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",
