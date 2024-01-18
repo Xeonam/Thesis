@@ -10,6 +10,7 @@ import DueCardsComponent from "./DueCardsComponent";
 import FileUploadForm from "./FileUploadForm";
 import Decks from "./Decks";
 import DeckWordPractise from "./DeckWordPractise";
+import AddNewDeckForm from "./AddNewDeckForm";
 
 export {
   DefaultNavbar,
@@ -24,4 +25,5 @@ export {
   FileUploadForm,
   Decks,
   DeckWordPractise,
+  AddNewDeckForm
 };

@@ -203,6 +203,13 @@ class Deck(db.Model):
             .all()
         )
         return words_in_deck
+    
+    @classmethod
+    def delete_deck(cls, deck_id: int):
+        deck = cls.get_deck(deck_id)
+        db.session.delete(deck)
+        db.session.commit()
+        return deck
 
 class DeckCard(db.Model):
     __tablename__ = 'deck_card'

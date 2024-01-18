@@ -1,14 +1,27 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { fetchDecks } from "../api/apiCalls";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { fetchDecks, deleteDeck } from "../api/apiCalls";
 
 function Decks() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { data, isLoading, error } = useQuery({
     queryKey: ["decks"],
     queryFn: fetchDecks,
   });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteDeck,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["decks"]);
+      /* queryClient.invalidateQueries({ queryKey: ["suppliersData"] }); */
+    },
+  });
+
+  const handleDelete = (deckId) => {
+    deleteMutation.mutate(deckId);
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -22,6 +35,12 @@ function Decks() {
   return (
     <div className="p-5">
       <h1 className="text-2xl font-bold mb-5 text-importantText">Decks</h1>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-5"
+        onClick={() => navigate(`/add-new-deck`)}
+      >
+        Add new Deck
+      </button>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 text-center">
         {data?.map((item) => (
           <div
@@ -34,11 +53,19 @@ function Decks() {
               </h3>
               <hr className="h-px  bg-black border-0"></hr>
               <p className="text-gray-600 pt-2"></p>
-              {/* a button with "Practise" */}
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => navigate(`/practise/${item.deck_id}`)}>
-                    Practise
-                </button>
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => navigate(`/practise/${item.deck_id}`)}
+              >
+                Practise
+              </button>
+
+              <button
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mx-2"
+                onClick={() => handleDelete(item.deck_id)}
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))}

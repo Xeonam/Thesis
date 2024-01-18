@@ -66,3 +66,25 @@ class GetDeckWords(Resource):
 
         except Exception as e:
             return {"message": str(e)}, 500
+        
+class DeleteDeck(Resource):
+    @jwt_required()
+    def delete(self):
+        try:
+            deck_id = request.args.get("deck_id")
+
+            if not deck_id:
+                return {"message": "Deck ID is required."}, 400
+
+            current_user_id = get_jwt_identity()
+            deck = Deck.query.filter_by(user_id=current_user_id, deck_id=deck_id).first()
+
+            if not deck:
+                return {"message": "Deck not found for this user."}, 404
+
+            Deck.delete_deck(deck_id)
+
+            return {"message": "Deck deleted successfully!"}, 200
+
+        except Exception as e:
+            return {"message": str(e)}, 500

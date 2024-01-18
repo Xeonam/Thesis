@@ -1,13 +1,19 @@
 import React, { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { uploadFile } from "../api/apiCalls";
+import { uploadFile, fetchDecks } from "../api/apiCalls";
 import { FaInfoCircle } from "react-icons/fa";
 
 function FileUploadForm() {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedDeck, setSelectedDeck] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { data: decks } = useQuery({
+    queryKey: ["decks"],
+    queryFn: fetchDecks,
+  });
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -27,8 +33,11 @@ function FileUploadForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("deck_id", selectedDeck);
     if (selectedFile) {
-      uploadMutation.mutate(selectedFile);
+      uploadMutation.mutate(formData);
     }
   };
 
@@ -86,7 +95,21 @@ function FileUploadForm() {
           </div>
         </div>
       )}
-
+      <div>
+        <label htmlFor="deck-select">Choose a deck:</label>
+        <select
+          id="deck-select"
+          value={selectedDeck}
+          onChange={(e) => setSelectedDeck(e.target.value)}
+        >
+          <option value="">Select a deck</option>
+          {decks?.map((deck) => (
+            <option key={deck.id} value={deck.deck_id}>
+              {deck.name}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="flex items-center justify-center w-full">
         <label className="flex flex-col rounded-lg border-2 border-purple-300 border-dashed w-full md:w-96 h-44 p-6 group text-center bg-white hover:border-purple-500 hover:bg-purple-100 transition duration-300 ease-in-out">
           <div className="h-full w-full text-center flex flex-col items-center justify-center">

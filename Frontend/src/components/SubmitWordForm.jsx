@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { addWord, addCard } from "../api/apiCalls";
+import { addWord, addCard, fetchDecks, addCardToDeck } from "../api/apiCalls";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaBackspace } from "react-icons/fa";
@@ -18,6 +18,7 @@ function SubmitWordForm() {
   const [english_word, setEnglish_word] = useState("");
   const [hungarian_meaning, setHungarian_meaning] = useState("");
   const [addCardError, setAddCardError] = useState("");
+  const [selectedDeck, setSelectedDeck] = useState("");
 
   const {
     register,
@@ -29,6 +30,13 @@ function SubmitWordForm() {
     resolver: yupResolver(schema),
   });
 
+  /* Get decks */
+  const { data: decks } = useQuery({
+    queryKey: ["decks"],
+    queryFn: fetchDecks,
+  });
+
+  /* Translate word */
   const submitMutation = useMutation({
     mutationFn: addWord,
     onSuccess: () => {
@@ -50,11 +58,37 @@ function SubmitWordForm() {
     submitMutation.mutate(data);
   };
 
+  /* Add card to deck */
+  const addCardToDeckMutation = useMutation({
+    mutationFn: addCardToDeck,
+    onSuccess: () => {
+      toast.success("Card has been successfully added to the deck!");
+      resetForm();
+    },
+    onError: (error) => {
+      toast.error("An error occurred: " + error.message);
+    },
+  });
+  const addCardAndAddToDeck = () => {
+    if (word_id) {
+      addCardMutation.mutate(
+        { word_id: word_id },
+        {
+          onSuccess: (response) => {
+            addCardToDeckMutation.mutate({
+              card_id: response.id,
+              deck_id: selectedDeck,
+            });
+          },
+        }
+      );
+    }
+  };
+
   const addCardMutation = useMutation({
     mutationFn: addCard,
     onSuccess: () => {
-      console.log("Card has been successfully added!");
-      toast.success("Card has been successfully added!");
+      /* toast.success("Card has been successfully added!"); */
       resetForm();
     },
     onError: (error) => {
@@ -65,8 +99,8 @@ function SubmitWordForm() {
     },
   });
 
-  const handleAddCardClick = () => {
-    addCardMutation.mutate({ word_id: word_id });
+  const handleAddCardToDeckClick = () => {
+    addCardAndAddToDeck();
   };
 
   const resetForm = () => {
@@ -85,6 +119,7 @@ function SubmitWordForm() {
       setHungarian_meaning("");
     }
   }, [watchedEnglishWord]);
+
   return (
     <div>
       <section className="bg-navbarBgColor">
@@ -134,12 +169,29 @@ function SubmitWordForm() {
                     <span className="font-semibold">{english_word}</span>:{" "}
                     <span className="italic">{hungarian_meaning}</span>
                   </p>
+
+                  <div>
+                    <label htmlFor="deck-select">Choose a deck:</label>
+                    <select
+                      id="deck-select"
+                      value={selectedDeck}
+                      onChange={(e) => setSelectedDeck(e.target.value)}
+                    >
+                      <option value="">Select a deck</option>
+                      {decks?.map((deck) => (
+                        <option key={deck.id} value={deck.deck_id}>
+                          {deck.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
                   <div className="text-center pt-2">
                     <button
                       className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 "
-                      onClick={handleAddCardClick}
+                      onClick={handleAddCardToDeckClick}
                     >
-                      Add word
+                      Add word to deck
                     </button>
                   </div>
                   {addCardError && (
