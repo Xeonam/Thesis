@@ -74,13 +74,15 @@ class User(db.Model):
     @classmethod
     def get_user_deck_words(cls, user_id: int, deck_id: int):
         words_in_deck = (
-            db.session.query(User, Card, Word)
-            .join(Card, Word.word_id == Card.word_id)
-            .join(DeckCard, Card.id == DeckCard.card_id)
-            .filter(DeckCard.deck_id == deck_id)
-            .filter(Card.user_id == user_id)
-            .all()
-        )
+        db.session.query(User, Card, Word)
+        .join(Card, User.user_id == Card.user_id)
+        .join(Word, Word.word_id == Card.word_id)
+        .join(DeckCard, Card.id == DeckCard.card_id)
+        .filter(DeckCard.deck_id == deck_id)
+        .filter(User.user_id == user_id)
+        .all())
+    
+        print(words_in_deck)
         return words_in_deck
 
 class Word(db.Model):
@@ -218,6 +220,7 @@ class Deck(db.Model):
         db.session.delete(deck)
         db.session.commit()
         return deck
+
 
 class DeckCard(db.Model):
     __tablename__ = 'deck_card'
