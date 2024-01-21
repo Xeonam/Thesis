@@ -87,6 +87,7 @@ class Word(db.Model):
     word_id = db.Column(db.Integer, primary_key=True)
     english_word = db.Column(db.String(255), nullable=False)
     hungarian_meaning = db.Column(db.String(255), nullable=False)
+    custom_meaning = db.Column(db.Boolean, nullable=False, default=False)
     cards = db.relationship('Card', back_populates='word', lazy=True)
 
     @classmethod
