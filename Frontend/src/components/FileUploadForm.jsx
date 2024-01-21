@@ -61,9 +61,6 @@ function FileUploadForm() {
       onDrop={handleDrop}
       onDragOver={handleDragOver}
     >
-      <button type="button" onClick={toggleModal}>
-        <FaInfoCircle />
-      </button>
       {isModalOpen && (
         <div className="fixed inset-0" onClick={toggleModal}>
           <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-blue-200">
@@ -96,9 +93,14 @@ function FileUploadForm() {
         </div>
       )}
       <div>
-        <label htmlFor="deck-select" className="font-bold">
-          Choose a deck:
-        </label>
+        <div className="flex justify-between items-center">
+          <label htmlFor="deck-select" className="font-bold">
+            Choose a deck:
+          </label>
+          <button type="button" onClick={toggleModal} className="text-lg">
+            <FaInfoCircle />
+          </button>
+        </div>
         <select
           id="deck-select"
           value={selectedDeck}
