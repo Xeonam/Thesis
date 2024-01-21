@@ -28,7 +28,7 @@ class AddWord(Resource):
 
 class AddCustomWord(Resource):
     @jwt_required()
-    def put(self, english_word: str):
+    def post(self):
         data = request.get_json()
         english_word = data['english_word']
         hungarian_meaning = data['hungarian_meaning']

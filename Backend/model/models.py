@@ -105,6 +105,13 @@ class Word(db.Model):
     @classmethod
     def get_word(cls, english_word: str):
         return cls.query.filter_by(english_word=english_word).first()
+    
+    @classmethod
+    def add_word(cls, english_word: str, hungarian_meaning: str, custom_meaning: bool = False) -> "Word":
+        word = cls(english_word=english_word, hungarian_meaning=hungarian_meaning, custom_meaning=custom_meaning)
+        db.session.add(word)
+        db.session.commit()
+        return word
 
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True)
