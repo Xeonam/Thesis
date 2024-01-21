@@ -185,8 +185,7 @@ function SubmitWordForm() {
                         <button
                           className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 "
                           onClick={() => {
-                            // Ide írhatod a mentési logikát, például egy API hívást a backendhez
-                            setIsEdited(false); // Eltüntetjük a gombot, miután rákattintottak
+                            setIsEdited(false);
                           }}
                         >
                           Save Edited Word
