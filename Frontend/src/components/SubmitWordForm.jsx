@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { addWord, addCard, fetchDecks, addCardToDeck } from "../api/apiCalls";
+import { addWord, addCard, fetchDecks, addCardToDeck, addCustomWord } from "../api/apiCalls";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaBackspace } from "react-icons/fa";
@@ -59,6 +59,30 @@ function SubmitWordForm() {
     submitMutation.mutate(data);
   };
 
+  const submitUpdateMutation = useMutation({
+    mutationFn: addCustomWord,
+    onSuccess: () => {
+      toast.success("The edited word has been successfully edited!");
+    },
+    onError: () => {
+      toast.error("An error occurred while editing the word.");
+    },
+    onSettled: (responseData) => {
+      if (responseData) {
+        setWord_id(responseData.word_id);
+        setEnglish_word(responseData.english_word);
+        setHungarian_meaning(responseData.hungarian_meaning);
+      }
+    },
+  });
+
+  const submitUpdate = () => {
+    submitUpdateMutation.mutate({
+      word_id: word_id,
+      english_word: english_word,
+      hungarian_meaning: hungarian_meaning,
+    });
+  };
   /* Add card to deck */
   const addCardToDeckMutation = useMutation({
     mutationFn: addCardToDeck,
@@ -185,6 +209,7 @@ function SubmitWordForm() {
                         <button
                           className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 "
                           onClick={() => {
+                            submitUpdate();
                             setIsEdited(false);
                           }}
                         >
