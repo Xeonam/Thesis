@@ -19,6 +19,7 @@ function SubmitWordForm() {
   const [hungarian_meaning, setHungarian_meaning] = useState("");
   const [addCardError, setAddCardError] = useState("");
   const [selectedDeck, setSelectedDeck] = useState("");
+  const [isEdited, setIsEdited] = useState(false);
 
   const {
     register,
@@ -170,12 +171,29 @@ function SubmitWordForm() {
                     <input
                       type="text"
                       value={hungarian_meaning}
-                      onChange={(e) => setHungarian_meaning(e.target.value)}
+                      onChange={(e) => {
+                        setHungarian_meaning(e.target.value);
+                        setIsEdited(true);
+                      }}
                       className="bg-gray-50 border border-gray-300 rounded-lg block w-full p-2.5"
                       placeholder="Enter Hungarian meaning"
                     />
                   </p>
-
+                  {isEdited && (
+                    <>
+                      <div className="text-center py-1">
+                        <button
+                          className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 "
+                          onClick={() => {
+                            // Ide írhatod a mentési logikát, például egy API hívást a backendhez
+                            setIsEdited(false); // Eltüntetjük a gombot, miután rákattintottak
+                          }}
+                        >
+                          Save Edited Word
+                        </button>
+                      </div>
+                    </>
+                  )}
                   <div className="py-2">
                     <label htmlFor="deck-select" className="font-bold">
                       Choose a deck:
