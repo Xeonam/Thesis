@@ -170,12 +170,14 @@ function SubmitWordForm() {
                     <span className="italic">{hungarian_meaning}</span>
                   </p>
 
-                  <div>
-                    <label htmlFor="deck-select">Choose a deck:</label>
+                  <div className="py-2">
+                    <label htmlFor="deck-select" className="font-bold">Choose a deck:</label>
+                    <hr className="h-px border-0 bg-black" />
                     <select
                       id="deck-select"
                       value={selectedDeck}
                       onChange={(e) => setSelectedDeck(e.target.value)}
+                      className="mt-2 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-navbarBgColor focus:border-navbarBgColor sm:text-sm"
                     >
                       <option value="">Select a deck</option>
                       {decks?.map((deck) => (
