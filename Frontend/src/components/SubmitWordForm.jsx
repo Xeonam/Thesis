@@ -167,11 +167,19 @@ function SubmitWordForm() {
                   <hr className="h-px border-0 bg-black" />
                   <p className="mt-2">
                     <span className="font-semibold">{english_word}</span>:{" "}
-                    <span className="italic">{hungarian_meaning}</span>
+                    <input
+                      type="text"
+                      value={hungarian_meaning}
+                      onChange={(e) => setHungarian_meaning(e.target.value)}
+                      className="bg-gray-50 border border-gray-300 rounded-lg block w-full p-2.5"
+                      placeholder="Enter Hungarian meaning"
+                    />
                   </p>
 
                   <div className="py-2">
-                    <label htmlFor="deck-select" className="font-bold">Choose a deck:</label>
+                    <label htmlFor="deck-select" className="font-bold">
+                      Choose a deck:
+                    </label>
                     <hr className="h-px border-0 bg-black" />
                     <select
                       id="deck-select"
