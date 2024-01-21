@@ -9,6 +9,7 @@ class WordSchema(Schema):
     word_id = fields.Integer(dump_only=True)
     english_word = fields.String()
     hungarian_meaning = fields.String()
+    custom_meaning = fields.Boolean()
 
 class CardSchema(Schema):
     id = fields.Integer(dump_only=True)

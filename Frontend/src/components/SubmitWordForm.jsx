@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { addWord, addCard, fetchDecks, addCardToDeck } from "../api/apiCalls";
+import { addWord, addCard, fetchDecks, addCardToDeck, addCustomWord } from "../api/apiCalls";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaBackspace } from "react-icons/fa";
@@ -19,6 +19,7 @@ function SubmitWordForm() {
   const [hungarian_meaning, setHungarian_meaning] = useState("");
   const [addCardError, setAddCardError] = useState("");
   const [selectedDeck, setSelectedDeck] = useState("");
+  const [isEdited, setIsEdited] = useState(false);
 
   const {
     register,
@@ -58,6 +59,30 @@ function SubmitWordForm() {
     submitMutation.mutate(data);
   };
 
+  const submitUpdateMutation = useMutation({
+    mutationFn: addCustomWord,
+    onSuccess: () => {
+      toast.success("The edited word has been successfully edited!");
+    },
+    onError: () => {
+      toast.error("An error occurred while editing the word.");
+    },
+    onSettled: (responseData) => {
+      if (responseData) {
+        setWord_id(responseData.word_id);
+        setEnglish_word(responseData.english_word);
+        setHungarian_meaning(responseData.hungarian_meaning);
+      }
+    },
+  });
+
+  const submitUpdate = () => {
+    submitUpdateMutation.mutate({
+      word_id: word_id,
+      english_word: english_word,
+      hungarian_meaning: hungarian_meaning,
+    });
+  };
   /* Add card to deck */
   const addCardToDeckMutation = useMutation({
     mutationFn: addCardToDeck,
@@ -167,15 +192,42 @@ function SubmitWordForm() {
                   <hr className="h-px border-0 bg-black" />
                   <p className="mt-2">
                     <span className="font-semibold">{english_word}</span>:{" "}
-                    <span className="italic">{hungarian_meaning}</span>
+                    <input
+                      type="text"
+                      value={hungarian_meaning}
+                      onChange={(e) => {
+                        setHungarian_meaning(e.target.value);
+                        setIsEdited(true);
+                      }}
+                      className="bg-gray-50 border border-gray-300 rounded-lg block w-full p-2.5"
+                      placeholder="Enter Hungarian meaning"
+                    />
                   </p>
-
-                  <div>
-                    <label htmlFor="deck-select">Choose a deck:</label>
+                  {isEdited && (
+                    <>
+                      <div className="text-center py-1">
+                        <button
+                          className="text-white bg-navbarBgColor hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2 "
+                          onClick={() => {
+                            submitUpdate();
+                            setIsEdited(false);
+                          }}
+                        >
+                          Save Edited Word
+                        </button>
+                      </div>
+                    </>
+                  )}
+                  <div className="py-2">
+                    <label htmlFor="deck-select" className="font-bold">
+                      Choose a deck:
+                    </label>
+                    <hr className="h-px border-0 bg-black" />
                     <select
                       id="deck-select"
                       value={selectedDeck}
                       onChange={(e) => setSelectedDeck(e.target.value)}
+                      className="mt-2 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-navbarBgColor focus:border-navbarBgColor sm:text-sm"
                     >
                       <option value="">Select a deck</option>
                       {decks?.map((deck) => (

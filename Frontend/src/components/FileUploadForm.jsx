@@ -57,13 +57,10 @@ function FileUploadForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 md:space-y-6 p-6"
+      className="space-y-2 md:space-y-6 p-6"
       onDrop={handleDrop}
       onDragOver={handleDragOver}
     >
-      <button type="button" onClick={toggleModal}>
-        <FaInfoCircle />
-      </button>
       {isModalOpen && (
         <div className="fixed inset-0" onClick={toggleModal}>
           <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-blue-200">
@@ -96,11 +93,19 @@ function FileUploadForm() {
         </div>
       )}
       <div>
-        <label htmlFor="deck-select">Choose a deck:</label>
+        <div className="flex justify-between items-center">
+          <label htmlFor="deck-select" className="font-bold">
+            Choose a deck:
+          </label>
+          <button type="button" onClick={toggleModal} className="text-lg">
+            <FaInfoCircle />
+          </button>
+        </div>
         <select
           id="deck-select"
           value={selectedDeck}
           onChange={(e) => setSelectedDeck(e.target.value)}
+          className="mt-2 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-navbarBgColor focus:border-navbarBgColor sm:text-sm"
         >
           <option value="">Select a deck</option>
           {decks?.map((deck) => (

@@ -160,3 +160,17 @@ export async function addCardToDeck(data) {
   );
   return response.data;
 }
+
+export async function addCustomWord(wordData) {
+  const token = localStorage.getItem("accessToken");
+  const response = await axios.post(
+    "http://127.0.0.1:5000/add-custom-word",
+    wordData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+}

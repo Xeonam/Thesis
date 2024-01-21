@@ -74,19 +74,22 @@ class User(db.Model):
     @classmethod
     def get_user_deck_words(cls, user_id: int, deck_id: int):
         words_in_deck = (
-            db.session.query(User, Card, Word)
-            .join(Card, Word.word_id == Card.word_id)
-            .join(DeckCard, Card.id == DeckCard.card_id)
-            .filter(DeckCard.deck_id == deck_id)
-            .filter(Card.user_id == user_id)
-            .all()
-        )
+        db.session.query(User, Card, Word)
+        .join(Card, User.user_id == Card.user_id)
+        .join(Word, Word.word_id == Card.word_id)
+        .join(DeckCard, Card.id == DeckCard.card_id)
+        .filter(DeckCard.deck_id == deck_id)
+        .filter(User.user_id == user_id)
+        .all())
+    
+        print(words_in_deck)
         return words_in_deck
 
 class Word(db.Model):
     word_id = db.Column(db.Integer, primary_key=True)
     english_word = db.Column(db.String(255), nullable=False)
     hungarian_meaning = db.Column(db.String(255), nullable=False)
+    custom_meaning = db.Column(db.Boolean, nullable=False, default=False)
     cards = db.relationship('Card', back_populates='word', lazy=True)
 
     @classmethod
@@ -104,6 +107,13 @@ class Word(db.Model):
     @classmethod
     def get_word(cls, english_word: str):
         return cls.query.filter_by(english_word=english_word).first()
+    
+    @classmethod
+    def add_word(cls, english_word: str, hungarian_meaning: str, custom_meaning: bool = False) -> "Word":
+        word = cls(english_word=english_word, hungarian_meaning=hungarian_meaning, custom_meaning=custom_meaning)
+        db.session.add(word)
+        db.session.commit()
+        return word
 
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -210,6 +220,7 @@ class Deck(db.Model):
         db.session.delete(deck)
         db.session.commit()
         return deck
+
 
 class DeckCard(db.Model):
     __tablename__ = 'deck_card'
