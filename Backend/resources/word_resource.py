@@ -26,6 +26,17 @@ class AddWord(Resource):
 
         return word_schema.dump(word)
 
+class AddCustomWord(Resource):
+    @jwt_required()
+    def put(self, english_word: str):
+        data = request.get_json()
+        english_word = data['english_word']
+        hungarian_meaning = data['hungarian_meaning']
+
+        word = Word.add_word(english_word, hungarian_meaning, custom_meaning=True)
+
+        return word_schema.dump(word)
+
 class GetWord(Resource):
     @jwt_required()
     def get(self, english_word: str):
