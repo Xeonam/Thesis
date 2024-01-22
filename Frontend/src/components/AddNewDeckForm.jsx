@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 const schema = yup.object({
   name: yup.string().required("Deck name is required"),
+  is_public: yup.boolean()
 });
 
 function AddNewDeckForm() {
@@ -64,6 +65,15 @@ function AddNewDeckForm() {
                     type="button"
                     className="absolute inset-y-0 right-0 pr-3 flex items-center"
                   ></button>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="is_public"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300"
+                    {...register("is_public")}
+                  />
+                  <label htmlFor="is_public" className="ml-2 text-sm font-medium text-gray-900">Make this deck public</label>
                 </div>
 
                 <button
