@@ -62,6 +62,14 @@ const App = () => {
             }
           />
           <Route
+            path="/view-public-decks"
+            element={
+              <RequireAuth>
+                <AddNewDeck />
+              </RequireAuth>
+            }
+          />
+          <Route
             path="/due-cards"
             element={
               <RequireAuth>
