@@ -174,3 +174,28 @@ export async function addCustomWord(wordData) {
   );
   return response.data;
 }
+
+/* fetch public Decks */
+export async function fetchPublicDecks() {
+  const token = localStorage.getItem("accessToken");
+  const response = await axios.get("http://localhost:5000/get-public-decks", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function cloneDeck(deckId) {
+  const token = localStorage.getItem("accessToken");
+  const response = await axios.post(
+    "http://localhost:5000/clone-deck",
+    { deck_id: deckId },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+}

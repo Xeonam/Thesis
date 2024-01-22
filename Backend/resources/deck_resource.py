@@ -11,11 +11,12 @@ class CreateDeck(Resource):
         data = request.get_json()
         user_id = get_jwt_identity()
         name = data.get("name")
+        is_public = data.get("is_public")
 
         if not name:
             return {"message": "Deck name is required."}, 400
 
-        deck = Deck.add_deck(name, user_id)
+        deck = Deck.add_deck(name, user_id, is_public)
         return {"message": "Deck created successfully!", "deck_id": deck.deck_id}, 201
     
 class AddCardToDeck(Resource):
@@ -86,5 +87,32 @@ class DeleteDeck(Resource):
 
             return {"message": "Deck deleted successfully!"}, 200
 
+        except Exception as e:
+            return {"message": str(e)}, 500
+
+class GetPublicDecks(Resource):
+    @jwt_required()
+    def get(self):
+        try:
+            current_user_id = get_jwt_identity()
+            decks = Deck.get_public_decks(current_user_id)
+
+            data = [{'deck_id': deck.deck_id, 'name': deck.name} for deck in decks]
+
+            return data, 200
+
+        except Exception as e:
+            return {"message": str(e)}, 500
+class CloneDeck(Resource):
+    @jwt_required()
+    def post(self):
+        try:
+            data = request.get_json()
+            deck_id = data.get("deck_id")
+            user_id = get_jwt_identity()
+            Deck.clone_to_user(deck_id, user_id)
+
+            return {"message": "Deck cloned successfully!"}, 200
+        
         except Exception as e:
             return {"message": str(e)}, 500

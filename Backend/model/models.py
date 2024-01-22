@@ -188,13 +188,14 @@ class Deck(db.Model):
     deck_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    is_public = db.Column(db.Boolean, nullable=False, default=False)
 
     cards = db.relationship('Card', secondary='deck_card', back_populates='decks', lazy=True)
     user = db.relationship('User', back_populates='decks')
 
     @classmethod
-    def add_deck(cls, name: str, user_id: int):
-        deck = cls(name=name, user_id=user_id)
+    def add_deck(cls, name: str, user_id: int, is_public: bool = False):
+        deck = cls(name=name, user_id=user_id, is_public=is_public)
         db.session.add(deck)
         db.session.commit()
         return deck
@@ -221,6 +222,34 @@ class Deck(db.Model):
         db.session.commit()
         return deck
 
+    @classmethod
+    def get_public_decks(cls, user_id: int):
+        return cls.query.filter_by(is_public=True).filter(Deck.user_id != user_id).all()
+    
+    @classmethod
+    def clone_to_user(cls, deck_id: int, user_id: int):
+        original_deck = cls.query.filter_by(deck_id=deck_id, is_public=True).first()
+        if not original_deck:
+            abort(404, message="Public deck not found.")
+
+        new_deck = Deck(name=original_deck.name + " (Clone)", user_id=user_id, is_public=False)
+        db.session.add(new_deck)
+        db.session.flush()
+
+        for card in original_deck.cards:
+            new_card = Card(
+                user_id=user_id,
+                word_id=card.word_id                
+            )
+            db.session.add(new_card)
+            db.session.flush()
+            
+            new_deck_card = DeckCard(deck_id=new_deck.deck_id, card_id=new_card.id)
+            db.session.add(new_deck_card)
+
+        db.session.commit()
+
+        return new_deck
 
 class DeckCard(db.Model):
     __tablename__ = 'deck_card'

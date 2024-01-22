@@ -41,6 +41,12 @@ function Decks() {
       >
         Add new Deck
       </button>
+      <button
+        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-5 ml-4"
+        onClick={() => navigate(`/view-public-decks`)} // Az útvonal a publikus deckekhez
+      >
+        View Public Decks
+      </button>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 text-center">
         {data?.map((item) => (
           <div
