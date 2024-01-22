@@ -103,3 +103,16 @@ class GetPublicDecks(Resource):
 
         except Exception as e:
             return {"message": str(e)}, 500
+class CloneDeck(Resource):
+    @jwt_required()
+    def post(self):
+        try:
+            data = request.get_json()
+            deck_id = data.get("deck_id")
+            user_id = get_jwt_identity()
+            Deck.clone_to_user(deck_id, user_id)
+
+            return {"message": "Deck cloned successfully!"}, 200
+        
+        except Exception as e:
+            return {"message": str(e)}, 500
