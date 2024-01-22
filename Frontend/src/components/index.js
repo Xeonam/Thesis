@@ -11,7 +11,7 @@ import FileUploadForm from "./FileUploadForm";
 import Decks from "./Decks";
 import DeckWordPractise from "./DeckWordPractise";
 import AddNewDeckForm from "./AddNewDeckForm";
-
+import ViewPublicDecks from "./ViewPublicDecks";
 export {
   DefaultNavbar,
   Hero,
@@ -25,5 +25,6 @@ export {
   FileUploadForm,
   Decks,
   DeckWordPractise,
-  AddNewDeckForm
+  AddNewDeckForm,
+  ViewPublicDecks,
 };

@@ -1,10 +1,10 @@
 import React from "react";
-import { AddNewDeckForm, DefaultNavbar } from "../components";
+import { ViewPublicDecks, DefaultNavbar } from "../components";
 function ViewPublicDecksPage() {
   return (
     <div>
         <DefaultNavbar />
-        <AddNewDeckForm />
+        <ViewPublicDecks />
     </div>
   )
 }
