@@ -1,8 +1,19 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchPublicDecks } from "../api/apiCalls";
-
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { fetchPublicDecks, cloneDeck } from "../api/apiCalls";
 function ViewPublicDecks() {
+  const cloneMutation = useMutation({
+    mutationFn: cloneDeck,
+    onSuccess: () => {
+    },
+    onError: () => {
+    },
+  });
+
+  const handleClone = (deck_id) => {
+    cloneMutation.mutate(deck_id);
+  };
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["decks"],
     queryFn: fetchPublicDecks,
@@ -32,7 +43,7 @@ function ViewPublicDecks() {
               <p className="text-gray-600 pt-2"></p>
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => console.log(" button clicked")}
+                onClick={() => handleClone(item.deck_id)}
               >
                 Add to my decks
               </button>
