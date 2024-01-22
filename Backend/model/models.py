@@ -225,6 +225,31 @@ class Deck(db.Model):
     @classmethod
     def get_public_decks(cls, user_id: int):
         return cls.query.filter_by(is_public=True).filter(Deck.user_id != user_id).all()
+    
+    @classmethod
+    def clone_to_user(cls, deck_id: int, user_id: int):
+        original_deck = cls.query.filter_by(deck_id=deck_id, is_public=True).first()
+        if not original_deck:
+            abort(404, message="Public deck not found.")
+
+        new_deck = Deck(name=original_deck.name + " (Clone)", user_id=user_id, is_public=False)
+        db.session.add(new_deck)
+        db.session.flush()
+
+        for card in original_deck.cards:
+            new_card = Card(
+                user_id=user_id,
+                word_id=card.word_id                
+            )
+            db.session.add(new_card)
+            db.session.flush()
+            
+            new_deck_card = DeckCard(deck_id=new_deck.deck_id, card_id=new_card.id)
+            db.session.add(new_deck_card)
+
+        db.session.commit()
+
+        return new_deck
 
 class DeckCard(db.Model):
     __tablename__ = 'deck_card'
