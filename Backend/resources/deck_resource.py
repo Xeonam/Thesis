@@ -89,3 +89,17 @@ class DeleteDeck(Resource):
 
         except Exception as e:
             return {"message": str(e)}, 500
+
+class GetPublicDecks(Resource):
+    @jwt_required()
+    def get(self):
+        try:
+            current_user_id = get_jwt_identity()
+            decks = Deck.get_public_decks(current_user_id)
+
+            data = [{'deck_id': deck.deck_id, 'name': deck.name} for deck in decks]
+
+            return data, 200
+
+        except Exception as e:
+            return {"message": str(e)}, 500
