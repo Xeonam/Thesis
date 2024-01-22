@@ -1,12 +1,16 @@
 import React from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { fetchPublicDecks, cloneDeck } from "../api/apiCalls";
+import { toast } from "react-toastify";
+
 function ViewPublicDecks() {
   const cloneMutation = useMutation({
     mutationFn: cloneDeck,
     onSuccess: () => {
+      toast.success("Deck has been successfully cloned!");
     },
     onError: () => {
+      toast.error("An error occurred while cloning the deck.");
     },
   });
 
