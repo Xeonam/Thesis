@@ -188,7 +188,8 @@ class Deck(db.Model):
     deck_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
-
+    is_public = db.Column(db.Boolean, nullable=False, default=False)
+    
     cards = db.relationship('Card', secondary='deck_card', back_populates='decks', lazy=True)
     user = db.relationship('User', back_populates='decks')
 
