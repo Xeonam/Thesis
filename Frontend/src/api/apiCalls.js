@@ -185,3 +185,17 @@ export async function fetchPublicDecks() {
   });
   return response.data;
 }
+
+export async function cloneDeck(deckId) {
+  const token = localStorage.getItem("accessToken");
+  const response = await axios.post(
+    "http://localhost:5000/clone-deck",
+    { deck_id: deckId },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+}
