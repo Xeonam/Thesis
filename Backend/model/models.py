@@ -222,6 +222,9 @@ class Deck(db.Model):
         db.session.commit()
         return deck
 
+    @classmethod
+    def get_public_decks(cls, user_id: int):
+        return cls.query.filter_by(is_public=True).filter(Deck.user_id != user_id).all()
 
 class DeckCard(db.Model):
     __tablename__ = 'deck_card'
