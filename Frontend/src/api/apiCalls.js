@@ -174,3 +174,14 @@ export async function addCustomWord(wordData) {
   );
   return response.data;
 }
+
+/* fetch public Decks */
+export async function fetchPublicDecks() {
+  const token = localStorage.getItem("accessToken");
+  const response = await axios.get("http://localhost:5000/get-public-decks", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
