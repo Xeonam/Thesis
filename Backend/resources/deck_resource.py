@@ -11,11 +11,12 @@ class CreateDeck(Resource):
         data = request.get_json()
         user_id = get_jwt_identity()
         name = data.get("name")
+        is_public = data.get("is_public")
 
         if not name:
             return {"message": "Deck name is required."}, 400
 
-        deck = Deck.add_deck(name, user_id)
+        deck = Deck.add_deck(name, user_id, is_public)
         return {"message": "Deck created successfully!", "deck_id": deck.deck_id}, 201
     
 class AddCardToDeck(Resource):

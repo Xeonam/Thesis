@@ -189,13 +189,13 @@ class Deck(db.Model):
     name = db.Column(db.String(255), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     is_public = db.Column(db.Boolean, nullable=False, default=False)
-    
+
     cards = db.relationship('Card', secondary='deck_card', back_populates='decks', lazy=True)
     user = db.relationship('User', back_populates='decks')
 
     @classmethod
-    def add_deck(cls, name: str, user_id: int):
-        deck = cls(name=name, user_id=user_id)
+    def add_deck(cls, name: str, user_id: int, is_public: bool = False):
+        deck = cls(name=name, user_id=user_id, is_public=is_public)
         db.session.add(deck)
         db.session.commit()
         return deck
