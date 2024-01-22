@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Home, Register, LogIn, Dashboard, SubmitWord, DueCard, DeckPage, DeckWordsPractisePage, AddNewDeck} from "./pages";
+import { Home, Register, LogIn, Dashboard, SubmitWord, DueCard, DeckPage, DeckWordsPractisePage, AddNewDeck, ViewPublicDecksPage} from "./pages";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -65,7 +65,7 @@ const App = () => {
             path="/view-public-decks"
             element={
               <RequireAuth>
-                <AddNewDeck />
+                <ViewPublicDecksPage />
               </RequireAuth>
             }
           />
