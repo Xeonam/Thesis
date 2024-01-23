@@ -1,7 +1,8 @@
 import React from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { fetchPublicDecks, cloneDeck } from "../api/apiCalls";
 import { toast } from "react-toastify";
+import { useCustomQuery } from "../hooks/useApiData";
 
 function ViewPublicDecks() {
   const cloneMutation = useMutation({
@@ -18,10 +19,10 @@ function ViewPublicDecks() {
     cloneMutation.mutate(deck_id);
   };
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["decks"],
-    queryFn: fetchPublicDecks,
-  });
+  const { data, isLoading, error } = useCustomQuery(
+    ["decks"],
+    fetchPublicDecks
+  );
 
   if (isLoading) {
     return <div>Loading...</div>;

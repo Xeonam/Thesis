@@ -1,12 +1,11 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { fetchWords } from "../api/apiCalls";
+import { useCustomQuery } from "../hooks/useApiData";
 
 function Words() {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["words"],
-    queryFn: fetchWords,
-  });
+
+  const { data, isLoading, error } = useCustomQuery(["words"], fetchWords);
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -29,7 +28,7 @@ function Words() {
               <h3 className="text-lg font-semibold text-gray-800 mb-2">
                 English Word: {wordItem.word.english_word}
               </h3>
-              <hr class="h-px  bg-black border-0"></hr>
+              <hr className="h-px  bg-black border-0"></hr>
               <p className="text-gray-600 pt-2">
                 Hungarian Meaning: {wordItem.word.hungarian_meaning}
               </p>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { fetchDeckWords, repeatCard } from "../api/apiCalls";
 import ReactCardFlip from "react-card-flip";
+import { useCustomQuery } from "../hooks/useApiData";
 
 function DeckWordPractise() {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -24,10 +25,10 @@ function DeckWordPractise() {
     },
   });
 
-  const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["deckWords", deckId],
-    queryFn: () => fetchDeckWords(deckId),
-  });
+  const { data, isLoading, error, refetch } = useCustomQuery(
+    ["deckWords", deckId],
+    () => fetchDeckWords(deckId)
+  );
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -57,17 +58,19 @@ function DeckWordPractise() {
   };
 
   if (data.length === 0) {
-    return <div>
-      <section className="bg-navbarBgColor">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen-90 lg:py-0">
-          <div className="w-full bg-[#e7b4a7] rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8 text-center font-bold">
+    return (
+      <div>
+        <section className="bg-navbarBgColor">
+          <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen-90 lg:py-0">
+            <div className="w-full bg-[#e7b4a7] rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
+              <div className="p-6 space-y-4 md:space-y-6 sm:p-8 text-center font-bold">
                 There are no cards in the deck!
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-      </div>;
+        </section>
+      </div>
+    );
   }
   return (
     <div>

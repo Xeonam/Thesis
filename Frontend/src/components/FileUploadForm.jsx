@@ -1,23 +1,21 @@
 import React, { useState } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { uploadFile, fetchDecks } from "../api/apiCalls";
 import { FaInfoCircle } from "react-icons/fa";
+import { useCustomQuery } from "../hooks/useApiData";
 
 function FileUploadForm() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedDeck, setSelectedDeck] = useState("");
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data: decks } = useQuery({
-    queryKey: ["decks"],
-    queryFn: fetchDecks,
-  });
+  const { data: decks } = useCustomQuery(["decks"], fetchDecks);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
+  
   const uploadMutation = useMutation({
     mutationFn: uploadFile,
     onSuccess: () => toast.success("File uploaded successfully"),

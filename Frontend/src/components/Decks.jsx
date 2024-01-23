@@ -1,21 +1,19 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchDecks, deleteDeck } from "../api/apiCalls";
+import { useCustomQuery } from "../hooks/useApiData";
 
 function Decks() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["decks"],
-    queryFn: fetchDecks,
-  });
+
+  const { data, isLoading, error } = useCustomQuery(["decks"], fetchDecks);
 
   const deleteMutation = useMutation({
     mutationFn: deleteDeck,
     onSuccess: () => {
       queryClient.invalidateQueries(["decks"]);
-      /* queryClient.invalidateQueries({ queryKey: ["suppliersData"] }); */
     },
   });
 
