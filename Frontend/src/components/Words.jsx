@@ -1,12 +1,11 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { fetchWords } from "../api/apiCalls";
+import { useCustomQuery } from "../hooks/useApiData";
 
 function Words() {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["words"],
-    queryFn: fetchWords,
-  });
+
+  const { data, isLoading, error } = useCustomQuery(["words"], fetchWords);
+
 
   if (isLoading) {
     return <div>Loading...</div>;
