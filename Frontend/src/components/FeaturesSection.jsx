@@ -22,7 +22,7 @@ const FeaturesSection = () => {
           Why <span className="text-customTextHighlight">choose</span> WordEnlighten?
         </h2>
       </div>
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         <FeatureCard
           title="Fast, Free Translations"
           bgColor="bg-[#FDEAE2]"
