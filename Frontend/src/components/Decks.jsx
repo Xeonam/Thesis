@@ -6,6 +6,7 @@ import { fetchDecks, deleteDeck } from "../api/apiCalls";
 function Decks() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["decks"],
     queryFn: fetchDecks,
@@ -15,7 +16,6 @@ function Decks() {
     mutationFn: deleteDeck,
     onSuccess: () => {
       queryClient.invalidateQueries(["decks"]);
-      /* queryClient.invalidateQueries({ queryKey: ["suppliersData"] }); */
     },
   });
 
