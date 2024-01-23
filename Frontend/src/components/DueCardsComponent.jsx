@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { fetchDueCards, repeatCard } from "../api/apiCalls";
+import { useCustomQuery } from "../hooks/useApiData";
 import ReactCardFlip from "react-card-flip";
 
 function DueCardsComponent() {
@@ -22,10 +23,7 @@ function DueCardsComponent() {
     },
   });
 
-  const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["dueCards"],
-    queryFn: fetchDueCards,
-  });
+  const { data, isLoading, error, refetch } = useCustomQuery(["dueCards"], fetchDueCards);
 
   if (isLoading) {
     return <div>Loading...</div>;
