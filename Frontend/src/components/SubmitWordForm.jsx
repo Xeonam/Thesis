@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaBackspace } from "react-icons/fa";
 import FileUploadForm from "./FileUploadForm";
+import { useCustomQuery } from "../hooks/useApiData";
 
 const schema = yup.object({
   english_word: yup.string().required("English word is required"),
@@ -32,10 +33,7 @@ function SubmitWordForm() {
   });
 
   /* Get decks */
-  const { data: decks } = useQuery({
-    queryKey: ["decks"],
-    queryFn: fetchDecks,
-  });
+  const { data: decks } = useCustomQuery(["decks"], fetchDecks);
 
   /* Translate word */
   const submitMutation = useMutation({
