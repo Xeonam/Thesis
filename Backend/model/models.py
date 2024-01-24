@@ -73,7 +73,6 @@ class User(db.Model):
         .filter(User.user_id == user_id)
         .all())
     
-        print(words_in_deck)
         return words_in_deck
 
 class Word(db.Model):
@@ -189,10 +188,12 @@ class Deck(db.Model):
         db.session.commit()
         return deck
     
+    #do i need this?
     @classmethod
     def get_deck(cls, deck_id: int):
         return cls.query.filter_by(deck_id=deck_id).first()
     
+    #do i need this?
     @classmethod
     def get_deck_words(cls, deck_id: int):
         words_in_deck = (

@@ -49,7 +49,7 @@ class GetDeckWords(Resource):
     def get(self):
         try:
             deck_id = request.args.get("deck_id")
-
+            print(deck_id)
             if not deck_id:
                 return {"message": "Deck ID is required."}, 400
 
@@ -116,3 +116,4 @@ class CloneDeck(Resource):
         
         except Exception as e:
             return {"message": str(e)}, 500
+        
