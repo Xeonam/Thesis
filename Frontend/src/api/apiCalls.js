@@ -199,3 +199,16 @@ export async function cloneDeck(deckId) {
   );
   return response.data;
 }
+
+export async function fetchPublicDeckWords(deckId) {
+  const token = localStorage.getItem("accessToken");
+  const response = await axios.get("http://localhost:5000/get-public-deck-words", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    params: {
+      deck_id: deckId,
+    },
+  });
+  return response.data;
+}

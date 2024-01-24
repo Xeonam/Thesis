@@ -1,5 +1,6 @@
 import React from "react";
-import { fetchDeckWords } from "../api/apiCalls";
+/* import { fetchDeckWords } from "../api/apiCalls"; */
+import { fetchPublicDeckWords } from "../api/apiCalls";
 import { useCustomQuery } from "../hooks/useApiData";
 import { Table } from "flowbite-react";
 
@@ -8,7 +9,8 @@ function DeckWordsPreviewComponent() {
 
   const { data, isLoading, error, refetch } = useCustomQuery(
     ["deckWords", deckId],
-    () => fetchDeckWords(deckId)
+    /* () => fetchDeckWords(deckId) */
+    () => fetchPublicDeckWords(deckId)
   );
 
   if (isLoading) {
@@ -34,7 +36,7 @@ function DeckWordsPreviewComponent() {
           {data.map((item, index) => (
             <Table.Row key={item.card_id} className="bg-gray-700">
               <Table.Cell className="whitespace-nowrap font-medium text-white">
-                {index + 1} {/* Sorszám az 1-től kezdődik, nem 0-tól */}
+                {index + 1}
               </Table.Cell>
               <Table.Cell className="text-white">
                 {item.word.english_word}
