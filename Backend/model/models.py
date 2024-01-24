@@ -193,17 +193,20 @@ class Deck(db.Model):
     def get_deck(cls, deck_id: int):
         return cls.query.filter_by(deck_id=deck_id).first()
     
-    #do i need this?
     @classmethod
-    def get_deck_words(cls, deck_id: int):
+    def get_public_deck_words(cls, deck_id: int):
         words_in_deck = (
-            db.session.query(Word)
-            .join(Card, Word.word_id == Card.word_id)
+            db.session.query(Card, Word)
+            .join(Word, Word.word_id == Card.word_id)
             .join(DeckCard, Card.id == DeckCard.card_id)
+            .join(Deck, DeckCard.deck_id == Deck.deck_id)
             .filter(DeckCard.deck_id == deck_id)
+            .filter(Deck.is_public.is_(True))
             .all()
         )
+
         return words_in_deck
+
     
     @classmethod
     def delete_deck(cls, deck_id: int):
