@@ -46,17 +46,8 @@ class User(db.Model):
         )
         return user_cards
     
-    #a function that return the user's cards where the due date is less than the current date
     @classmethod
     def get_due_cards(cls, user_id: int):
-        """ user_cards = (
-            db.session.query(User, Card, Word)
-            .join(Card, User.user_id == Card.user_id)
-            .join(Word, Card.word_id == Word.word_id)
-            .filter(User.user_id == user_id)
-            .filter(Card.due < datetime.utcnow())
-            .all()
-        ) """
         user_cards = (
             db.session.query(User, Card, Word)
             .join(Card, User.user_id == Card.user_id)
@@ -103,7 +94,6 @@ class Word(db.Model):
         db.session.commit()
         return word
     
-    #function that returns the word with the given english word
     @classmethod
     def get_word(cls, english_word: str):
         return cls.query.filter_by(english_word=english_word).first()
@@ -150,7 +140,6 @@ class Card(db.Model):
         self.state = scheduling_card_user_rating.state
         self.last_review = scheduling_card_user_rating.last_review
     
-    #a function that invokes the do_repeat function and commits the changes to the database
     @classmethod
     def repeat(self, card_id, user_rating: Rating) -> None:
         card = self.get_card(card_id)
