@@ -1,6 +1,7 @@
 import React from "react";
 import { fetchDeckWords } from "../api/apiCalls";
 import { useCustomQuery } from "../hooks/useApiData";
+import { Table } from "flowbite-react";
 
 function DeckWordsPreviewComponent() {
   const deckId = window.location.pathname.split("/")[2];
@@ -20,7 +21,36 @@ function DeckWordsPreviewComponent() {
 
   console.log(data);
 
-  return <div>DeckWordsPreviewComponent</div>;
+  return (
+    <div className="overflow-x-auto">
+      <Table>
+        <Table.Head>
+          <Table.HeadCell className="bg-gray-800 text-white">Card</Table.HeadCell>
+          <Table.HeadCell className="bg-gray-800 text-white">English Word</Table.HeadCell>
+          <Table.HeadCell className="bg-gray-800 text-white">Hungarian Meaning</Table.HeadCell>
+          <Table.HeadCell className="bg-gray-800 text-white">Custom Meaning</Table.HeadCell>
+        </Table.Head>
+        <Table.Body className="divide-y divide-gray-700">
+          {data.map((item, index) => (
+            <Table.Row key={item.card_id} className="bg-gray-700">
+              <Table.Cell className="whitespace-nowrap font-medium text-white">
+                {index + 1} {/* Sorszám az 1-től kezdődik, nem 0-tól */}
+              </Table.Cell>
+              <Table.Cell className="text-white">
+                {item.word.english_word}
+              </Table.Cell>
+              <Table.Cell className="text-white">
+                {item.word.hungarian_meaning}
+              </Table.Cell>
+              <Table.Cell className="text-white">
+                {item.word.custom_meaning ? "Yes" : "No"}
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
+    </div>
+  );
 }
 
 export default DeckWordsPreviewComponent;
