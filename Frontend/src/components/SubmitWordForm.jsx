@@ -123,6 +123,10 @@ function SubmitWordForm() {
   });
 
   const handleAddCardToDeckClick = () => {
+    if (!selectedDeck) {
+      toast.error("Please select a deck before adding the word.");
+      return;
+    }
     addCardAndAddToDeck();
   };
 
