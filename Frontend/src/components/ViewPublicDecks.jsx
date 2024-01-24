@@ -57,7 +57,7 @@ function ViewPublicDecks() {
               </button>
               <button
                 className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mt-2"
-                onClick={() => navigate(`/preview/${item.deck_id}`)}
+                onClick={() => navigate(`/preview/${item.deck_id}`, { state: { fromPrivate: false } })}
               >
                 Preview
               </button>

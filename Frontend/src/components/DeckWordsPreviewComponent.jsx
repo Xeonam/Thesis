@@ -1,16 +1,19 @@
 import React from "react";
-/* import { fetchDeckWords } from "../api/apiCalls"; */
+import { fetchDeckWords } from "../api/apiCalls";
 import { fetchPublicDeckWords } from "../api/apiCalls";
 import { useCustomQuery } from "../hooks/useApiData";
 import { Table } from "flowbite-react";
+import { useLocation } from "react-router-dom";
 
 function DeckWordsPreviewComponent() {
   const deckId = window.location.pathname.split("/")[2];
 
+  const location = useLocation();
+  const fromPrivate = location.state?.fromPrivate;
+  console.log(fromPrivate);
   const { data, isLoading, error, refetch } = useCustomQuery(
     ["deckWords", deckId],
-    /* () => fetchDeckWords(deckId) */
-    () => fetchPublicDeckWords(deckId)
+    () => fromPrivate ? fetchDeckWords(deckId) : fetchPublicDeckWords(deckId)
   );
 
   if (isLoading) {
