@@ -49,7 +49,7 @@ class GetDeckWords(Resource):
     def get(self):
         try:
             deck_id = request.args.get("deck_id")
-
+            print(deck_id)
             if not deck_id:
                 return {"message": "Deck ID is required."}, 400
 
@@ -114,5 +114,28 @@ class CloneDeck(Resource):
 
             return {"message": "Deck cloned successfully!"}, 200
         
+        except Exception as e:
+            return {"message": str(e)}, 500
+        
+class GetPublicDeckWords(Resource):
+    @jwt_required()
+    def get(self):
+        try:
+            deck_id = request.args.get("deck_id")
+
+            if not deck_id:
+                return {"message": "Deck ID is required."}, 400
+
+            deck = Deck.get_deck(deck_id)
+
+            if not deck:
+                return {"message": "Deck not found."}, 404
+
+            data = Deck.get_public_deck_words(deck_id)
+
+            words = [{'card_id': card.Card.id, 'word': word_schema.dump(card.Word)} for card in data]
+
+            return words, 200
+
         except Exception as e:
             return {"message": str(e)}, 500

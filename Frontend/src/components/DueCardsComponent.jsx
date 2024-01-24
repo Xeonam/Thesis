@@ -54,7 +54,6 @@ function DueCardsComponent() {
 
   if (data.length === 0) {
     return <div>
-      <section className="bg-navbarBgColor">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen-90 lg:py-0">
           <div className="w-full bg-[#e7b4a7] rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8 text-center font-bold">
@@ -62,13 +61,11 @@ function DueCardsComponent() {
             </div>
           </div>
         </div>
-      </section>
       </div>;
   }
 
   return (
     <div>
-      <section className="bg-navbarBgColor">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen-90 lg:py-0">
           <div className="w-full bg-[#a7e7c6] rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -131,7 +128,6 @@ function DueCardsComponent() {
             </div>
           </div>
         </div>
-      </section>
     </div>
   );
 }

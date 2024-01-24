@@ -3,7 +3,7 @@ import { AddNewDeckForm, DefaultNavbar } from "../components";
 
 function AddNewDeck() {
   return (
-    <div>
+    <div className="bg-[#412A4C] min-h-screen">
       <DefaultNavbar />
       <AddNewDeckForm />
     </div>

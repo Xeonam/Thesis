@@ -2,7 +2,7 @@ import React from 'react'
 import { DueCardsComponent, DefaultNavbar } from '../components'
 function DueCard() {
   return (
-    <div>
+    <div className="bg-[#412A4C] min-h-screen">
         <DefaultNavbar />
         <DueCardsComponent />
     </div>

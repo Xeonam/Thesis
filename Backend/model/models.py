@@ -46,17 +46,8 @@ class User(db.Model):
         )
         return user_cards
     
-    #a function that return the user's cards where the due date is less than the current date
     @classmethod
     def get_due_cards(cls, user_id: int):
-        """ user_cards = (
-            db.session.query(User, Card, Word)
-            .join(Card, User.user_id == Card.user_id)
-            .join(Word, Card.word_id == Word.word_id)
-            .filter(User.user_id == user_id)
-            .filter(Card.due < datetime.utcnow())
-            .all()
-        ) """
         user_cards = (
             db.session.query(User, Card, Word)
             .join(Card, User.user_id == Card.user_id)
@@ -82,7 +73,6 @@ class User(db.Model):
         .filter(User.user_id == user_id)
         .all())
     
-        print(words_in_deck)
         return words_in_deck
 
 class Word(db.Model):
@@ -103,7 +93,6 @@ class Word(db.Model):
         db.session.commit()
         return word
     
-    #function that returns the word with the given english word
     @classmethod
     def get_word(cls, english_word: str):
         return cls.query.filter_by(english_word=english_word).first()
@@ -150,7 +139,6 @@ class Card(db.Model):
         self.state = scheduling_card_user_rating.state
         self.last_review = scheduling_card_user_rating.last_review
     
-    #a function that invokes the do_repeat function and commits the changes to the database
     @classmethod
     def repeat(self, card_id, user_rating: Rating) -> None:
         card = self.get_card(card_id)
@@ -200,20 +188,25 @@ class Deck(db.Model):
         db.session.commit()
         return deck
     
+    #do i need this?
     @classmethod
     def get_deck(cls, deck_id: int):
         return cls.query.filter_by(deck_id=deck_id).first()
     
     @classmethod
-    def get_deck_words(cls, deck_id: int):
+    def get_public_deck_words(cls, deck_id: int):
         words_in_deck = (
-            db.session.query(Word)
-            .join(Card, Word.word_id == Card.word_id)
+            db.session.query(Card, Word)
+            .join(Word, Word.word_id == Card.word_id)
             .join(DeckCard, Card.id == DeckCard.card_id)
+            .join(Deck, DeckCard.deck_id == Deck.deck_id)
             .filter(DeckCard.deck_id == deck_id)
+            .filter(Deck.is_public.is_(True))
             .all()
         )
+
         return words_in_deck
+
     
     @classmethod
     def delete_deck(cls, deck_id: int):

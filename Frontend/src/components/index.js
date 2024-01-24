@@ -12,6 +12,8 @@ import Decks from "./Decks";
 import DeckWordPractise from "./DeckWordPractise";
 import AddNewDeckForm from "./AddNewDeckForm";
 import ViewPublicDecks from "./ViewPublicDecks";
+import DeckWordsPreviewComponent from "./DeckWordsPreviewComponent";
+
 export {
   DefaultNavbar,
   Hero,
@@ -27,4 +29,5 @@ export {
   DeckWordPractise,
   AddNewDeckForm,
   ViewPublicDecks,
+  DeckWordsPreviewComponent
 };

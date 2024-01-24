@@ -3,7 +3,7 @@ import { SubmitWordForm, DefaultNavbar } from "../components";
 
 function SubmitWord() {
   return (
-    <div>
+    <div className="bg-[#412A4C] min-h-screen">
       <DefaultNavbar />
       <SubmitWordForm />
     </div>
