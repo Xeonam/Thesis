@@ -3,8 +3,11 @@ import { useMutation } from "@tanstack/react-query";
 import { fetchPublicDecks, cloneDeck } from "../api/apiCalls";
 import { toast } from "react-toastify";
 import { useCustomQuery } from "../hooks/useApiData";
+import { useNavigate } from "react-router-dom";
+
 
 function ViewPublicDecks() {
+  const navigate = useNavigate();
   const cloneMutation = useMutation({
     mutationFn: cloneDeck,
     onSuccess: () => {
@@ -51,6 +54,12 @@ function ViewPublicDecks() {
                 onClick={() => handleClone(item.deck_id)}
               >
                 Add to my decks
+              </button>
+              <button
+                className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mt-2"
+                onClick={() => navigate(`/preview/${item.deck_id}`)}
+              >
+                Preview
               </button>
             </div>
           </div>
