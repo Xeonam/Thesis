@@ -70,7 +70,7 @@ const App = () => {
             }
           />
           <Route
-            path="/preview:deckId"
+            path="/preview/:deckId"
             element={
               <RequireAuth>
                 <DeckWordsPreview />
