@@ -79,5 +79,6 @@ class GetTextAnalysis(Resource):
     def post(self):
         data = request.get_json()
         text = data['text']
-        return analyze_text_and_return_json(text)
+        analysis = analyze_text_and_return_json(text)
+        return analysis
 
