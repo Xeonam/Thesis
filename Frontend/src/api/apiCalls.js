@@ -215,7 +215,6 @@ export async function fetchPublicDeckWords(deckId) {
 
 export async function getTextAnalysis(text) {
   const token = localStorage.getItem("accessToken");
-  console.log(text);
   const response = await axios.post("http://127.0.0.1:5000/get-text-analysis", text, {
     headers: {
       Authorization: `Bearer ${token}`,

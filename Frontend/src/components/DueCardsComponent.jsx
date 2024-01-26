@@ -11,16 +11,12 @@ function DueCardsComponent() {
   const repeatCardMutation = useMutation({
     mutationFn: repeatCard,
     onSuccess: () => {
-      console.log("Card has been successfully repeated!");
       const isLastCard = currentCardIndex === data.length - 1;
       if (isLastCard) {
         refetch();
       }
       handleNext(isLastCard);
-    },
-    onError: (error) => {
-      console.log("An error occurred while repeating the card.", error);
-    },
+    }
   });
 
   const { data, isLoading, error, refetch } = useCustomQuery(["dueCards"], fetchDueCards);

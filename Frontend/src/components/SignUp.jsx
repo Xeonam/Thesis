@@ -38,7 +38,6 @@ function SignUp() {
 
   const onSubmit = (data) => {
     const { confirmPassword, ...userData } = data;
-    console.log(userData);
     createUserMutation.mutate(userData);
   };
 

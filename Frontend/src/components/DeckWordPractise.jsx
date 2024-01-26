@@ -14,16 +14,12 @@ function DeckWordPractise() {
   const repeatCardMutation = useMutation({
     mutationFn: repeatCard,
     onSuccess: () => {
-      console.log("Card has been successfully repeated!");
       const isLastCard = currentCardIndex === data.length - 1;
       if (isLastCard) {
         refetch();
       }
       handleNext(isLastCard);
-    },
-    onError: (error) => {
-      console.log("An error occurred while repeating the card.", error);
-    },
+    }
   });
 
   const { data, isLoading, error, refetch } = useCustomQuery(
@@ -34,7 +30,6 @@ function DeckWordPractise() {
   const AnalysisMutation = useMutation({
     mutationFn: getTextAnalysis,
     onSuccess: (data) => {
-      console.log("Text analysis has been successfully done!");
       setAnalysisResult(data);
     },
   });
@@ -72,8 +67,6 @@ function DeckWordPractise() {
       text: currentCard.word.english_word,
     });
   };
-
-  console.log(currentCard.word.english_word);
 
   if (data.length === 0) {
     return (

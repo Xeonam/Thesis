@@ -10,7 +10,6 @@ function DeckWordsPreviewComponent() {
 
   const location = useLocation();
   const fromPrivate = location.state?.fromPrivate;
-  console.log(fromPrivate);
   const { data, isLoading, error, refetch } = useCustomQuery(
     ["deckWords", deckId],
     () => fromPrivate ? fetchDeckWords(deckId) : fetchPublicDeckWords(deckId)
@@ -24,7 +23,6 @@ function DeckWordsPreviewComponent() {
     return <div>Error! {error.message}</div>;
   }
 
-  console.log(data);
 
   return (
     <div className="overflow-x-auto">
