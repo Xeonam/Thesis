@@ -50,7 +50,6 @@ class FileUpload(Resource):
         user_id = get_jwt_identity()
         if 'file' not in request.files:
             return {'message': 'No file part'}, 400
-        print(request.form)
         deck_id = request.form.get('deck_id')
         file = request.files['file']
 
