@@ -16,9 +16,10 @@ class AddUser(Resource):
         username = data['username']
         email = data["email"]
         pw = data["pw"]
+        if User.find_by_email(email):
+            return {'message': 'User already exists! Change email'}, 400
 
         user = User.add_user(username, email, pw)
-
         return user_schema.dump(user)
 
 class GetWords(Resource):
@@ -44,9 +45,10 @@ class Login(Resource):
         data = request.get_json()
         email = data.get('email')
         password = data.get('pw')
-
+        print(email)
+        print(password)
         user = User.find_by_email(email)
-
+        print(user)
         if user and user.verify_password(password):
             access_token = create_access_token(identity=user.user_id)
             return {'access_token': access_token}, 200

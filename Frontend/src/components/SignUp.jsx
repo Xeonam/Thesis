@@ -34,6 +34,9 @@ function SignUp() {
         Navigate("/dashboard");
       }, 2000);
     },
+    onError: (error) => {
+      toast.error(error.response.data.message);
+    },
   });
 
   const onSubmit = (data) => {
