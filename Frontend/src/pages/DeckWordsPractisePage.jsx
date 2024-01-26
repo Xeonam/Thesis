@@ -3,7 +3,7 @@ import { DeckWordPractise, DefaultNavbar } from "../components";
 
 function DeckWordsPractisePage() {
   return (
-    <div>
+    <div className="bg-[#412A4C] min-h-screen">
       <DefaultNavbar />
       <DeckWordPractise />
     </div>
