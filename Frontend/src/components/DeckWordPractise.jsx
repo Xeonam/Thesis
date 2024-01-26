@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { fetchDeckWords, repeatCard } from "../api/apiCalls";
+import { fetchDeckWords, repeatCard, getTextAnalysis } from "../api/apiCalls";
 import ReactCardFlip from "react-card-flip";
 import { useCustomQuery } from "../hooks/useApiData";
 
 function DeckWordPractise() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [analysisResult, setAnalysisResult] = useState("");
 
   const deckId = window.location.pathname.split("/")[2];
 
@@ -29,6 +30,16 @@ function DeckWordPractise() {
     ["deckWords", deckId],
     () => fetchDeckWords(deckId)
   );
+
+  const AnalysisMutation = useMutation({
+    mutationFn: getTextAnalysis,
+    onSuccess: () => {
+      console.log("Text analysis has been successfully done!");
+      setAnalysisResult(JSON.stringify(data, null, 2));
+    }
+  })
+
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -56,6 +67,14 @@ function DeckWordPractise() {
       rating: rating,
     });
   };
+
+  const analysisHandler = () => {
+    AnalysisMutation.mutate({
+      text: currentCard.word.english_word
+    })
+  }
+
+  console.log(currentCard.word.english_word);
 
   if (data.length === 0) {
     return (
@@ -93,7 +112,8 @@ function DeckWordPractise() {
                     {currentCard.word.hungarian_meaning}
                   </div>
                 </ReactCardFlip>
-              )}
+                
+              ) }
 
               {isFlipped && (
                 <>
@@ -130,6 +150,12 @@ function DeckWordPractise() {
                 className="mt-4 p-2 bg-blue-500 text-white rounded"
               >
                 Next
+              </button>
+              <button
+                onClick={analysisHandler}
+                className="mt-4 p-2 bg-blue-500 text-white rounded"
+              >
+                Analysis
               </button>
             </div>
           </div>
