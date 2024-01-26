@@ -57,6 +57,7 @@ function DeckWordPractise() {
     let nextIndex = (currentCardIndex + 1) % data.length;
     setCurrentCardIndex(nextIndex);
     setIsFlipped(false);
+    setAnalysisResult([]);
   };
 
   const repeatCardHandler = (rating) => {
