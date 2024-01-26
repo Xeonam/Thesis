@@ -4,16 +4,21 @@ import { fetchPublicDeckWords } from "../api/apiCalls";
 import { useCustomQuery } from "../hooks/useApiData";
 import { Table } from "flowbite-react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function DeckWordsPreviewComponent() {
   const deckId = window.location.pathname.split("/")[2];
-
   const location = useLocation();
   const fromPrivate = location.state?.fromPrivate;
-  console.log(fromPrivate);
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   const { data, isLoading, error, refetch } = useCustomQuery(
     ["deckWords", deckId],
-    () => fromPrivate ? fetchDeckWords(deckId) : fetchPublicDeckWords(deckId)
+    () => (fromPrivate ? fetchDeckWords(deckId) : fetchPublicDeckWords(deckId))
   );
 
   if (isLoading) {
@@ -24,16 +29,29 @@ function DeckWordsPreviewComponent() {
     return <div>Error! {error.message}</div>;
   }
 
-  console.log(data);
-
   return (
     <div className="overflow-x-auto">
+      <button
+        onClick={handleBack}
+        className="p-2 bg-blue-500 rounded my-5 mx-2 hover:text-importantText"
+      >
+        Return
+      </button>
+
       <Table>
         <Table.Head>
-          <Table.HeadCell className="bg-gray-800 text-white">Card</Table.HeadCell>
-          <Table.HeadCell className="bg-gray-800 text-white">English Word</Table.HeadCell>
-          <Table.HeadCell className="bg-gray-800 text-white">Hungarian Meaning</Table.HeadCell>
-          <Table.HeadCell className="bg-gray-800 text-white">Custom Meaning</Table.HeadCell>
+          <Table.HeadCell className="bg-gray-800 text-white">
+            Card
+          </Table.HeadCell>
+          <Table.HeadCell className="bg-gray-800 text-white">
+            English Word
+          </Table.HeadCell>
+          <Table.HeadCell className="bg-gray-800 text-white">
+            Hungarian Meaning
+          </Table.HeadCell>
+          <Table.HeadCell className="bg-gray-800 text-white">
+            Custom Meaning
+          </Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y divide-gray-700">
           {data.map((item, index) => (

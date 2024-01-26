@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import { useCustomQuery } from "../hooks/useApiData";
 import { useNavigate } from "react-router-dom";
 
-
 function ViewPublicDecks() {
   const navigate = useNavigate();
   const cloneMutation = useMutation({
@@ -27,6 +26,10 @@ function ViewPublicDecks() {
     fetchPublicDecks
   );
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -37,6 +40,12 @@ function ViewPublicDecks() {
 
   return (
     <div className="p-5">
+      <button
+        onClick={handleBack}
+        className="p-2 bg-blue-500 rounded my-5 mx-2 hover:text-importantText"
+      >
+        Return
+      </button>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 text-center">
         {data?.map((item) => (
           <div
@@ -57,7 +66,11 @@ function ViewPublicDecks() {
               </button>
               <button
                 className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mt-2"
-                onClick={() => navigate(`/preview/${item.deck_id}`, { state: { fromPrivate: false } })}
+                onClick={() =>
+                  navigate(`/preview/${item.deck_id}`, {
+                    state: { fromPrivate: false },
+                  })
+                }
               >
                 Preview
               </button>

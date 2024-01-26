@@ -29,7 +29,6 @@ function Decks() {
     return <div>Error! {error.message}</div>;
   }
 
-  console.log(data);
   return (
     <div className="p-5">
       <h1 className="text-2xl font-bold mb-5 text-importantText">Decks</h1>

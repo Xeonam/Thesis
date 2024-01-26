@@ -4,6 +4,7 @@ from model.models import db, Word, Card, DeckCard
 from schema.schemas import WordSchema
 from utils.translator import translate_to_hungarian
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from utils.text_analyzer import analyze_text_and_return_json
 from werkzeug.utils import secure_filename
 
 word_schema = WordSchema()
@@ -49,7 +50,6 @@ class FileUpload(Resource):
         user_id = get_jwt_identity()
         if 'file' not in request.files:
             return {'message': 'No file part'}, 400
-        print(request.form)
         deck_id = request.form.get('deck_id')
         file = request.files['file']
 
@@ -72,4 +72,12 @@ class FileUpload(Resource):
                 DeckCard.add_to_deck(deck_id, card.id)
             
         return {'message': f'File {file.filename} uploaded successfully'}, 200
+    
+class GetTextAnalysis(Resource):
+    @jwt_required()
+    def post(self):
+        data = request.get_json()
+        text = data['text']
+        analysis = analyze_text_and_return_json(text)
+        return analysis
 

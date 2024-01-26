@@ -37,6 +37,5 @@ class GetCard(Resource):
     @jwt_required()
     def get(self, card_id: int):
         card = Card.verify_card_ownership(card_id)
-        print(card)
         #card = Card.get_card(card_id)
         return card_schema.dump(card)
