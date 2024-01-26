@@ -114,7 +114,7 @@ function DeckWordPractise() {
 
             {isFlipped && (
               <>
-                <div className="flex mt-4 gap-12 text-white ">
+                <div className="flex justify-center gap-4 mt-4 text-white">
                   <button
                     className="p-2 bg-red-500 rounded mx-1 hover:text-importantText"
                     onClick={() => repeatCardHandler(1)}
@@ -142,10 +142,10 @@ function DeckWordPractise() {
                 </div>
               </>
             )}
-             <div className="flex gap-8  text-white ">
+             <div className="flex justify-center gap-4  text-white ">
               <button
                 onClick={handleNext}
-                className="mt-4 p-2 bg-blue-500 text-white rounded"
+                className="mt-4 px-6  bg-blue-500 text-white rounded"
               >
                 Next
               </button>
