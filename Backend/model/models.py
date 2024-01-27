@@ -106,7 +106,7 @@ class Word(db.Model):
 
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=True)
     word_id = db.Column(db.Integer, db.ForeignKey('word.word_id'), nullable=False)
     due = db.Column(db.DateTime, default=datetime.utcnow)
     stability = db.Column(db.Float, default=0)
@@ -157,7 +157,14 @@ class Card(db.Model):
         db.session.add(card)
         db.session.commit()
         return card
-    
+
+    @classmethod
+    def add_card(cls, word_id: int):
+        card = cls(word_id=word_id)
+        db.session.add(card)
+        db.session.commit()
+        return card
+
     @classmethod
     def get_card(cls, card_id: int):
         return cls.query.filter_by(id=card_id).first()
@@ -175,7 +182,7 @@ class Card(db.Model):
 class Deck(db.Model):
     deck_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=True)
     is_public = db.Column(db.Boolean, nullable=False, default=False)
 
     cards = db.relationship('Card', secondary='deck_card', back_populates='decks', lazy=True)
@@ -187,7 +194,14 @@ class Deck(db.Model):
         db.session.add(deck)
         db.session.commit()
         return deck
-    
+
+    @classmethod
+    def add_deck(cls, name: str):
+        deck = cls(name=name, is_public=True)
+        db.session.add(deck)
+        db.session.commit()
+        return deck
+
     #do i need this?
     @classmethod
     def get_deck(cls, deck_id: int):
