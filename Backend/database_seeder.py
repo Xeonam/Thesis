@@ -54,6 +54,44 @@ FAMILY = [
     ("orphan", "árvagyermek")
 ]
 
+EMOTIONS = [
+    ("happy", "boldog"),
+    ("sad", "szomorú"),
+    ("angry", "mérges"),
+    ("excited", "izgatott"),
+    ("bored", "unalmas"),
+    ("scared", "ijedt"),
+    ("nervous", "ideges"),
+    ("relaxed", "lazult"),
+    ("surprised", "meglepett"),
+    ("tired", "fáradt"),
+    ("worried", "aggódó"),
+    ("confident", "magabiztos"),
+    ("curious", "kíváncsi"),
+    ("frustrated", "frusztrált"),
+    ("grateful", "hálás"),
+    ("hopeful", "reménykedő"),
+    ("jealous", "féltékeny"),
+    ("lonely", "magányos"),
+    ("proud", "büszke"),
+    ("shy", "szégyenlős"),
+    ("calm", "nyugodt"),
+    ("disappointed", "csalódott"),
+    ("embarrassed", "zavarban"),
+    ("guilty", "bűnös"),
+    ("amused", "szórakozott"),
+    ("anxious", "aggódó"),
+    ("delighted", "elragadtatott"),
+    ("envious", "irigy"),
+    ("impressed", "lenyűgözött"),
+    ("overwhelmed", "elárasztott"),
+    ("relieved", "megkönnyebbült"),
+    ("stressed", "stresszes"),
+    ("suspicious", "gyanakvó"),
+    ("thrilled", "izgatott")
+]
+
+
 def add_deck_to_database(deck_name: str, cards: [(str, str)]):
     deck = Deck.add_deck(deck_name)
     for english, hungarian in cards:
@@ -72,6 +110,7 @@ def seed_database():
         db.session.commit()
         
         add_deck_to_database("Family", FAMILY)
+        add_deck_to_database("Emotions", EMOTIONS)
 
         db.session.commit()
 
