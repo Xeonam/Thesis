@@ -137,6 +137,48 @@ EVERYDAY_ITEMS = [
     ("scissors", "olló")
 ]
 
+FOOD_AND_DRINKS = [
+    ("apple", "alma"),
+    ("banana", "banán"),
+    ("grapes", "szőlő"),
+    ("orange", "narancs"),
+    ("peach", "barack"),
+    ("pear", "körte"),
+    ("strawberry", "eper"),
+    ("watermelon", "görögdinnye"),
+    ("chicken", "csirke"),
+    ("beef", "marhahús"),
+    ("pork", "sertéshús"),
+    ("fish", "hal"),
+    ("rice", "rizs"),
+    ("pasta", "tészta"),
+    ("bread", "kenyér"),
+    ("cheese", "sajt"),
+    ("butter", "vaj"),
+    ("milk", "tej"),
+    ("coffee", "kávé"),
+    ("tea", "tea"),
+    ("water", "víz"),
+    ("juice", "gyümölcslé"),
+    ("soda", "szénsavas ital"),
+    ("wine", "bor"),
+    ("beer", "sör"),
+    ("salad", "saláta"),
+    ("soup", "leves"),
+    ("sandwich", "szendvics"),
+    ("cake", "torta"),
+    ("chocolate", "csokoládé"),
+    ("ice cream", "fagylalt"),
+    ("egg", "tojás"),
+    ("yogurt", "joghurt"),
+    ("honey", "méz"),
+    ("sugar", "cukor"),
+    ("salt", "só"),
+    ("pepper", "bors"),
+    ("oil", "olaj"),
+    ("vinegar", "ecet")
+]
+
 
 def add_deck_to_database(deck_name: str, cards: [(str, str)]):
     deck = Deck.add_deck(deck_name)
@@ -158,6 +200,7 @@ def seed_database():
         add_deck_to_database("Family", FAMILY)
         add_deck_to_database("Emotions", EMOTIONS)
         add_deck_to_database("Everyday Items", EVERYDAY_ITEMS)
+        add_deck_to_database("Food and Drinks", FOOD_AND_DRINKS)
 
         db.session.commit()
 
