@@ -1,6 +1,58 @@
 from model.models import db, DeckCard, Card, Word, Deck, User
 from app import app
 
+FAMILY = [
+    ("family", "család"),
+    ("mother", "anya"),
+    ("father", "apa"),
+    ("sister", "lánytestvér"),
+    ("brother", "fiútestvér"),
+    ("grandmother", "nagymama"),
+    ("grandfather", "nagypapa"),
+    ("daughter", "lánya"),
+    ("son", "fia"),
+    ("wife", "feleség"),
+    ("husband", "férj"),
+    ("parent", "szülő"),
+    ("child", "gyermek"),
+    ("cousin", "unokatestvér"),
+    ("aunt", "nagynéni"),
+    ("uncle", "nagybácsi"),
+    ("niece", "unokahúg"),
+    ("nephew", "unokaöccs"),
+    ("grandchild", "unoka"),
+    ("sibling", "testvér"),
+    ("stepmother", "mostohaanya"),
+    ("stepfather", "mostohaapa"),
+    ("stepdaughter", "mostohalánya"),
+    ("stepson", "mostohafia"),
+    ("mother-in-law", "anyós"),
+    ("father-in-law", "após"),
+    ("daughter-in-law", "meny"),
+    ("son-in-law", "vej"),
+    ("half-sister", "féltestvér (lány)"),
+    ("half-brother", "féltestvér (fiú)"),
+    ("godmother", "keresztesanya"),
+    ("godfather", "keresztesapa"),
+    ("godson", "keresztgyermek (fiú)"),
+    ("goddaughter", "keresztgyermek (lány)"),
+    ("foster parents", "nevelőszülők"),
+    ("foster child", "nevelt gyermek"),
+    ("twin brother", "iker fiútestvér"),
+    ("twin sister", "iker lánytestvér"),
+    ("elder brother", "báty"),
+    ("younger brother", "öcs"),
+    ("elder sister", "nővér"),
+    ("younger sister", "húg"),
+    ("great-grandmother", "dédnagymama"),
+    ("great-grandfather", "dédnagypapa"),
+    ("relatives", "rokonok"),
+    ("ancestor", "ős, előd"),
+    ("descendant", "leszármazott"),
+    ("single mother", "egyedülálló anya"),
+    ("single father", "egyedülálló apa"),
+    ("orphan", "árvagyermek")
+]
 
 def add_deck_to_database(deck_name: str, cards: [(str, str)]):
     deck = Deck.add_deck(deck_name)
@@ -19,6 +71,8 @@ def seed_database():
         db.session.query(User).delete()
         db.session.commit()
         
+        add_deck_to_database("Family", FAMILY)
+
         db.session.commit()
 
 
