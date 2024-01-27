@@ -91,6 +91,52 @@ EMOTIONS = [
     ("thrilled", "izgatott")
 ]
 
+EVERYDAY_ITEMS = [
+    ("table", "asztal"),
+    ("chair", "szék"),
+    ("book", "könyv"),
+    ("phone", "telefon"),
+    ("computer", "számítógép"),
+    ("pen", "toll"),
+    ("pencil", "ceruza"),
+    ("door", "ajtó"),
+    ("window", "ablak"),
+    ("television", "televízió"),
+    ("cup", "csésze"),
+    ("glass", "pohár"),
+    ("plate", "tányér"),
+    ("fork", "villa"),
+    ("knife", "kés"),
+    ("spoon", "kanál"),
+    ("bottle", "üveg"),
+    ("bag", "táska"),
+    ("shoes", "cipő"),
+    ("shirt", "ing"),
+    ("pants", "nadrág"),
+    ("hat", "kalap"),
+    ("coat", "kabát"),
+    ("umbrella", "esernyő"),
+    ("clock", "óra"),
+    ("bed", "ágy"),
+    ("sofa", "kanapé"),
+    ("lamp", "lámpa"),
+    ("refrigerator", "hűtőszekrény"),
+    ("microwave", "mikrohullámú sütő"),
+    ("oven", "sütő"),
+    ("stove", "tűzhely"),
+    ("washing machine", "mosógép"),
+    ("dryer", "szárítógép"),
+    ("vacuum cleaner", "porszívó"),
+    ("toothbrush", "fogkefe"),
+    ("toothpaste", "fogkrém"),
+    ("soap", "szappan"),
+    ("towel", "törölköző"),
+    ("hairbrush", "hajkefe"),
+    ("comb", "fésű"),
+    ("mirror", "tükör"),
+    ("scissors", "olló")
+]
+
 
 def add_deck_to_database(deck_name: str, cards: [(str, str)]):
     deck = Deck.add_deck(deck_name)
@@ -111,6 +157,7 @@ def seed_database():
         
         add_deck_to_database("Family", FAMILY)
         add_deck_to_database("Emotions", EMOTIONS)
+        add_deck_to_database("Everyday Items", EVERYDAY_ITEMS)
 
         db.session.commit()
 
