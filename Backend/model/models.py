@@ -159,7 +159,7 @@ class Card(db.Model):
         return card
 
     @classmethod
-    def add_card(cls, word_id: int):
+    def add_card_seeder(cls, word_id: int):
         card = cls(word_id=word_id)
         db.session.add(card)
         db.session.commit()
@@ -196,7 +196,7 @@ class Deck(db.Model):
         return deck
 
     @classmethod
-    def add_deck(cls, name: str):
+    def add_deck_seeder(cls, name: str):
         deck = cls(name=name, is_public=True)
         db.session.add(deck)
         db.session.commit()

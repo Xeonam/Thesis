@@ -181,10 +181,10 @@ FOOD_AND_DRINKS = [
 
 
 def add_deck_to_database(deck_name: str, cards: [(str, str)]):
-    deck = Deck.add_deck(deck_name)
+    deck = Deck.add_deck_seeder(deck_name)
     for english, hungarian in cards:
         word = Word.add_word(english_word=english, hungarian_meaning=hungarian)
-        card = Card.add_card(word.word_id)
+        card = Card.add_card_seeder(word.word_id)
         DeckCard.add_to_deck(deck_id=deck.deck_id, card_id=card.id)
     return deck
 
