@@ -138,3 +138,16 @@ class GetPublicDeckWords(Resource):
 
         except Exception as e:
             return {"message": str(e)}, 500
+
+class GetPredefinedDecks(Resource):
+    @jwt_required()
+    def get(self):
+        try:
+            data = Deck.get_predefined_decks()
+
+            decks = [{'deck_id': deck.deck_id, 'name': deck.name} for deck in data]
+
+            return decks, 200
+
+        except Exception as e:
+            return {"message": str(e)}, 500
