@@ -16,6 +16,10 @@ class AddUser(Resource):
         username = data['username']
         email = data["email"]
         pw = data["pw"]
+
+        if User.find_by_username(username):
+            return {'message': 'User already exists! Change username'}, 400
+
         if User.find_by_email(email):
             return {'message': 'User already exists! Change email'}, 400
 
