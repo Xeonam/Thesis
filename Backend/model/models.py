@@ -257,6 +257,10 @@ class Deck(db.Model):
         db.session.commit()
 
         return new_deck
+    
+    @classmethod
+    def get_predefined_decks(cls):
+        return cls.query.filter_by(is_public=True, user_id=None).all()
 
 class DeckCard(db.Model):
     __tablename__ = 'deck_card'

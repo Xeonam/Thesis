@@ -5,7 +5,7 @@ from flask_restful import Api
 from resources.user_resource import AddUser, GetWords, GetDueCards, Login, GetDecks
 from resources.word_resource import AddWord, GetWord, FileUpload, AddCustomWord, GetTextAnalysis
 from resources.card_resource import AddCard, RepeatCard, GetCard
-from resources.deck_resource import CreateDeck, AddCardToDeck, GetDeckWords, DeleteDeck, GetPublicDecks, CloneDeck, GetPublicDeckWords
+from resources.deck_resource import CreateDeck, AddCardToDeck, GetDeckWords, DeleteDeck, GetPublicDecks, CloneDeck, GetPublicDeckWords, GetPredefinedDecks
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
@@ -38,3 +38,4 @@ api.add_resource(GetPublicDecks, '/get-public-decks')
 api.add_resource(CloneDeck, '/clone-deck')
 api.add_resource(GetPublicDeckWords, '/get-public-deck-words')
 api.add_resource(GetTextAnalysis, '/get-text-analysis')
+api.add_resource(GetPredefinedDecks, '/get-predefined-decks')

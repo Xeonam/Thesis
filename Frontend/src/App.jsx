@@ -1,18 +1,32 @@
 import React from "react";
 import "./App.css";
-import { Home, Register, LogIn, Dashboard, SubmitWord, DueCard, DeckPage, DeckWordsPractisePage, AddNewDeck, ViewPublicDecksPage, DeckWordsPreview} from "./pages";
+import {
+  Home,
+  Register,
+  LogIn,
+  Dashboard,
+  SubmitWord,
+  DueCard,
+  DeckPage,
+  DeckWordsPractisePage,
+  AddNewDeck,
+  ViewPublicDecksPage,
+  DeckWordsPreview,
+  ViewPredefinedDecksPage
+} from "./pages";
+
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 const RequireAuth = ({ children }) => {
-  const token = localStorage.getItem('accessToken');
+  const token = localStorage.getItem("accessToken");
   if (!token) {
     return <Navigate to="/login" />;
   }
 
   return children;
 };
-  
+
 const App = () => {
   return (
     <div>
@@ -37,7 +51,7 @@ const App = () => {
               </RequireAuth>
             }
           />
-           <Route
+          <Route
             path="/practise/:deckId"
             element={
               <RequireAuth>
@@ -66,6 +80,14 @@ const App = () => {
             element={
               <RequireAuth>
                 <ViewPublicDecksPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/view-predefined-decks"
+            element={
+              <RequireAuth>
+                <ViewPredefinedDecksPage />
               </RequireAuth>
             }
           />
