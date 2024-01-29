@@ -8,12 +8,32 @@ function Words() {
 
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+      </div>
+    );
   }
 
   if (error) {
     return <div>Error! {error.message}</div>;
   }
+
+  if (data.length === 0) {
+    return (
+      <div className="p-5 flex justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-semibold text-importantText mb-3">
+            Your words will appear here
+          </h2>
+          <p className="text-gray-600">
+            Once you add words, they'll show up in this space.
+          </p>
+        </div>
+      </div>
+    );
+  }
+  
 
   return (
     <div className="p-5">
@@ -22,7 +42,7 @@ function Words() {
         {data?.map((wordItem) => (
           <div
             key={wordItem.card_id}
-            className="bg-[#A3D8F4] rounded-lg shadow overflow-hidden"
+            className="bg-[#A3D8F4] rounded-lg shadow overflow-hidden break-words"
           >
             <div className="p-5">
               <h3 className="text-lg font-semibold text-gray-800 mb-2">

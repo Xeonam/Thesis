@@ -22,7 +22,11 @@ function Decks() {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+      </div>
+    );
   }
 
   if (error) {
@@ -77,7 +81,11 @@ function Decks() {
               </button>
               <button
                 className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mt-2"
-                onClick={() => navigate(`/preview/${item.deck_id}`, { state: { fromPrivate: true } })}
+                onClick={() =>
+                  navigate(`/preview/${item.deck_id}`, {
+                    state: { fromPrivate: true },
+                  })
+                }
               >
                 Preview
               </button>

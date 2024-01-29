@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { login } from "../api/apiCalls";
 import * as yup from "yup";
+import { toast } from "react-toastify";
 
 const schema = yup.object({
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -28,6 +29,9 @@ function LogInForm() {
       localStorage.setItem("accessToken", token);
       navigate("/dashboard");
     },
+    onError: (error) => {
+      toast.error(error.response.data.message);
+    }
   });
 
   const onSubmit = (data) => {
