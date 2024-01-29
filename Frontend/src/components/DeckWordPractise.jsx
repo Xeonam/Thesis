@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { fetchDeckWords, repeatCard, getTextAnalysis } from "../api/apiCalls";
 import ReactCardFlip from "react-card-flip";
 import { useCustomQuery } from "../hooks/useApiData";
+import { useNavigate } from "react-router-dom";
 
 function DeckWordPractise() {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -10,6 +11,7 @@ function DeckWordPractise() {
   const [analysisResult, setAnalysisResult] = useState([]);
 
   const deckId = window.location.pathname.split("/")[2];
+  const navigate = useNavigate();
 
   const repeatCardMutation = useMutation({
     mutationFn: repeatCard,
@@ -58,6 +60,10 @@ function DeckWordPractise() {
     AnalysisMutation.mutate({
       text: currentCard.word.english_word,
     });
+  };
+
+  const handleBack = () => {
+    navigate(-1);
   };
 
   if (isLoading) {
@@ -141,15 +147,21 @@ function DeckWordPractise() {
           <div className="flex justify-center gap-4  text-white ">
             <button
               onClick={handleNext}
-              className="mt-4 px-6  bg-blue-500 text-white rounded"
+              className="mt-4 px-6  bg-blue-500 text-white rounded hover:text-importantText"
             >
               Next
             </button>
             <button
               onClick={analysisHandler}
-              className="mt-4 p-2 bg-blue-500 text-white rounded"
+              className="mt-4 p-2 bg-blue-500 text-white rounded hover:text-importantText"
             >
               Analysis
+            </button>
+            <button
+              onClick={handleBack}
+              className="mt-4 p-2 bg-blue-500 text-white rounded hover:text-importantText"
+            >
+              Return
             </button>
           </div>
           <div>
