@@ -15,6 +15,22 @@ function Words() {
     return <div>Error! {error.message}</div>;
   }
 
+  if (data.length === 0) {
+    return (
+      <div className="p-5 flex justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-semibold text-importantText mb-3">
+            Your words will appear here
+          </h2>
+          <p className="text-gray-600">
+            Once you add words, they'll show up in this space.
+          </p>
+        </div>
+      </div>
+    );
+  }
+  
+
   return (
     <div className="p-5">
       <h1 className="text-2xl font-bold mb-5 text-importantText">Words</h1>
