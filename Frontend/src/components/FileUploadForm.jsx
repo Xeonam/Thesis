@@ -18,7 +18,11 @@ function FileUploadForm() {
 
   const uploadMutation = useMutation({
     mutationFn: uploadFile,
-    onSuccess: () => toast.success("File uploaded successfully"),
+    onSuccess: () => {
+      toast.success("File uploaded successfully");
+      setSelectedFile(null);
+      setSelectedDeck("");
+    },
     onError: (error) => {
       const errorMessage = error.response.data.message;
       toast.error(`Upload failed: ${errorMessage}`);
@@ -137,9 +141,11 @@ function FileUploadForm() {
       <button
         type="submit"
         className={`w-full text-white ${
-          selectedFile ? "bg-purple-600 hover:bg-purple-700" : "bg-gray-400"
+          selectedFile && selectedDeck
+            ? "bg-purple-600 hover:bg-purple-700"
+            : "bg-gray-400"
         } focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition duration-300 ease-in-out`}
-        disabled={!selectedFile}
+        disabled={!selectedFile || !selectedDeck}
       >
         Upload
       </button>
