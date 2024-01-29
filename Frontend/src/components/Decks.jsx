@@ -21,11 +21,13 @@ function Decks() {
     deleteMutation.mutate(deckId);
   };
 
-  return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
-    </div>
-  );
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+      </div>
+    );
+  }
 
   if (error) {
     return <div>Error! {error.message}</div>;
@@ -79,7 +81,11 @@ function Decks() {
               </button>
               <button
                 className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mt-2"
-                onClick={() => navigate(`/preview/${item.deck_id}`, { state: { fromPrivate: true } })}
+                onClick={() =>
+                  navigate(`/preview/${item.deck_id}`, {
+                    state: { fromPrivate: true },
+                  })
+                }
               >
                 Preview
               </button>
