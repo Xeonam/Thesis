@@ -22,7 +22,7 @@ function Words() {
         {data?.map((wordItem) => (
           <div
             key={wordItem.card_id}
-            className="bg-[#A3D8F4] rounded-lg shadow overflow-hidden"
+            className="bg-[#A3D8F4] rounded-lg shadow overflow-hidden break-words"
           >
             <div className="p-5">
               <h3 className="text-lg font-semibold text-gray-800 mb-2">
