@@ -202,33 +202,57 @@ export async function cloneDeck(deckId) {
 
 export async function fetchPublicDeckWords(deckId) {
   const token = localStorage.getItem("accessToken");
-  const response = await axios.get("http://localhost:5000/get-public-deck-words", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    params: {
-      deck_id: deckId,
-    },
-  });
+  const response = await axios.get(
+    "http://localhost:5000/get-public-deck-words",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        deck_id: deckId,
+      },
+    }
+  );
   return response.data;
 }
 
 export async function getTextAnalysis(text) {
   const token = localStorage.getItem("accessToken");
-  const response = await axios.post("http://127.0.0.1:5000/get-text-analysis", text, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await axios.post(
+    "http://127.0.0.1:5000/get-text-analysis",
+    text,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
   return response.data;
 }
 
 export async function fetchPredefinedDecks() {
   const token = localStorage.getItem("accessToken");
-  const response = await axios.get("http://localhost:5000/get-predefined-decks", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await axios.get(
+    "http://localhost:5000/get-predefined-decks",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+}
+
+export async function getCardByName(word) {
+  const token = localStorage.getItem("accessToken");
+  const response = await axios.post(
+    "http://localhost:5000/get-word-by-name",
+     word,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
   return response.data;
 }
