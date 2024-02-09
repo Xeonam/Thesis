@@ -3,9 +3,7 @@ import { fetchWords } from "../api/apiCalls";
 import { useCustomQuery } from "../hooks/useApiData";
 
 function Words() {
-
   const { data, isLoading, error } = useCustomQuery(["words"], fetchWords);
-
 
   if (isLoading) {
     return (
@@ -33,10 +31,39 @@ function Words() {
       </div>
     );
   }
-  
 
   return (
     <div className="p-5">
+      <div class="max-w-md mx-auto">
+        <form
+          /* onSubmit={handleSubmit(onSubmit)} */
+          className="space-y-4 md:space-y-6"
+        >
+          <div>
+            <label className="block mb-2 text-sm font-medium text-white">
+              Search for a word
+            </label>
+            <input
+              type="text"
+              name="word"
+              id="word"
+              className="bg-gray-50 border border-gray-300 text-black sm:text-sm rounded-lg block w-full p-2.5"
+              placeholder="word"
+              required=""
+              /*                     {...register("email")}
+               */
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full text-white bg-navbarBgColor   active:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+
       <h1 className="text-2xl font-bold mb-5 text-importantText">Words</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 text-center">
         {data?.map((wordItem) => (
