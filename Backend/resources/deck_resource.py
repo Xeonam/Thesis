@@ -152,3 +152,32 @@ class GetPredefinedDecks(Resource):
 
         except Exception as e:
             return {"message": str(e)}, 500
+        
+class GetSpecifiedDeckWords(Resource):
+    @jwt_required()
+    def get(self):
+        try:
+            deck_id = request.args.get("deck_id")
+            current_user_id = get_jwt_identity()
+            deck = Deck.query.filter_by(user_id=current_user_id, deck_id=deck_id).first()
+
+            specified_part_of_speech = request.args.get("part_of_speech")
+            if not deck:
+                return {"message": "Deck not found for this user."}, 404
+
+            data = User.get_user_deck_words(current_user_id, deck_id)
+
+            words = [{'card_id': user_card.Card.id, 'word': word_schema.dump(user_card.Word)} for user_card in data]
+            specified_deck_words = []
+
+            for word in words:
+                analysis_results = analyze_text_and_return_json(word['word']['english_word'])
+                print(analysis_results[0]["part_of_speech"])
+                if analysis_results[0]["part_of_speech"] == specified_part_of_speech:
+                    specified_deck_words.append(word)
+            
+
+            return specified_deck_words, 200
+
+        except Exception as e:
+            return {"message": str(e)}, 500
