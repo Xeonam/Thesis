@@ -4,6 +4,7 @@ import { fetchDeckWords, repeatCard, getTextAnalysis } from "../api/apiCalls";
 import ReactCardFlip from "react-card-flip";
 import { useCustomQuery } from "../hooks/useApiData";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function DeckWordPractise() {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -12,6 +13,10 @@ function DeckWordPractise() {
 
   const deckId = window.location.pathname.split("/")[2];
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  const selectedPartOfSpeech = location.state?.selectedPartOfSpeech;
+  console.log(selectedPartOfSpeech);
 
   const repeatCardMutation = useMutation({
     mutationFn: repeatCard,

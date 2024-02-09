@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchDecks, deleteDeck } from "../api/apiCalls";
 import { useCustomQuery } from "../hooks/useApiData";
 
+const PARTS_OF_SPEECH = [
+  { value: "NOUN", label: "Noun" },
+  { value: "verb", label: "Verb" },
+  { value: "adjective", label: "Adjective" },
+  { value: "adverb", label: "Adverb" },
+];
+
 function Decks() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [selectedDeck, setSelectedDeck] = useState("");
+  const [selectedPartOfSpeech, setSelectedPartOfSpeech] = useState("");
 
   const { data, isLoading, error } = useCustomQuery(["decks"], fetchDecks);
 
@@ -19,6 +28,13 @@ function Decks() {
 
   const handleDelete = (deckId) => {
     deleteMutation.mutate(deckId);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/practise/${selectedDeck}`, {
+      state: { selectedPartOfSpeech: selectedPartOfSpeech },
+    });
   };
 
   if (isLoading) {
@@ -35,6 +51,51 @@ function Decks() {
 
   return (
     <div className="p-5">
+      <div className="max-w-md mx-auto">
+        <form onSubmit={handleSubmit} className="space-y-2 md:space-y-6 p-6">
+          <div>
+            <div className="flex justify-between items-center">
+              <label htmlFor="deck-select" className="font-bold">
+                Choose a deck:
+              </label>
+            </div>
+            <select
+              id="deck-select"
+              value={selectedDeck}
+              onChange={(e) => setSelectedDeck(e.target.value)}
+              className="mt-2 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-navbarBgColor focus:border-navbarBgColor sm:text-sm"
+            >
+              <option value="">Select a deck</option>
+              {data?.map((deck) => (
+                <option key={deck.id} value={deck.deck_id}>
+                  {deck.name}
+                </option>
+              ))}
+            </select>
+            <select
+              id="part-of-speech-select"
+              value={selectedPartOfSpeech}
+              onChange={(e) => setSelectedPartOfSpeech(e.target.value)}
+              className="mt-2 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-navbarBgColor focus:border-navbarBgColor sm:text-sm"
+            >
+              <option value="">Select a part of speech</option>
+              {PARTS_OF_SPEECH.map((part) => (
+                <option key={part.value} value={part.value}>
+                  {part.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mt-2"
+          >
+            Upload
+          </button>
+        </form>
+      </div>
+
       <h1 className="text-2xl font-bold mb-5 text-importantText">Decks</h1>
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-5"
