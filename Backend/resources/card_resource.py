@@ -50,10 +50,11 @@ class GetCardByName(Resource):
         user_id = get_jwt_identity()
 
         card = Card.get_card_by_string(user_id, word)
-        print(card[0][-1])
+        print(card)
+        """ print(card[0][-1]) """
         
 
         if card:
-            return 200
+            return card[0][-1], 200
         else:
             return {"message": "Word not found in your cards."}, 404
