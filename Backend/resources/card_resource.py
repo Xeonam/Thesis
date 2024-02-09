@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource
-from model.models import Card
+from model.models import Card, DeckCard
 from schema.schemas import CardSchema
 from fsrs import Rating
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -39,3 +39,21 @@ class GetCard(Resource):
         card = Card.verify_card_ownership(card_id)
         #card = Card.get_card(card_id)
         return card_schema.dump(card)
+    
+class GetCardByName(Resource):
+    @jwt_required()
+    def post(self):
+        data = request.get_json()
+        word = data.get("word")
+        if not word:
+            return {"message": "Word is required."}, 400
+        user_id = get_jwt_identity()
+
+        card = Card.get_card_by_string(user_id, word)
+        print(card[0][-1])
+        
+
+        if card:
+            return 200
+        else:
+            return {"message": "Word not found in your cards."}, 404

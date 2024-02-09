@@ -3,6 +3,7 @@ from flask_restful import Resource
 from model.models import Deck, DeckCard, Card, User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from schema.schemas import WordSchema
+from utils.text_analyzer import analyze_text_and_return_json
 
 word_schema = WordSchema()
 class CreateDeck(Resource):
