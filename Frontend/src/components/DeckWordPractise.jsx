@@ -40,7 +40,8 @@ function DeckWordPractise() {
     setIsFlipped(!isFlipped);
   };
 
-  const currentCard = data[currentCardIndex];
+  const currentCard = (data ? data[currentCardIndex] : null);
+  /* const currentCard = data[currentCardIndex] */
 
   const handleNext = () => {
     let nextIndex = (currentCardIndex + 1) % data.length;
@@ -77,7 +78,7 @@ function DeckWordPractise() {
     return <div>Error! {error.message}</div>;
   }
 
-  if (data.length === 0) {
+  if (data.length === 0 || data === undefined) {
     return (
       <div>
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen-90 lg:py-0">
