@@ -82,6 +82,10 @@ class DeleteDeck(Resource):
 
             if not deck:
                 return {"message": "Deck not found for this user."}, 404
+            
+            cards_in_deck = deck.get_cards_in_deck()
+            for card in cards_in_deck:
+                card.delete_card(card.id)
 
             Deck.delete_deck(deck_id)
 

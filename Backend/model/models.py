@@ -204,6 +204,20 @@ class Card(db.Model):
             .all()
         )
         return results """
+
+    @classmethod
+    def delete_card(cls, card_id):
+        card = cls.get_card(card_id)
+        if not card:
+            return False, "Card not found."
+
+        deck_cards = DeckCard.query.filter_by(card_id=card_id).all()
+        for deck_card in deck_cards:
+            db.session.delete(deck_card)
+
+        db.session.delete(card)
+        db.session.commit()
+        return True
         
 
 
@@ -291,6 +305,9 @@ class Deck(db.Model):
         return cls.query.filter_by(is_public=True, user_id=None).all()
     
     
+    
+    def get_cards_in_deck(self):
+        return self.cards
 
 class DeckCard(db.Model):
     __tablename__ = 'deck_card'
