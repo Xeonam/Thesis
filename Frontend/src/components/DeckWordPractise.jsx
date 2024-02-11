@@ -5,6 +5,7 @@ import {
   repeatCard,
   getTextAnalysis,
   fetchSpecifiedDeckWords,
+  addPracticeSession
 } from "../api/apiCalls";
 import ReactCardFlip from "react-card-flip";
 import { useCustomQuery } from "../hooks/useApiData";
@@ -43,6 +44,14 @@ function DeckWordPractise() {
     },
   });
 
+  const addPracticeSessionMutation = useMutation({
+    mutationFn: addPracticeSession,
+    onSuccess: () => {
+      console.log("Practice session added");
+    },
+  });
+  
+
   const { data, isLoading, error, refetch } = useCustomQuery(
     ["deckWords", deckId, selectedPartOfSpeech],
     () =>
@@ -74,6 +83,7 @@ function DeckWordPractise() {
     if (isLastCard) {
       setIsTimerActive(false); // Az időzítő leállítása
       setIsPracticeFinished(true); // Összegzés megjelenítése
+      handleAddPracticeSession();
     }
   };
 
@@ -101,6 +111,14 @@ function DeckWordPractise() {
             : "easy"
         ] + 1,
     }));
+  };
+
+  const handleAddPracticeSession = () => {
+    addPracticeSessionMutation.mutate({
+      deck_id: deckId,
+      practice_duration: timer,
+      practice_date: new Date().toISOString(),
+    });
   };
 
   const analysisHandler = () => {

@@ -10,7 +10,6 @@ class AddPracticeSession(Resource):
     @jwt_required()
     def post(self):
         data = request.get_json()
-        print(data)
         user_id = get_jwt_identity()
         deck_id = data['deck_id']
         practice_duration = data['practice_duration']

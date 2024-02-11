@@ -270,3 +270,17 @@ export async function fetchSpecifiedDeckWords(deckId, part_of_speech) {
   });
   return response.data;
 }
+
+export async function addPracticeSession(data) {
+  const token = localStorage.getItem("accessToken");
+  const response = await axios.post(
+    "http://127.0.0.1:5000/add-practice-session",
+    data,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+}
