@@ -342,3 +342,8 @@ class Statistic(db.Model):
         db.session.add(session)
         db.session.commit()
         return session
+    
+    @classmethod
+    def get_user_sessions(cls, user_id: int):
+        user_sessions = cls.query.filter_by(user_id=user_id).all()
+        return user_sessions

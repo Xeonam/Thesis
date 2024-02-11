@@ -21,3 +21,11 @@ class AddPracticeSession(Resource):
         practice_session = Statistic.add_session(user_id, deck_name, practice_duration, practice_date)
 
         return practice_session_schema.dump(practice_session)
+
+class GetPracticeSessions(Resource):
+    @jwt_required()
+    def get(self):
+        user_id = get_jwt_identity()
+        practice_sessions = Statistic.get_user_sessions(user_id)
+
+        return practice_session_schema.dump(practice_sessions, many=True)

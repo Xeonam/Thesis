@@ -6,7 +6,7 @@ from resources.user_resource import AddUser, GetWords, GetDueCards, Login, GetDe
 from resources.word_resource import AddWord, GetWord, FileUpload, AddCustomWord, GetTextAnalysis
 from resources.card_resource import AddCard, RepeatCard, GetCard, GetCardByName
 from resources.deck_resource import CreateDeck, AddCardToDeck, GetDeckWords, DeleteDeck, GetPublicDecks, CloneDeck, GetPublicDeckWords, GetPredefinedDecks, GetSpecifiedDeckWords
-from resources.statistics_resource import AddPracticeSession
+from resources.statistics_resource import AddPracticeSession, GetPracticeSessions
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
@@ -43,3 +43,4 @@ api.add_resource(GetPredefinedDecks, '/get-predefined-decks')
 api.add_resource(GetCardByName, '/get-word-by-name')
 api.add_resource(GetSpecifiedDeckWords, '/get-specified-deck-words')
 api.add_resource(AddPracticeSession, '/add-practice-session')
+api.add_resource(GetPracticeSessions, '/get-practice-sessions')
