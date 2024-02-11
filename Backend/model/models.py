@@ -326,3 +326,19 @@ class DeckCard(db.Model):
         deck_card = cls.query.filter_by(card_id=card_id).first()
         print(deck_card)
         return deck_card
+
+class Statistic(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
+    deck_name = db.Column(db.String(255), nullable=False)
+    practice_duration = db.Column(db.Integer, nullable=False)
+    practice_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    user = db.relationship('User', backref=db.backref('practice_sessions', lazy=True))
+
+    @classmethod
+    def add_session(cls, user_id: int, deck_name: str, practice_duration: int, practice_date: datetime):
+        session = cls(user_id=user_id, deck_name=deck_name, practice_duration=practice_duration, practice_date=practice_date)
+        db.session.add(session)
+        db.session.commit()
+        return session
