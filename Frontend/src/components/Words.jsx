@@ -1,4 +1,4 @@
-import React, { useState }  from "react";
+import React, { useState } from "react";
 import { fetchWords } from "../api/apiCalls";
 import { useCustomQuery } from "../hooks/useApiData";
 import { useMutation } from "@tanstack/react-query";
@@ -14,6 +14,9 @@ const schema = yup.object({
 function Words() {
   const { data, isLoading, error } = useCustomQuery(["words"], fetchWords);
   const [deckName, setDeckName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [searchedWord, setSearchedWord] = useState("");
+
 
   const { register, handleSubmit, reset } = useForm({
     resolver: yupResolver(schema),
@@ -25,12 +28,18 @@ function Words() {
       console.log(data);
       setDeckName(data);
       resetForm();
+      setErrorMessage("");
     },
-    onError: () => {
+    onError: (error) => {
+      setErrorMessage(
+        error.response?.data?.message ||
+          "An error occurred while searching for the word."
+      );
     },
   });
 
   const onSubmit = (data) => {
+    setSearchedWord(data.word);
     submitMutation.mutate(data);
   };
 
@@ -94,12 +103,14 @@ function Words() {
             Search
           </button>
         </form>
+        {errorMessage && (
+          <div className="mt-4 text-red-500">{errorMessage} ({searchedWord})</div>
+        )}
         {deckName && (
-        <div className="text-green-600 mt-4">
-          The word is found in the {deckName} deck. 
-        </div>
-        
-      )}
+          <div className="text-green-600 mt-4">
+            The word {searchedWord} is found in the {deckName} deck.
+          </div>
+        )}
       </div>
 
       <h1 className="text-2xl font-bold mb-5 text-importantText">Words</h1>
