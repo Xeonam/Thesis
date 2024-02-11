@@ -21,8 +21,8 @@ class AddWord(Resource):
             return word_schema.dump(word)
             #return {"message": "Word already exists."}, 200
         
-        #hungarian_meaning = translate_to_hungarian(english_word)
-        hungarian_meaning = "test"
+        hungarian_meaning = translate_to_hungarian(english_word)
+        #hungarian_meaning = "test"
         word = Word.add_word(english_word, hungarian_meaning)
 
         return word_schema.dump(word)
@@ -79,5 +79,7 @@ class GetTextAnalysis(Resource):
         data = request.get_json()
         text = data['text']
         analysis = analyze_text_and_return_json(text)
+        print(analysis)
+        print("asd")
         return analysis
 

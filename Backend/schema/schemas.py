@@ -29,3 +29,10 @@ class DeckSchema(Schema):
     deck_id = fields.Integer(dump_only=True)
     name = fields.String()
     user_id = fields.Integer()
+
+class StatisticSchema(Schema):
+    id = fields.Integer(dump_only=True)
+    user_id = fields.Integer()
+    deck_name = fields.String()
+    practice_duration = fields.Integer()
+    practice_date = fields.DateTime()

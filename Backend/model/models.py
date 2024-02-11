@@ -182,6 +182,44 @@ class Card(db.Model):
         if card.user_id != current_user_id:
             abort(403, message="Not your card.")
         return card
+    
+    @classmethod
+    def get_card_by_string(cls, user_id: int, word: str):
+        results = (
+            db.session.query(cls, Deck.name)
+            .join(Word, cls.word_id == Word.word_id)
+            .join(DeckCard, cls.id == DeckCard.card_id)
+            .join(Deck, DeckCard.deck_id == Deck.deck_id)
+            .filter((Word.english_word.ilike(f"{word}")))
+            .filter(cls.user_id == user_id)
+            .all()
+        )
+        return results
+        """  results = (
+            db.session.query(cls, Deck.name)
+            .join(Word, cls.word_id == Word.word_id)
+
+            .filter((Word.english_word.ilike(f"%{word}%")) | (Word.hungarian_meaning.ilike(f"%{word}%")))
+            .filter(cls.user_id == user_id)
+            .all()
+        )
+        return results """
+
+    @classmethod
+    def delete_card(cls, card_id):
+        card = cls.get_card(card_id)
+        if not card:
+            return False, "Card not found."
+
+        deck_cards = DeckCard.query.filter_by(card_id=card_id).all()
+        for deck_card in deck_cards:
+            db.session.delete(deck_card)
+
+        db.session.delete(card)
+        db.session.commit()
+        return True
+        
+
 
 class Deck(db.Model):
     deck_id = db.Column(db.Integer, primary_key=True)
@@ -265,6 +303,11 @@ class Deck(db.Model):
     @classmethod
     def get_predefined_decks(cls):
         return cls.query.filter_by(is_public=True, user_id=None).all()
+    
+    
+    
+    def get_cards_in_deck(self):
+        return self.cards
 
 class DeckCard(db.Model):
     __tablename__ = 'deck_card'
@@ -277,3 +320,30 @@ class DeckCard(db.Model):
         db.session.add(deck_card)
         db.session.commit()
         return deck_card
+    
+    @classmethod
+    def get_deck_id(cls, card_id: int):
+        deck_card = cls.query.filter_by(card_id=card_id).first()
+        print(deck_card)
+        return deck_card
+
+class Statistic(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
+    deck_name = db.Column(db.String(255), nullable=False)
+    practice_duration = db.Column(db.Integer, nullable=False)
+    practice_date = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    user = db.relationship('User', backref=db.backref('practice_sessions', lazy=True))
+
+    @classmethod
+    def add_session(cls, user_id: int, deck_name: str, practice_duration: int, practice_date: datetime):
+        session = cls(user_id=user_id, deck_name=deck_name, practice_duration=practice_duration, practice_date=practice_date)
+        db.session.add(session)
+        db.session.commit()
+        return session
+    
+    @classmethod
+    def get_user_sessions(cls, user_id: int):
+        user_sessions = cls.query.filter_by(user_id=user_id).all()
+        return user_sessions
