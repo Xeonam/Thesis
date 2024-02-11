@@ -170,16 +170,18 @@ class GetSpecifiedDeckWords(Resource):
                 return {"message": "Deck not found for this user."}, 404
 
             data = User.get_user_deck_words(current_user_id, deck_id)
-
             words = [{'card_id': user_card.Card.id, 'word': word_schema.dump(user_card.Word)} for user_card in data]
             specified_deck_words = []
 
             for word in words:
                 analysis_results = analyze_text_and_return_json(word['word']['english_word'])
-                print(analysis_results[0]["part_of_speech"])
-                if analysis_results[0]["part_of_speech"] == specified_part_of_speech:
-                    specified_deck_words.append(word)
-            
+                print(analysis_results)
+                for analysis_result in analysis_results:
+                    if analysis_result["part_of_speech"] == specified_part_of_speech:
+                        print("asd", analysis_result)
+                        specified_deck_words.append(word)
+
+                
 
             return specified_deck_words, 200
 

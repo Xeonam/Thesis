@@ -256,3 +256,17 @@ export async function getCardByName(word) {
   );
   return response.data;
 }
+
+export async function fetchSpecifiedDeckWords(deckId, part_of_speech) {
+  const token = localStorage.getItem("accessToken");
+  const response = await axios.get("http://127.0.0.1:5000/get-specified-deck-words", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    params: {
+      deck_id: deckId,
+      part_of_speech: part_of_speech,
+    },
+  });
+  return response.data;
+}

@@ -6,9 +6,9 @@ import { useCustomQuery } from "../hooks/useApiData";
 
 const PARTS_OF_SPEECH = [
   { value: "NOUN", label: "Noun" },
-  { value: "verb", label: "Verb" },
-  { value: "adjective", label: "Adjective" },
-  { value: "adverb", label: "Adverb" },
+  { value: "VERB", label: "Verb" },
+  { value: "PROPN", label: "Adjective" },
+  { value: "PRON", label: "Pronoun" },
 ];
 
 function Decks() {

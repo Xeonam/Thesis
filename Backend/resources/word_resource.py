@@ -79,5 +79,7 @@ class GetTextAnalysis(Resource):
         data = request.get_json()
         text = data['text']
         analysis = analyze_text_and_return_json(text)
+        print(analysis)
+        print("asd")
         return analysis
 

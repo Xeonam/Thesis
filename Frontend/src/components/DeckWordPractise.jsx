@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { fetchDeckWords, repeatCard, getTextAnalysis } from "../api/apiCalls";
+import { fetchDeckWords, repeatCard, getTextAnalysis, fetchSpecifiedDeckWords} from "../api/apiCalls";
 import ReactCardFlip from "react-card-flip";
 import { useCustomQuery } from "../hooks/useApiData";
 import { useNavigate } from "react-router-dom";
@@ -30,8 +30,10 @@ function DeckWordPractise() {
   });
 
   const { data, isLoading, error, refetch } = useCustomQuery(
-    ["deckWords", deckId],
-    () => fetchDeckWords(deckId)
+    ["deckWords", deckId, selectedPartOfSpeech],
+    () => selectedPartOfSpeech
+      ? fetchSpecifiedDeckWords(deckId, selectedPartOfSpeech)
+      : fetchDeckWords(deckId)
   );
 
   const AnalysisMutation = useMutation({
