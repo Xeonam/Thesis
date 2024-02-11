@@ -284,3 +284,16 @@ export async function addPracticeSession(data) {
   );
   return response.data;
 }
+
+export async function fetchStatistics() {
+  const token = localStorage.getItem("accessToken");
+  const response = await axios.get(
+    "http://127.0.0.1:5000/get-practice-sessions",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+}
