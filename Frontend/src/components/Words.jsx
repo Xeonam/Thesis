@@ -17,7 +17,6 @@ function Words() {
   const [errorMessage, setErrorMessage] = useState("");
   const [searchedWord, setSearchedWord] = useState("");
 
-
   const { register, handleSubmit, reset } = useForm({
     resolver: yupResolver(schema),
   });
@@ -25,12 +24,11 @@ function Words() {
   const submitMutation = useMutation({
     mutationFn: getCardByName,
     onSuccess: (data) => {
-      console.log(data);
       setDeckName(data);
-      resetForm();
       setErrorMessage("");
     },
     onError: (error) => {
+      setDeckName("");
       setErrorMessage(
         error.response?.data?.message ||
           "An error occurred while searching for the word."
@@ -76,15 +74,13 @@ function Words() {
 
   return (
     <div className="p-5">
-      <div className="max-w-md mx-auto">
+      <div className="max-w-md mx-auto ">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-4 md:space-y-6"
+          className="space-y-2 md:space-y-6 p-6 bg-red-400 rounded"
         >
           <div>
-            <label className="block mb-2 text-sm font-medium text-white">
-              Search for a word
-            </label>
+            <label className="block mb-2 font-bold">Search for a word</label>
             <input
               type="text"
               name="word"
@@ -102,15 +98,17 @@ function Words() {
           >
             Search
           </button>
+          {errorMessage && (
+            <div className="flex justify-center text-white mt-4 py-2 bg-red-600 rounded">
+              {errorMessage} ({searchedWord})
+            </div>
+          )}
+          {deckName && (
+            <div className="flex justify-center text-white mt-4 py-2 bg-green-600 rounded">
+              The word {searchedWord} is found in the {deckName} deck.
+            </div>
+          )}
         </form>
-        {errorMessage && (
-          <div className="mt-4 text-red-500">{errorMessage} ({searchedWord})</div>
-        )}
-        {deckName && (
-          <div className="text-green-600 mt-4">
-            The word {searchedWord} is found in the {deckName} deck.
-          </div>
-        )}
       </div>
 
       <h1 className="text-2xl font-bold mb-5 text-importantText">Words</h1>
