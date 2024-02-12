@@ -52,9 +52,9 @@ function Decks() {
   return (
     <div className="p-5">
       <div className="max-w-md mx-auto">
-        <form onSubmit={handleSubmit} className="space-y-2 md:space-y-6 p-6">
+        <form onSubmit={handleSubmit} className="space-y-2 md:space-y-6 p-6 bg-red-400 rounded">
           <div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center ">
               <label htmlFor="deck-select" className="font-bold">
                 Choose a deck:
               </label>
@@ -91,7 +91,7 @@ function Decks() {
             type="submit"
             className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mt-2"
           >
-            Submit
+            Practise
           </button>
         </form>
       </div>
