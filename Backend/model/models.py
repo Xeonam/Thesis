@@ -42,9 +42,11 @@ class User(db.Model):
     @classmethod
     def get_user_words(cls, user_id: int):
         user_cards = (
-            db.session.query(User, Card, Word)
+            db.session.query(User, Card, Word, Deck)
             .join(Card, User.user_id == Card.user_id)
             .join(Word, Card.word_id == Word.word_id)
+            .join(DeckCard, Card.id == DeckCard.card_id)
+            .join(Deck, DeckCard.deck_id == Deck.deck_id)
             .filter(User.user_id == user_id)
             .all()
         )
