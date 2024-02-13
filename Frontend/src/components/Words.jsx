@@ -93,14 +93,12 @@ function Words() {
             className="bg-[#A3D8F4] rounded-lg shadow overflow-hidden break-words"
           >
             <div className="p-5">
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              <p className="text-lg font-semibold text-gray-800 mb-2">
                 English Word: {wordItem.word.english_word}
-              </h3>
-              <hr className="h-px  bg-black border-0"></hr>
-              <p className="text-gray-600 pt-2">
+              </p>
+              <p className="text-gray-600 pt-2 my-1">
                 Hungarian Meaning: {wordItem.word.hungarian_meaning}
               </p>
-              <hr className="h-px  bg-black border-0"></hr>
               <p className="text-gray-600 pt-2">
                 Deck: {wordItem.deck_name}
               </p>
