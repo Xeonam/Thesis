@@ -100,6 +100,10 @@ function Words() {
               <p className="text-gray-600 pt-2">
                 Hungarian Meaning: {wordItem.word.hungarian_meaning}
               </p>
+              <hr className="h-px  bg-black border-0"></hr>
+              <p className="text-gray-600 pt-2">
+                Deck: {wordItem.deck_name}
+              </p>
             </div>
           </div>
         ))}
