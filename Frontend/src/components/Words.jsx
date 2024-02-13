@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { fetchWords } from "../api/apiCalls";
 import { useCustomQuery } from "../hooks/useApiData";
-import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { getCardByName } from "../api/apiCalls";
 
 const schema = yup.object({
   word: yup.string().required("Word is required"),
@@ -13,37 +11,30 @@ const schema = yup.object({
 
 function Words() {
   const { data, isLoading, error } = useCustomQuery(["words"], fetchWords);
-  const [deckName, setDeckName] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [searchedWord, setSearchedWord] = useState("");
+  const [filteredWords, setFilteredWords] = useState([]);
 
-  const { register, handleSubmit, reset } = useForm({
+
+  const {
+    register,
+    watch,
+  } = useForm({
     resolver: yupResolver(schema),
   });
+  const searchWord = watch("word");
 
-  const submitMutation = useMutation({
-    mutationFn: getCardByName,
-    onSuccess: (data) => {
-      setDeckName(data);
-      setErrorMessage("");
-    },
-    onError: (error) => {
-      setDeckName("");
-      setErrorMessage(
-        error.response?.data?.message ||
-          "An error occurred while searching for the word."
+  useEffect(() => {
+    if (!data || data.length === 0 || !searchWord) {
+      setFilteredWords(data);
+    } else {
+      const filtered = data.filter((wordItem) =>
+        wordItem.word.english_word.toLowerCase().includes(searchWord.toLowerCase()) ||
+        wordItem.word.hungarian_meaning.toLowerCase().includes(searchWord.toLowerCase())
       );
-    },
-  });
 
-  const onSubmit = (data) => {
-    setSearchedWord(data.word);
-    submitMutation.mutate(data);
-  };
+      setFilteredWords(filtered);
+    }
+  }, [searchWord, data]);
 
-  const resetForm = () => {
-    reset();
-  };
 
   if (isLoading) {
     return (
@@ -76,7 +67,6 @@ function Words() {
     <div className="p-5">
       <div className="max-w-md mx-auto ">
         <form
-          onSubmit={handleSubmit(onSubmit)}
           className="space-y-2 md:space-y-6 p-6 bg-red-400 rounded"
         >
           <div>
@@ -92,28 +82,12 @@ function Words() {
             />
           </div>
 
-          <button
-            type="submit"
-            className="w-full text-white bg-navbarBgColor   active:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-          >
-            Search
-          </button>
-          {errorMessage && (
-            <div className="flex justify-center text-white mt-4 py-2 bg-red-600 rounded">
-              {errorMessage} ({searchedWord})
-            </div>
-          )}
-          {deckName && (
-            <div className="flex justify-center text-white mt-4 py-2 bg-green-600 rounded">
-              The word {searchedWord} is found in the {deckName} deck.
-            </div>
-          )}
         </form>
       </div>
 
       <h1 className="text-2xl font-bold mb-5 text-importantText">Words</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 text-center">
-        {data?.map((wordItem) => (
+        {filteredWords?.map((wordItem) => (
           <div
             key={wordItem.card_id}
             className="bg-[#A3D8F4] rounded-lg shadow overflow-hidden break-words"
