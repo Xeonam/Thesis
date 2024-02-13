@@ -243,19 +243,7 @@ export async function fetchPredefinedDecks() {
   return response.data;
 }
 
-export async function getCardByName(word) {
-  const token = localStorage.getItem("accessToken");
-  const response = await axios.post(
-    "http://localhost:5000/get-word-by-name",
-     word,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  return response.data;
-}
+
 
 export async function fetchSpecifiedDeckWords(deckId, part_of_speech) {
   const token = localStorage.getItem("accessToken");
@@ -276,6 +264,19 @@ export async function addPracticeSession(data) {
   const response = await axios.post(
     "http://127.0.0.1:5000/add-practice-session",
     data,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+}
+
+export async function fetchStatistics() {
+  const token = localStorage.getItem("accessToken");
+  const response = await axios.get(
+    "http://127.0.0.1:5000/get-practice-sessions",
     {
       headers: {
         Authorization: `Bearer ${token}`,

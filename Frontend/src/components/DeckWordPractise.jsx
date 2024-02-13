@@ -5,7 +5,7 @@ import {
   repeatCard,
   getTextAnalysis,
   fetchSpecifiedDeckWords,
-  addPracticeSession
+  addPracticeSession,
 } from "../api/apiCalls";
 import ReactCardFlip from "react-card-flip";
 import { useCustomQuery } from "../hooks/useApiData";
@@ -17,7 +17,7 @@ function DeckWordPractise() {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [analysisResult, setAnalysisResult] = useState([]);
   const [timer, setTimer] = useState(0);
-  const [isTimerActive, setIsTimerActive] = useState(false);
+  const [isTimerActive, setIsTimerActive] = useState(true);
   const [clickCounts, setClickCounts] = useState({
     again: 0,
     hard: 0,
@@ -50,7 +50,6 @@ function DeckWordPractise() {
       console.log("Practice session added");
     },
   });
-  
 
   const { data, isLoading, error, refetch } = useCustomQuery(
     ["deckWords", deckId, selectedPartOfSpeech],
@@ -81,8 +80,8 @@ function DeckWordPractise() {
     setAnalysisResult([]);
     const isLastCard = nextIndex === 0;
     if (isLastCard) {
-      setIsTimerActive(false); // Az időzítő leállítása
-      setIsPracticeFinished(true); // Összegzés megjelenítése
+      setIsTimerActive(false);
+      setIsPracticeFinished(true);
       handleAddPracticeSession();
     }
   };
@@ -182,36 +181,42 @@ function DeckWordPractise() {
   }
   return (
     <div className="flex flex-col items-center justify-center overflow-y-auto mt-20">
-      <div className="text-center mb-4 text-white">
-        Time: {Math.floor(timer / 60)}:{String(timer % 60).padStart(2, "0")}{" "}
-      </div>
       <div className="w-full bg-[#a7e7c6] rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <div className="text-center mb-4">
-            {currentCardIndex + 1}/{data.length}
-          </div>
           {isPracticeFinished ? (
             <>
-            <div className="text-center mt-4">
-              <p>Practice finished!</p>
-              <p>
-                Time: {Math.floor(timer / 60)}:{String(timer % 60).padStart(2, "0")}
-              </p>
-              <p>Again: {clickCounts.again}</p>
-              <p>Hard: {clickCounts.hard}</p>
-              <p>Good: {clickCounts.good}</p>
-              <p>Easy: {clickCounts.easy}</p>
-            </div>
-            <button
-              onClick={handleAgain}
-              className="mt-4 px-6 bg-blue-500 text-white rounded hover:bg-blue-600"
-            >
-              Start Over
-            </button>
-          </>
-          
+              <div className="text-center mt-4">
+                <p className="text-lg font-bold">You're done!</p>
+                <p className="font-semibold">
+                  Time: {Math.floor(timer / 60)}:
+                  {String(timer % 60).padStart(2, "0")}
+                </p>
+                <p>Again: {clickCounts.again}</p>
+                <p>Hard: {clickCounts.hard}</p>
+                <p>Good: {clickCounts.good}</p>
+                <p>Easy: {clickCounts.easy}</p>
+              </div>
+              <div className="flex items-center justify-center">
+                <button
+                  onClick={handleAgain}
+                  className="mx-4 px-6 bg-blue-500 text-white rounded hover:bg-blue-600 py-2"
+                >
+                  Start Over
+                </button>
+                <button
+                  onClick={handleBack}
+                  className="mx-4 px-6 bg-blue-500 text-white rounded hover:bg-blue-600 py-2"
+                >
+                  Return
+                </button>
+              </div>
+            </>
           ) : (
             <>
+              <div className="text-center mb-4 text-black">
+                Time: {Math.floor(timer / 60)}:
+                {String(timer % 60).padStart(2, "0")}{" "}
+              </div>
               {currentCard && (
                 <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical">
                   <div

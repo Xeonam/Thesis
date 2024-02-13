@@ -10,6 +10,7 @@ import AddNewDeck from "./AddNewDeck";
 import ViewPublicDecksPage from "./ViewPublicDecksPage";
 import DeckWordsPreview from "./DeckWordsPreview";
 import ViewPredefinedDecksPage from "./ViewPredefinedDecksPage";
+import StatisticPage from "./StatisticPage";
 
 export {
   Home,
@@ -23,5 +24,6 @@ export {
   AddNewDeck,
   ViewPublicDecksPage,
   DeckWordsPreview,
-  ViewPredefinedDecksPage
+  ViewPredefinedDecksPage,
+  StatisticPage
 };

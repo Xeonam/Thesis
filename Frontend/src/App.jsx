@@ -12,7 +12,8 @@ import {
   AddNewDeck,
   ViewPublicDecksPage,
   DeckWordsPreview,
-  ViewPredefinedDecksPage
+  ViewPredefinedDecksPage,
+  StatisticPage
 } from "./pages";
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -104,6 +105,14 @@ const App = () => {
             element={
               <RequireAuth>
                 <DueCard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/statistics"
+            element={
+              <RequireAuth>
+                <StatisticPage />
               </RequireAuth>
             }
           />

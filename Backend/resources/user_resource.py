@@ -31,8 +31,7 @@ class GetWords(Resource):
     def get(self):
         current_user_id = get_jwt_identity()
         words = User.get_user_words(user_id=current_user_id)
-        words = [{'card_id': user_card.Card.id, 'word': word_schema.dump(user_card.Word)} for user_card in words]
-
+        words = [{'card_id': user_card.Card.id, 'word': word_schema.dump(user_card.Word), 'deck_name': user_card.Deck.name} for user_card in words]
         return words
 
 class GetDueCards(Resource):

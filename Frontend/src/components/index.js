@@ -14,6 +14,7 @@ import AddNewDeckForm from "./AddNewDeckForm";
 import ViewPublicDecks from "./ViewPublicDecks";
 import DeckWordsPreviewComponent from "./DeckWordsPreviewComponent";
 import ViewPredefinedDecks from "./ViewPredefinedDecks";
+import Statistic from "./Statistic";
 
 export {
   DefaultNavbar,
@@ -31,5 +32,6 @@ export {
   AddNewDeckForm,
   ViewPublicDecks,
   DeckWordsPreviewComponent,
-  ViewPredefinedDecks
+  ViewPredefinedDecks,
+  Statistic
 };

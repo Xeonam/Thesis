@@ -40,6 +40,12 @@ function DefaultNavbar() {
             >
               Due cards
             </Link>
+            <Link
+              to="/statistics"
+              className="my-2 mx-5 font-medium text-white hover:text-importantText"
+            >
+              Statistics
+            </Link>
           </div>
 
           <div className="md:hidden">
@@ -51,6 +57,12 @@ function DefaultNavbar() {
             </button>
             {showDropdown && (
               <div className="flex flex-col items-start">
+                <Link
+                  to="/dashboard"
+                  className="my-2 font-medium text-white hover:text-importantText"
+                >
+                  Dashboard
+                </Link>
                 <Link
                   to="/decks"
                   className="my-2 font-medium text-white hover:text-importantText"
@@ -69,6 +81,12 @@ function DefaultNavbar() {
                 >
                   Due cards
                 </Link>
+                <Link
+                  to="/statistics"
+                  className="my-2 font-medium text-white hover:text-importantText"
+                >
+                  Statistics
+                </Link>
               </div>
             )}
           </div>
@@ -84,8 +102,7 @@ function DefaultNavbar() {
         </>
       ) : (
         <>
-           <div className="flex justify-between w-full">
-
+          <div className="flex justify-between w-full">
             <Navbar.Brand href="/">
               <span className="self-center whitespace-nowrap text-xl font-semibold text-importantText">
                 WordEnlighten
@@ -106,7 +123,6 @@ function DefaultNavbar() {
             </div>
           </div>
         </>
-
       )}
     </Navbar>
   );
