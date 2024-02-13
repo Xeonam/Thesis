@@ -243,19 +243,7 @@ export async function fetchPredefinedDecks() {
   return response.data;
 }
 
-export async function getCardByName(word) {
-  const token = localStorage.getItem("accessToken");
-  const response = await axios.post(
-    "http://localhost:5000/get-word-by-name",
-     word,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-  return response.data;
-}
+
 
 export async function fetchSpecifiedDeckWords(deckId, part_of_speech) {
   const token = localStorage.getItem("accessToken");

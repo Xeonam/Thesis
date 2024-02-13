@@ -40,21 +40,3 @@ class GetCard(Resource):
         #card = Card.get_card(card_id)
         return card_schema.dump(card)
     
-class GetCardByName(Resource):
-    @jwt_required()
-    def post(self):
-        data = request.get_json()
-        word = data.get("word")
-        if not word:
-            return {"message": "Word is required."}, 400
-        user_id = get_jwt_identity()
-
-        card = Card.get_card_by_string(user_id, word)
-        print(card)
-        """ print(card[0][-1]) """
-        
-
-        if card:
-            return card[0][-1], 200
-        else:
-            return {"message": "Word not found in your cards."}, 404

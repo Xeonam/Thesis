@@ -182,28 +182,6 @@ class Card(db.Model):
         if card.user_id != current_user_id:
             abort(403, message="Not your card.")
         return card
-    
-    @classmethod
-    def get_card_by_string(cls, user_id: int, word: str):
-        results = (
-            db.session.query(cls, Deck.name)
-            .join(Word, cls.word_id == Word.word_id)
-            .join(DeckCard, cls.id == DeckCard.card_id)
-            .join(Deck, DeckCard.deck_id == Deck.deck_id)
-            .filter((Word.english_word.ilike(f"{word}")))
-            .filter(cls.user_id == user_id)
-            .all()
-        )
-        return results
-        """  results = (
-            db.session.query(cls, Deck.name)
-            .join(Word, cls.word_id == Word.word_id)
-
-            .filter((Word.english_word.ilike(f"%{word}%")) | (Word.hungarian_meaning.ilike(f"%{word}%")))
-            .filter(cls.user_id == user_id)
-            .all()
-        )
-        return results """
 
     @classmethod
     def delete_card(cls, card_id):
