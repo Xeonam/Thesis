@@ -199,9 +199,15 @@ function DeckWordPractise() {
               <div className="flex items-center justify-center">
                 <button
                   onClick={handleAgain}
-                  className="mt-4 px-6 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  className="mx-4 px-6 bg-blue-500 text-white rounded hover:bg-blue-600 py-2"
                 >
                   Start Over
+                </button>
+                <button
+                  onClick={handleBack}
+                  className="mx-4 px-6 bg-blue-500 text-white rounded hover:bg-blue-600 py-2"
+                >
+                  Return
                 </button>
               </div>
             </>
